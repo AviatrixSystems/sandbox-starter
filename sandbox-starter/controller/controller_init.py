@@ -93,7 +93,7 @@ def onboard_controller(ctrl_url, account_id, cid, email):
     print("Upgrading to latest release")
     try:
         upgrade_latest = requests.request(
-            "POST", ctrl_url, headers=headers, data=upgrade, files=files, verify=False, timeout=300)
+            "POST", ctrl_url, headers=headers, data=upgrade, files=files, verify=False, timeout=420)
         print(upgrade_latest.text.encode('utf8'))
     except:
         # 6.4 reaches timeout, but upgrade succeeds
