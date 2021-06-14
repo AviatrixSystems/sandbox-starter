@@ -1,4 +1,4 @@
-VERSION ?= 0.4
+VERSION ?= latest
 
 build:
 	cd sst-frontend; yarn install

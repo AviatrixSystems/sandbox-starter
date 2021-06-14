@@ -10,3 +10,4 @@ Gemfile.lock
 yarn.lock
 .vscode*
 .yarn*
+terraform.tfstate

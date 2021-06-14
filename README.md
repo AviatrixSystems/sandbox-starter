@@ -20,23 +20,37 @@ Building sandbox starter has several workstation or user prerequsites.
 - An EC2 key pair in the Ohio (us-east-2) and N Virginia (us-east-1) regions.
 - Subscription to the [Aviatrix metered software](https://aws.amazon.com/marketplace/pp/B08NTSDHKG) from the AWS Marketplace.
 
-## Building the sst docker image
+## Building the sst docker image locally
 
 To build the sst docker image, update the [makefile](./makefile) version variable and execute:
 ```bash
 make build
 ```
 
-## Launching the sst docker image
+## Launching the sst docker image locally
 
 To run the sst docker image from a built `make build`, execute:
 ```bash
 make run
 ```
 
-## Removing the sst docker image
+## Removing the sst docker image locally
 
 To start over and clean your system of built sst docker images, execute:
 ```bash
 make clean
 ```
+
+## Lauching the latest version of sst in AWS using terraform
+
+To run the Sandbox Starter in AWS with a pre-built sst AMI using terraform:
+```bash
+git clone https://github.com/AviatrixSystems/sandbox-starter.git
+cd ./sandbox-starter/infra-ami
+```
+Be sure to update [variables.tf](./infra-ami/variables.tf) to specify your region and ec2 keypair name. Then:
+```bash
+terraform init
+terraform apply
+```
+The url for the sandbox starter is output from terraform.
