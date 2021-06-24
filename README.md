@@ -18,7 +18,7 @@ Building sandbox starter has several workstation or user prerequsites.
 - Aws credentials for testing controller launch and transit deployment in AWS.
 - Azure credentials for testing transit deployment and cross-cloud transit peering.
 - An EC2 key pair in the Ohio (us-east-2) and N Virginia (us-east-1) regions.
-- Subscription to the [Aviatrix metered software](https://aws.amazon.com/marketplace/pp/B08NTSDHKG) from the AWS Marketplace.
+- Subscription to the [Aviatrix metered software](https://aws.amazon.com/marketplace/pp/B08NTSDHKG) from the AWS Marketplace (Unless launching the controller as [BYOL](lauching-sst-with-the-byol-version-of-the-aviatrix-controller)).
 
 ## Building the sst docker image locally
 
@@ -54,3 +54,19 @@ terraform init
 terraform apply
 ```
 The url for the sandbox starter is output from terraform.
+
+## Lauching sst with the BYOL version of the Aviatrix controller
+
+To run the Sandbox Starter with a BYOL (bring your own license) controller:
+```bash
+	docker volume create TF
+	docker run -v TF:/root -p 5000:5000 -d aviatrix/sandbox-starter:latest
+	docker exec $(docker ps -a -q) sed -i 's/"meteredplatinum"/"BYOL"/g' /root/controller/aviatrix-controller-build/variables.tf
+```
+
+Or, from this cloned repository:
+```bash
+  make run-byol
+```
+
+Presumes the only running local docker container is the sst.
