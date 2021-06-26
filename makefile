@@ -19,4 +19,4 @@ run:
 run-byol:
 	docker volume create TF
 	docker run -v TF:/root -p 5000:5000 -d aviatrix/sandbox-starter:${VERSION}
-	docker exec $$(docker ps -a -q) sed -i 's/"meteredplatinum"/"BYOL"/g' /root/controller/aviatrix-controller-build/variables.tf
+	docker exec $$(docker ps -aqf "ancestor=aviatrix/sandbox-starter") sed -i 's/"meteredplatinum"/"BYOL"/g' /root/controller/aviatrix-controller-build/variables.tf

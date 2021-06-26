@@ -61,12 +61,10 @@ To run the Sandbox Starter with a BYOL (bring your own license) controller:
 ```bash
 	docker volume create TF
 	docker run -v TF:/root -p 5000:5000 -d aviatrix/sandbox-starter:latest
-	docker exec $(docker ps -a -q) sed -i 's/"meteredplatinum"/"BYOL"/g' /root/controller/aviatrix-controller-build/variables.tf
+	docker exec $(docker ps -aqf "ancestor=aviatrix/sandbox-starter") sed -i 's/"meteredplatinum"/"BYOL"/g' /root/controller/aviatrix-controller-build/variables.tf
 ```
 
 Or, from this cloned repository:
 ```bash
   make run-byol
 ```
-
-Presumes the only running local docker container is the sst.
