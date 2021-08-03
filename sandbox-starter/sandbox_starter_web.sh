@@ -514,7 +514,7 @@ mcna_aws_transit()
     fi
 
     terraform init
-    terraform apply -target=aviatrix_transit_gateway.aws_transit_gw -target=aviatrix_spoke_gateway.aws_spoke_gws -auto-approve
+    terraform apply -target=aviatrix_transit_gateway.aws_transit_gw -target=aviatrix_spoke_gateway.aws_spoke_gws -target aviatrix_spoke_transit_attachment.aws_spoke_gws_attachment -auto-approve
     return $?
 }
 
@@ -579,7 +579,7 @@ mcna_azure_transit()
     fi
 
     terraform init
-    terraform apply -target=aviatrix_transit_gateway.azure_transit_gw -target=aviatrix_spoke_gateway.azure_spoke_gws -auto-approve
+    terraform apply -target=aviatrix_transit_gateway.azure_transit_gw -target=aviatrix_spoke_gateway.azure_spoke_gws -target aviatrix_spoke_transit_attachment.azure_spoke_gws_attachment -auto-approve
     return $?
 }
 

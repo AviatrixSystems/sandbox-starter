@@ -8,7 +8,7 @@ RUN apk update && \
     cd /tmp && \
     wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
     unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/bin && \
-    pip3 install awscli && pip3 install requests urllib3 && pip3 install git+git://github.com/HR/github-clone#egg=ghclone && \
+    pip3 install awscli && pip3 install requests urllib3 && pip3 install github-clone && \
     rm -rf /tmp/* && \
     rm -rf /var/cache/apk/* && \
     rm -rf /var/tmp/*
