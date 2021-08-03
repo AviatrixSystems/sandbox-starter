@@ -69,4 +69,8 @@ resource "aviatrix_spoke_transit_attachment" "aws_spoke_gws_attachment" {
   for_each        = var.aws_spoke_gateways
   spoke_gw_name   = each.value.name
   transit_gw_name = var.aws_transit_gateway.name
+  depends_on = [
+    aviatrix_spoke_gateway.aws_spoke_gws["spoke1"],
+    aviatrix_spoke_gateway.aws_spoke_gws["spoke2"],
+  ]
 }
