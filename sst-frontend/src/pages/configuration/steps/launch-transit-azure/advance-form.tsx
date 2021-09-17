@@ -130,7 +130,7 @@ export default function AdvanceForm(props: ComponentProps) {
               <Input
                 value={values.azure_directory_id}
                 name="azure_directory_id"
-                label="Directory ID"
+                label="Directory (Tenant) ID"
                 variant="outlined"
                 customClasses="--standard --blue --small"
                 onChange={handleChange}
@@ -141,7 +141,7 @@ export default function AdvanceForm(props: ComponentProps) {
               <Input
                 value={values.azure_application_id}
                 name="azure_application_id"
-                label="Application ID"
+                label="Application (Client) ID"
                 variant="outlined"
                 customClasses="--standard --blue --small"
                 onChange={handleChange}
@@ -152,7 +152,7 @@ export default function AdvanceForm(props: ComponentProps) {
               <Input
                 value={values.azure_application_key}
                 name="azure_application_key"
-                label="Application Key"
+                label="Application Key (Client Secret)"
                 variant="outlined"
                 customClasses="--standard --blue --small"
                 onChange={handleChange}
