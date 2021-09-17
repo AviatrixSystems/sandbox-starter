@@ -89,14 +89,14 @@ def onboard_controller(ctrl_url, account_id, cid, email):
 
 # Upgrade Controller
     print("Upgrading controller. It can take several minutes")
-    upgrade = {'action': 'upgrade', 'CID': cid, 'version': '6.4'}
+    upgrade = {'action': 'upgrade', 'CID': cid, 'version': '6.5'}
     print("Upgrading to latest release")
     try:
         upgrade_latest = requests.request(
             "POST", ctrl_url, headers=headers, data=upgrade, files=files, verify=False, timeout=420)
         print(upgrade_latest.text.encode('utf8'))
     except:
-        # 6.4 reaches timeout, but upgrade succeeds
+        # Upgrade reaches timeout, but upgrade succeeds
         pass
 
 
