@@ -56,14 +56,14 @@ def launch_transit_state(command):
     with open('state.txt') as json_file:
         data_transit = json.load(json_file)
 
-        launchAviatrixTransit = {
-            'state': command,
-        }
-        data_transit['processedData'].update(
-            {'launchAviatrixTransit': launchAviatrixTransit})
+    launchAviatrixTransit = {
+        'state': command,
+    }
+    data_transit['processedData'].update(
+        {'launchAviatrixTransit': launchAviatrixTransit})
 
-        with open('state.txt', 'w') as outfile:
-            json.dump(data_transit, outfile)
+    with open('state.txt', 'w') as outfile:
+        json.dump(data_transit, outfile)
 
 
 def launch_azure_state(command):
@@ -165,9 +165,8 @@ def aws_configuration_process(key_id, secret_key):
 
     data['processedData'] = {}
 
+    # file should not save any keys
     awsConfiguration = {
-        'key_id': key_id,
-        'secret_key': secret_key,
     }
     data['processedData'] = {'awsConfigurations': awsConfiguration}
 
@@ -199,8 +198,6 @@ def launch_controller(controller_data):
     controller = {
         'email': email,
         'recovery_email': recovery_email,
-        'password': password,
-        'confirm_password': confirm_password,
     }
 
     data['processedData'].update({'controller': controller})
