@@ -52,7 +52,7 @@ def set_controller_password(ctrl_url, private_ip, cid, password, email):
 
 # Controller initialization
 
-def onboard_controller(ctrl_url, account_id, cid, email):
+def onboard_controller(ctrl_url, account_id, cid, email, password):
 
     # Set email:
 
@@ -69,6 +69,12 @@ def onboard_controller(ctrl_url, account_id, cid, email):
         "POST", ctrl_url, headers=headers, data=set_name, files=files, verify=False)
     print(set_hostname.text.encode('utf8'))
 
+# Create user based on email
+    new_user = {'action': 'add_account_user', 'CID': cid,
+                'account_name': email, 'username': email.rpartition('@')[0], 'password': password, 'email': email, 'groups': 'admin'}
+    add_user = requests.request(
+        "POST", ctrl_url, headers=headers, data=new_user, files=files, verify=False)
+    print(add_user.text.encode('utf8'))
 
 # AWS Access Account:
 # https://api.aviatrix.com/#76259f3e-be0e-4cd9-be53-725fb134ce21
@@ -145,7 +151,7 @@ def main():
         sys.exit(1)
 
     onboard_controller(ctrl_url=ctrl_url,
-                       account_id=account_id, cid=cid, email=email)
+                       account_id=account_id, cid=cid, email=email, password=password)
     # no need anymore to store those in a file.
     # print_credentials(public_ip, email, password)
 

@@ -62,7 +62,7 @@ resource "aviatrix_spoke_gateway" "aws_spoke_gws" {
   # of AZs in the region to get to the first public subnet.
   subnet                            = aviatrix_vpc.aws_spoke_vpcs[each.value.vpc].subnets[length(data.aws_availability_zones.az_available.names)]["cidr"]
   manage_transit_gateway_attachment = false
-  depends_on                        = [aviatrix_transit_gateway.aws_transit_gw]
+  # depends_on                        = [aviatrix_transit_gateway.aws_transit_gw]
 }
 
 resource "aviatrix_spoke_transit_attachment" "aws_spoke_gws_attachment" {

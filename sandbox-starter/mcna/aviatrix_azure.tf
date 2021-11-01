@@ -51,7 +51,7 @@ resource "aviatrix_spoke_gateway" "azure_spoke_gws" {
   # The first subnet is always a public subnet for gateways.
   subnet                            = aviatrix_vpc.azure_vnets[each.value.vpc].subnets[0].cidr
   manage_transit_gateway_attachment = false
-  depends_on                        = [aviatrix_transit_gateway.azure_transit_gw]
+  # depends_on                        = [aviatrix_transit_gateway.azure_transit_gw]
 }
 
 resource "aviatrix_spoke_transit_attachment" "azure_spoke_gws_attachment" {

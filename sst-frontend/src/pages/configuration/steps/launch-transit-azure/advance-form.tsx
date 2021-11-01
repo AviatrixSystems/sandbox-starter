@@ -148,6 +148,7 @@ export default function AdvanceForm(props: ComponentProps) {
                 error={Boolean(errors.azure_application_id)}
                 helperText={errors.azure_application_id}
                 disabled={pageDisabled}
+                type="password"
               />
               <Input
                 value={values.azure_application_key}
