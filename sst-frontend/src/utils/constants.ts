@@ -3,7 +3,7 @@ import * as yup from "yup";
 
 export const SEC_15 = 15000;
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?])[A-Za-z\d@!%*#?]{8,}$/;
 const ipRegex = /([1-9]|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])(\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])){3}\/\d+/;
 const ipInvalidMessage = "Need with IP with subnet mask";
 
@@ -54,7 +54,7 @@ export const FORM_CONFIGS = {
         .required("Required")
         .matches(
           passwordRegex,
-          "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+          "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case (@!%*#?) Character"
         ),
       confirm_password: yup.string().required("Required"),
     }),
@@ -68,7 +68,7 @@ export const FORM_CONFIGS = {
         .required("Required")
         .matches(
           passwordRegex,
-          "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+          "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case (@!%*#?) Character"
         ),
       confirm_password: yup.string().required("Required"),
       region: yup.string().required("Required"),
