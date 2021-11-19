@@ -1,11 +1,12 @@
 # Aviatrix Sandbox Starter
 
 ## Summary
-This solution deploys an Aviatrix controller and an Aviatrix transit architecture in AWS and in Azure.
 
-<img alt="sandbox-starter" src="https://raw.githubusercontent.com/AviatrixSystems/sandbox-starter/main/img/sst.png">
+This solution deploys an Aviatrix controller and an Aviatrix transit architecture in AWS and in Azure.
+![Sandbox Starter Infrastructure](/img/sst.png)
 
 ## Instructions
+
 Install Docker if you don't already have it: https://docs.docker.com/get-docker/.
 
 Start the container:

@@ -32,7 +32,7 @@ record_controller_launch()
     read -p '--> Enter email for Aviatrix support to reach out in case of issues (the email will be shared with Aviatrix): ' email_support
     d=$(date)
     payload="{\"controllerIP\":\"$CONTROLLER_PUBLIC_IP\", \"email\":\"$email_support\", \"timestamp\":\"$d\"}"
-    curl -d "$payload" -H 'Content-Type: application/json' https://vyidaoc6pa.execute-api.us-west-2.amazonaws.com/v1/controller
+    curl -d "$payload" -H 'Content-Type: application/json' https://tqcp56gr3a.execute-api.us-west-2.amazonaws.com/v1/controller
 }
 
 generate_controller_ssh_key()
