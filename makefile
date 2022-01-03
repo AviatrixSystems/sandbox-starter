@@ -1,4 +1,4 @@
-VERSION ?= 0.6
+VERSION ?= 1.0.0
 
 build:
 	cd sst-frontend; yarn install
@@ -15,6 +15,10 @@ push:
 run:
 	docker volume create TF
 	docker run -v TF:/root -p 5000:5000 -d aviatrix/sandbox-starter:${VERSION}
+
+run-latest:
+	docker volume create TF
+	docker run -v TF:/root -p 5000:5000 -d aviatrix/sandbox-starter:latest
 
 run-byol:
 	docker volume create TF

@@ -14,11 +14,11 @@ timer()
 
 aws_configure()
 {
-    if [ -d "/root/.aws" ]
-    then
-	echo "--> .aws exists, skipping aws configure."
-	return 0
-    fi
+    # if [ -d "/root/.aws" ]
+    # then
+	# echo "--> .aws exists, skipping aws configure."
+	# return 0
+    # fi
     echo "--> Going to get your AWS API access keys. They are required to launch the Aviatrix controller in AWS. They stay local to this container and are not shared. Access keys can be created in AWS console under Account -> My Security Credentials -> Access keys for CLI, SDK, & API access."
     read -p '--> Enter AWS access key ID: ' key_id
     read -p '--> Enter AWS secret access key: ' secret_key
@@ -32,7 +32,7 @@ record_controller_launch()
     read -p '--> Enter email for Aviatrix support to reach out in case of issues (the email will be shared with Aviatrix): ' email_support
     d=$(date)
     payload="{\"controllerIP\":\"$CONTROLLER_PUBLIC_IP\", \"email\":\"$email_support\", \"timestamp\":\"$d\"}"
-    curl -d "$payload" -H 'Content-Type: application/json' https://vyidaoc6pa.execute-api.us-west-2.amazonaws.com/v1/controller
+    curl -d "$payload" -H 'Content-Type: application/json' https://tqcp56gr3a.execute-api.us-west-2.amazonaws.com/v1/controller
 }
 
 generate_controller_ssh_key()
