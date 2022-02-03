@@ -39,10 +39,10 @@ export default function StandardForm(props: ComponentProps) {
   const { controller } = processedData;
   const inputValues: typeof initialValues = controller
     ? {
-        email: controller.email,
-        password: controller.password,
-        confirm_password: controller.confirm_password,
-      }
+      email: controller.email,
+      password: controller.password,
+      confirm_password: controller.confirm_password,
+    }
     : initialValues;
 
   return (
@@ -65,7 +65,7 @@ export default function StandardForm(props: ComponentProps) {
       {({ values, handleChange, handleSubmit, errors }) => (
         <form onSubmit={handleSubmit} className="launch-controller-grid">
           <div className="text-block">
-            <Heading customClasses="--dark" text="Launch Controller"></Heading>
+            <Heading customClasses="--dark" text="Launch Controller and Copilot"></Heading>
             <Paragraph
               customClasses="--light"
               text={

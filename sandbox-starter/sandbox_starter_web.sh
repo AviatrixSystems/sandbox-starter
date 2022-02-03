@@ -246,11 +246,12 @@ writekeys_controller_launch() {
   local CONTROLLER_PRIVATE_IP=$2
   local CONTROLLER_PUBLIC_IP=$3
   local AVIATRIX_CONTROLLER_IP=$4
+  local COPILOT_PUBLIC_IP=$5
 
 #   echo "$AVIATRIX_CONTROLLER_IP"
 
   # Save variables to file
-  typeset -p AWS_ACCOUNT CONTROLLER_PRIVATE_IP CONTROLLER_PUBLIC_IP AVIATRIX_CONTROLLER_IP >keys.sh
+  typeset -p AWS_ACCOUNT CONTROLLER_PRIVATE_IP CONTROLLER_PUBLIC_IP COPILOT_PUBLIC_IP AVIATRIX_CONTROLLER_IP >keys.sh
 
 }
 
@@ -266,7 +267,7 @@ writekeys_controller_init() {
   local SANDBOX_STARTER_CONTROLLER_INIT_DONE=$4
 
   # Save variables to file
-  typeset -p  AWS_ACCOUNT CONTROLLER_PRIVATE_IP CONTROLLER_PUBLIC_IP AVIATRIX_CONTROLLER_IP  AVIATRIX_EMAIL AVIATRIX_PASSWORD AVIATRIX_USERNAME SANDBOX_STARTER_CONTROLLER_INIT_DONE >keys.sh
+  typeset -p  AWS_ACCOUNT CONTROLLER_PRIVATE_IP CONTROLLER_PUBLIC_IP COPILOT_PUBLIC_IP AVIATRIX_CONTROLLER_IP  AVIATRIX_EMAIL AVIATRIX_PASSWORD AVIATRIX_USERNAME SANDBOX_STARTER_CONTROLLER_INIT_DONE >keys.sh
 }
 
 #test for key.sh data
@@ -279,6 +280,7 @@ check_data_test() {
     printf 'CONTROLLER_PRIVATE_IP=%s\n' "$CONTROLLER_PRIVATE_IP"
     printf 'CONTROLLER_PUBLIC_IP=%s\n' "$CONTROLLER_PUBLIC_IP"
     printf 'AVIATRIX_CONTROLLER_IP=%s\n' "$AVIATRIX_CONTROLLER_IP"
+    printf 'COPILOT_PUBLIC_IP=%s\n' "$COPILOT_PUBLIC_IP"
 
     printf 'AVIATRIX_EMAIL=%s\n'  "$AVIATRIX_EMAIL"
     printf 'AVIATRIX_PASSWORD=%s\n'  "$AVIATRIX_PASSWORD"
@@ -411,8 +413,7 @@ controller_launch()
     export CONTROLLER_PRIVATE_IP=$(terraform output -raw controller_private_ip)
     export CONTROLLER_PUBLIC_IP=$(terraform output -raw controller_public_ip)
     export AVIATRIX_CONTROLLER_IP=$CONTROLLER_PUBLIC_IP
-
-
+    export COPILOT_PUBLIC_IP=$(terraform output -raw copilot_public_ip)
 
     # Keep them in .bashrc in case the container gets restarted.
     f=/root/.sandbox_starter_restore
@@ -426,16 +427,18 @@ controller_launch()
     echo 'export CONTROLLER_PRIVATE_IP=$(terraform output -raw controller_private_ip)' >> $f
     echo 'export CONTROLLER_PUBLIC_IP=$(terraform output -raw controller_public_ip)' >> $f
     echo 'export AVIATRIX_CONTROLLER_IP=$CONTROLLER_PUBLIC_IP' >> $f
+    echo 'export COPILOT_PUBLIC_IP=$(terraform output -raw copilot_public_ip)' >> $f
 
     echo AWS_ACCOUNT: $AWS_ACCOUNT
     echo CONTROLLER_PRIVATE_IP: $CONTROLLER_PRIVATE_IP
     echo CONTROLLER_PUBLIC_IP: $CONTROLLER_PUBLIC_IP
+    echo COPILOT_PUBLIC_IP: $COPILOT_PUBLIC_IP
 
-    writekeys_controller_launch $AWS_ACCOUNT $CONTROLLER_PRIVATE_IP $CONTROLLER_PUBLIC_IP  $AVIATRIX_CONTROLLER_IP
+    writekeys_controller_launch $AWS_ACCOUNT $CONTROLLER_PRIVATE_IP $CONTROLLER_PUBLIC_IP  $AVIATRIX_CONTROLLER_IP $COPILOT_PUBLIC_IP
 
     record_controller_launch $email_support
 
-    echo -e "\n--> Waiting 5 minutes for the controller to come up... Do not access the controller yet."
+    echo -e "\n--> Waiting 15 minutes for the controller to come up... Do not access the controller yet."
     timer 300
     return 0
 }
@@ -742,6 +745,16 @@ get_public_ip()
 
     export $CONTROLLER_PUBLIC_IP
     echo "$CONTROLLER_PUBLIC_IP"
+
+}
+
+get_copilot_ip()
+{
+    cd /root/
+        . keys.sh # Load variables from file
+
+    export $COPILOT_PUBLIC_IP
+    echo "$COPILOT_PUBLIC_IP"
 
 }
 

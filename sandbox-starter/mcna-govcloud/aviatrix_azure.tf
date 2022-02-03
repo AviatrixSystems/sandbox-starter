@@ -23,15 +23,14 @@ resource "aviatrix_vpc" "azure_vnets" {
 
 ### Azure Transit gateway.
 resource "aviatrix_transit_gateway" "azure_transit_gw" {
-  cloud_type         = 8
-  account_name       = var.azure_account_name
-  gw_name            = var.azure_transit_gateway.name
-  vpc_id             = aviatrix_vpc.azure_vnets[var.azure_transit_gateway.vpc].vpc_id
-  vpc_reg            = var.azure_region
-  gw_size            = var.azure_transit_gateway.size
-  connected_transit  = true
-  enable_active_mesh = var.azure_transit_gateway.active_mesh
-  single_az_ha       = var.azure_transit_gateway.single_az_ha
+  cloud_type        = 8
+  account_name      = var.azure_account_name
+  gw_name           = var.azure_transit_gateway.name
+  vpc_id            = aviatrix_vpc.azure_vnets[var.azure_transit_gateway.vpc].vpc_id
+  vpc_reg           = var.azure_region
+  gw_size           = var.azure_transit_gateway.size
+  connected_transit = true
+  single_az_ha      = var.azure_transit_gateway.single_az_ha
   # The first subnet is always a public subnet for gateways.
   subnet = aviatrix_vpc.azure_vnets[var.azure_transit_gateway.vpc].subnets[0].cidr
 }
@@ -40,14 +39,13 @@ resource "aviatrix_transit_gateway" "azure_transit_gw" {
 resource "aviatrix_spoke_gateway" "azure_spoke_gws" {
   for_each = var.azure_spoke_gateways
 
-  cloud_type         = 8
-  account_name       = var.azure_account_name
-  gw_name            = each.value.name
-  vpc_id             = aviatrix_vpc.azure_vnets[each.value.vpc].vpc_id
-  vpc_reg            = var.azure_region
-  gw_size            = each.value.size
-  enable_active_mesh = each.value.active_mesh
-  single_az_ha       = each.value.single_az_ha
+  cloud_type   = 8
+  account_name = var.azure_account_name
+  gw_name      = each.value.name
+  vpc_id       = aviatrix_vpc.azure_vnets[each.value.vpc].vpc_id
+  vpc_reg      = var.azure_region
+  gw_size      = each.value.size
+  single_az_ha = each.value.single_az_ha
   # The first subnet is always a public subnet for gateways.
   subnet                            = aviatrix_vpc.azure_vnets[each.value.vpc].subnets[0].cidr
   manage_transit_gateway_attachment = false
@@ -56,10 +54,6 @@ resource "aviatrix_spoke_gateway" "azure_spoke_gws" {
 
 resource "aviatrix_spoke_transit_attachment" "azure_spoke_gws_attachment" {
   for_each        = var.azure_spoke_gateways
-  spoke_gw_name   = each.value.name
-  transit_gw_name = var.azure_transit_gateway.name
-  depends_on = [
-    aviatrix_spoke_gateway.azure_spoke_gws["spoke1"],
-    aviatrix_spoke_gateway.azure_spoke_gws["spoke2"],
-  ]
+  spoke_gw_name   = aviatrix_spoke_gateway.azure_spoke_gws[each.key].gw_name
+  transit_gw_name = aviatrix_transit_gateway.azure_transit_gw.gw_name
 }

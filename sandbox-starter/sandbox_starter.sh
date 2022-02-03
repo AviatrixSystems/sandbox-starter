@@ -110,7 +110,8 @@ controller_launch()
     export CONTROLLER_PRIVATE_IP=$(terraform output -raw controller_private_ip)
     export CONTROLLER_PUBLIC_IP=$(terraform output -raw controller_public_ip)
     export AVIATRIX_CONTROLLER_IP=$CONTROLLER_PUBLIC_IP
-    
+    export COPILOT_PUBLIC_IP=$(terraform output -raw copilot_public_ip)
+
     # Keep them in .bashrc in case the container gets restarted.
     f=/root/.sandbox_starter_restore
 
@@ -123,14 +124,16 @@ controller_launch()
     echo 'export CONTROLLER_PRIVATE_IP=$(terraform output -raw controller_private_ip)' >> $f
     echo 'export CONTROLLER_PUBLIC_IP=$(terraform output -raw controller_public_ip)' >> $f
     echo 'export AVIATRIX_CONTROLLER_IP=$CONTROLLER_PUBLIC_IP' >> $f
-    
+    echo 'export COPILOT_PUBLIC_IP=$(terraform output -raw copilot_public_ip)' >> $f
+
     echo AWS_ACCOUNT: $AWS_ACCOUNT
     echo CONTROLLER_PRIVATE_IP: $CONTROLLER_PRIVATE_IP
     echo CONTROLLER_PUBLIC_IP: $CONTROLLER_PUBLIC_IP
+    echo COPILOT_PUBLIC_IP: $COPILOT_PUBLIC_IP
 
     record_controller_launch
 
-    echo -e "\n--> Waiting 5 minutes for the controller to come up... Do not access the controller yet."
+    echo -e "\n--> Waiting 15 minutes for the controller to come up... Do not access the controller yet."
     timer 300
     return 0
 }
@@ -163,7 +166,7 @@ controller_init()
 
     export AVIATRIX_USERNAME=admin
     echo 'export AVIATRIX_USERNAME=admin' >> $f
-    
+
     python3 controller_init.py
     if [ $? != 0 ]; then
 	echo "--> Controller init failed"

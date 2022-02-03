@@ -32,7 +32,7 @@ export default function AppBar() {
         customClasses="--inverse --mode"
       />
       <div className="vertical-separator" />
-      <a className="mailto" href="mailto:kickstart@aviatrix.com">
+      <a className="mailto" href="mailto:sandbox-starter@aviatrix.com">
         {helpIcon}
       </a>
       <Button

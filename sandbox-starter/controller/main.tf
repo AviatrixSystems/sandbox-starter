@@ -10,7 +10,7 @@ data "aws_caller_identity" "aws_account" {}
 ### AWS VPC
 
 resource "aws_vpc" "avtx_ctrl_vpc" {
-  cidr_block       = var.vpc_cidr
+  cidr_block = var.vpc_cidr
   tags = {
     Name = "controller_vpc"
   }
@@ -25,9 +25,9 @@ resource "aws_internet_gateway" "gw" {
 ###  VPC Subnet
 
 resource "aws_subnet" "avtx_ctrl_subnet" {
-  vpc_id     = aws_vpc.avtx_ctrl_vpc.id
+  vpc_id            = aws_vpc.avtx_ctrl_vpc.id
   availability_zone = var.az
-  cidr_block = var.vpc_subnet
+  cidr_block        = var.vpc_subnet
 
   tags = {
     Name = "controller_subnet"
@@ -56,18 +56,18 @@ resource "aws_key_pair" "avtx_ctrl_key" {
 
 #### IAM Role
 
-module "avtx_iam_role"{
+module "avtx_iam_role" {
   source = "./aviatrix-controller-iam-roles"
 }
 
 #### Controller Build
 
 module "avtx_controller_instance" {
-  source = "./aviatrix-controller-build"
-  vpc     = aws_vpc.avtx_ctrl_vpc.id
-  subnet  = aws_subnet.avtx_ctrl_subnet.id
-  keypair = aws_key_pair.avtx_ctrl_key.key_name
-  ec2role = module.avtx_iam_role.aviatrix-role-ec2-name
+  source                 = "./aviatrix-controller-build"
+  vpc                    = aws_vpc.avtx_ctrl_vpc.id
+  subnet                 = aws_subnet.avtx_ctrl_subnet.id
+  keypair                = aws_key_pair.avtx_ctrl_key.key_name
+  ec2role                = module.avtx_iam_role.aviatrix-role-ec2-name
   termination_protection = false
 }
 
@@ -82,7 +82,10 @@ output "controller_private_ip" {
   value = module.avtx_controller_instance.private_ip
 }
 
-
 output "controller_public_ip" {
   value = module.avtx_controller_instance.public_ip
+}
+
+output "copilot_public_ip" {
+  value = module.avtx_controller_instance.copilot_public_ip
 }

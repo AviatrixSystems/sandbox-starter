@@ -11,7 +11,7 @@ interface ComponentProps {
 
 const stepsList = [
   "Add AWS Credentials",
-  "Launch Controller",
+  "Launch Controller and Copilot",
   "Launch Aviatrix Transit in AWS",
   "Launch EC2 instances in the AWS Spoke VPCs",
   "Key Pair Name",
