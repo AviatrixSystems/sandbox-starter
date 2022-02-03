@@ -48,11 +48,20 @@ resource "aws_instance" "aviatrixcontroller" {
   }
 }
 
+data "aws_ami" "copilot" {
+  most_recent = true
+  owners      = ["679593333241"]
+
+  filter {
+    name   = "name"
+    values = ["copilot-v1.5.1-*"]
+  }
+}
+
 # Copilot
 resource "aws_instance" "aws_copilot" {
-  ami = "ami-014a0430dcbd64db5"
-  # instance_type          = var.instance_type
-  instance_type          = "t3.2xlarge"
+  ami                    = data.aws_ami.copilot.id
+  instance_type          = var.instance_type
   subnet_id              = var.subnet
   key_name               = var.keypair
   vpc_security_group_ids = [aws_security_group.aws_copilot.id]
