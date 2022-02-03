@@ -138,6 +138,14 @@ export const CoverImage = (
           Controller-0
         </tspan>
       </text>
+      <text transform="matrix(1 0 0 1 42.7951 180)" className="st8">
+        <tspan x="0" y="0" className="st1 st6 st9">
+          Aviatrix
+        </tspan>
+        <tspan x="46.6" y="0" className="st5 st6 st9">
+          Copilot
+        </tspan>
+      </text>
       <path
         id="Rectangle_50"
         className="st10"

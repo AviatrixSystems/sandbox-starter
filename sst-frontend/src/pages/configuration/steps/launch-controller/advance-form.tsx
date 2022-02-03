@@ -45,21 +45,21 @@ export default function AdvanceForm(props: ComponentProps) {
   const { controller } = processedData;
   const inputValues: typeof initialValuesAdvance = controller
     ? {
-        email: controller.email,
-        password: controller.password,
-        confirm_password: controller.confirm_password,
-        az: step2_variables?.az || "",
-        region: step2_variables?.region || "",
-        vpc_cidr: step2_variables?.vpc_cidr || "",
-        vpc_subnet: step2_variables?.vpc_subnet || "",
-      }
+      email: controller.email,
+      password: controller.password,
+      confirm_password: controller.confirm_password,
+      az: step2_variables?.az || "",
+      region: step2_variables?.region || "",
+      vpc_cidr: step2_variables?.vpc_cidr || "",
+      vpc_subnet: step2_variables?.vpc_subnet || "",
+    }
     : {
-        ...initialValuesAdvance,
-        az: step2_variables?.az || "",
-        region: step2_variables?.region || "",
-        vpc_cidr: step2_variables?.vpc_cidr || "",
-        vpc_subnet: step2_variables?.vpc_subnet || "",
-      };
+      ...initialValuesAdvance,
+      az: step2_variables?.az || "",
+      region: step2_variables?.region || "",
+      vpc_cidr: step2_variables?.vpc_cidr || "",
+      vpc_subnet: step2_variables?.vpc_subnet || "",
+    };
 
   useEffect(() => {
     dispatch(sendVariableCall("step2_variables", history));
@@ -85,7 +85,7 @@ export default function AdvanceForm(props: ComponentProps) {
       {({ values, handleChange, handleSubmit, errors }) => (
         <form onSubmit={handleSubmit} className="launch-controller-grid">
           <div className="text-block">
-            <Heading customClasses="--dark" text="Launch Controller"></Heading>
+            <Heading customClasses="--dark" text="Launch Controller and Copilot"></Heading>
             <Paragraph
               customClasses="--light"
               text={
