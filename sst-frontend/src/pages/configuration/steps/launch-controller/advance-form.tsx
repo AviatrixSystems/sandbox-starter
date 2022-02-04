@@ -52,6 +52,7 @@ export default function AdvanceForm(props: ComponentProps) {
       region: step2_variables?.region || "",
       vpc_cidr: step2_variables?.vpc_cidr || "",
       vpc_subnet: step2_variables?.vpc_subnet || "",
+      controller_license: step2_variables?.controller_license || "",
     }
     : {
       ...initialValuesAdvance,
@@ -59,6 +60,7 @@ export default function AdvanceForm(props: ComponentProps) {
       region: step2_variables?.region || "",
       vpc_cidr: step2_variables?.vpc_cidr || "",
       vpc_subnet: step2_variables?.vpc_subnet || "",
+      controller_license: step2_variables?.controller_license || "",
     };
 
   useEffect(() => {
@@ -200,6 +202,20 @@ export default function AdvanceForm(props: ComponentProps) {
               helperText={errors.vpc_subnet}
               disabled={pageDisabled}
             />{" "}
+            <Separator />
+            <Input
+              value={values.controller_license}
+              name="controller_license"
+              label="Controller License"
+              variant="outlined"
+              fullWidth={false}
+              customClasses="--small --blue"
+              onChange={handleChange}
+              error={Boolean(errors.controller_license)}
+              helperText={errors.controller_license}
+              disabled={pageDisabled}
+            />
+            <Separator />
           </>
           <span>
             <Button

@@ -6,6 +6,8 @@ const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?])[A-Za-z\d@!%*#?]{8,}$/;
 const ipRegex = /([1-9]|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])(\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])){3}\/\d+/;
 const ipInvalidMessage = "Need with IP with subnet mask";
+const licenseRegex = /(meteredplatinum|BYOL)/;
+const licenseInvalidMessage = "Choose a controller license type: meteredplatinum or BYOL. Do not change this value unless you already have a license key.";
 
 export const ROUTES = {
   configuration: "/configuration",
@@ -43,6 +45,7 @@ export const FORM_CONFIGS = {
       az: "",
       vpc_cidr: "",
       vpc_subnet: "",
+      controller_license: "",
     },
     validations: yup.object({
       email: yup
@@ -81,6 +84,10 @@ export const FORM_CONFIGS = {
         .string()
         .required("Required")
         .matches(ipRegex, ipInvalidMessage),
+      controller_license: yup
+        .string()
+        .required("Required")
+        .matches(licenseRegex, licenseInvalidMessage),
     }),
   },
   launch_transit_aws: {

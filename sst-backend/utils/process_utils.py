@@ -28,10 +28,11 @@ def controller_file_change(data):
     az = data.get('az')
     vpc_cidr = data.get('vpc_cidr')
     vpc_subnet = data.get('vpc_subnet')
+    controller_license = data.get('controller_license')
 
     command = ['bash', '-c', '. /root/sandbox_starter_web.sh;'
                              ' controller_file_change "' + region + '" "'
-               + az + '" "' + vpc_cidr + '" "' + vpc_subnet + '"']
+               + az + '" "' + vpc_cidr + '" "' + vpc_subnet + '" "' + controller_license + '"']
 
     proccess_file(command)
 

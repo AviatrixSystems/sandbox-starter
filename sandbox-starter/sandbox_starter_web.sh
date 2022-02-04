@@ -19,11 +19,13 @@ controller_file_change(){
   local az=$2
   local vpc_cidr=$3
   local vpc_subnet=$4
+  local controller_license=$5
 
   sed -i "s/variable \"region\".*/variable \"region\" { default = \"$region\" }/g" /root/controller/variables.tf
   sed -i "s/variable \"az\".*/variable \"az\" { default = \"$az\" }/g" /root/controller/variables.tf
   sed -i "s#variable \"vpc_cidr\".*#variable \"vpc_cidr\" { default = \"$vpc_cidr\" }#g"  /root/controller/variables.tf
   sed -i "s#variable \"vpc_subnet\".*#variable \"vpc_subnet\" { default = \"$vpc_subnet\" }#g"  /root/controller/variables.tf
+  sed -i "s#variable \"controller_license\".*#variable \"controller_license\" { default = \"$controller_license\" }#g"  /root/controller/variables.tf
 
 }
 
