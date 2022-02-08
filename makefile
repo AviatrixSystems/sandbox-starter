@@ -1,6 +1,7 @@
-VERSION ?= 1.1.1
+VERSION ?= 1.1.2
 
 build:
+	sed -i'' -e 's+version = ".*"+version = "${VERSION}"+g' sst-frontend/src/components/app-bar/index.tsx
 	cd sst-frontend; yarn install
 	cd sst-frontend; yarn build
 	cd sst-frontend; cp -r build ../sst-backend/frontend
