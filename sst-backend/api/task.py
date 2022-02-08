@@ -256,6 +256,7 @@ class GetStep2Variables(Resource):
             'az': controler_vars['variable']['az']['default'],
             'vpc_cidr': controler_vars['variable']['vpc_cidr']['default'],
             'vpc_subnet': controler_vars['variable']['vpc_subnet']['default'],
+            'controller_license': controler_vars['variable']['controller_license']['default'],
         }
         return {"message": "State 2 data ", "data": data}, 200
 

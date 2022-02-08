@@ -55,8 +55,13 @@ resource "aws_key_pair" "avtx_ctrl_key" {
 
 
 #### IAM Role
+# check if role exists
+data "external" "aviatrix_role_app" {
+  program = ["bash", "${path.root}/check_role.sh"]
+}
 
 module "avtx_iam_role" {
+  count  = data.external.aviatrix_role_app.result["role_exists"] == "aviatrix-role-ec2" ? 0 : 1
   source = "./aviatrix-controller-iam-roles"
 }
 
@@ -67,7 +72,8 @@ module "avtx_controller_instance" {
   vpc                    = aws_vpc.avtx_ctrl_vpc.id
   subnet                 = aws_subnet.avtx_ctrl_subnet.id
   keypair                = aws_key_pair.avtx_ctrl_key.key_name
-  ec2role                = module.avtx_iam_role.aviatrix-role-ec2-name
+  ec2role                = "aviatrix-role-ec2"
+  type                   = var.controller_license
   termination_protection = false
 }
 
