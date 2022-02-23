@@ -3,11 +3,14 @@ import * as yup from "yup";
 
 export const SEC_15 = 15000;
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?])[A-Za-z\d@!%*#?]{8,}$/;
-const ipRegex = /([1-9]|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])(\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])){3}\/\d+/;
+const passwordRegex =
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?])[A-Za-z\d@!%*#?]{8,}$/;
+const ipRegex =
+  /([1-9]|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])(\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])){3}\/\d+/;
 const ipInvalidMessage = "Need with IP with subnet mask";
 const licenseRegex = /(meteredplatinum|BYOL)/;
-const licenseInvalidMessage = "Choose a controller license type: meteredplatinum or BYOL. Do not change this value unless you already have a license key.";
+const licenseInvalidMessage =
+  "Choose a controller license type: meteredplatinum or BYOL. Do not change this value unless you already have a license key.";
 
 export const ROUTES = {
   configuration: "/configuration",
@@ -36,6 +39,8 @@ export const FORM_CONFIGS = {
       email: "",
       password: "",
       confirm_password: "",
+      controller_type: "",
+      controller_license: "",
     },
     initialValuesAdvance: {
       email: "",
@@ -60,6 +65,10 @@ export const FORM_CONFIGS = {
           "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case (@!%*#?) Character"
         ),
       confirm_password: yup.string().required("Required"),
+      controller_license: yup
+        .string()
+        .required("Required")
+        .matches(licenseRegex, licenseInvalidMessage),
     }),
     validationsAdvance: yup.object({
       email: yup

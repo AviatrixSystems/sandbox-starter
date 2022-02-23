@@ -5,7 +5,7 @@ import { Input, Button, Heading, Paragraph } from "components/base";
 import { FORM_CONFIGS } from "utils/constants";
 import { launchController } from "store/actions/configuration";
 import { ConfigurationState } from "types/store";
-
+import { valueContainerCSS } from "react-select/dist/declarations/src/components/containers";
 interface ComponentProps {
   processedData: ConfigurationState["processedData"];
   pageDisabled: boolean;
@@ -29,6 +29,8 @@ export default function StandardForm(props: ComponentProps) {
             recovery_email: values.email,
             password: values.password,
             confirm_password: values.confirm_password,
+            controller_type: values.controller_type,
+            controller_license: values.controller_license,
           },
           history
         )
@@ -39,12 +41,13 @@ export default function StandardForm(props: ComponentProps) {
   const { controller } = processedData;
   const inputValues: typeof initialValues = controller
     ? {
-      email: controller.email,
-      password: controller.password,
-      confirm_password: controller.confirm_password,
-    }
+        email: controller.email,
+        password: controller.password,
+        confirm_password: controller.confirm_password,
+        controller_type: controller.controller_type,
+        controller_license: controller.controller_license,
+      }
     : initialValues;
-
   return (
     <Formik
       initialValues={inputValues}
@@ -65,7 +68,10 @@ export default function StandardForm(props: ComponentProps) {
       {({ values, handleChange, handleSubmit, errors }) => (
         <form onSubmit={handleSubmit} className="launch-controller-grid">
           <div className="text-block">
-            <Heading customClasses="--dark" text="Launch Controller and Copilot"></Heading>
+            <Heading
+              customClasses="--dark"
+              text="Launch Controller and Copilot"
+            ></Heading>
             <Paragraph
               customClasses="--light"
               text={
@@ -124,7 +130,42 @@ export default function StandardForm(props: ComponentProps) {
             helperText={errors.confirm_password}
             disabled={pageDisabled}
           />
-
+          <Heading
+            customClasses="--dark"
+            text="Select Controller Type"
+          ></Heading>
+          <select
+            className="--small --blue"
+            name="controller_type"
+            id="controller_type"
+            onChange={handleChange}
+            value={values.controller_type}
+          >
+            <option value="meteredplatinum">Metered Platinum</option>
+            <option value="byol">BYOL</option>
+          </select>
+          <div>
+            {(() => {
+              if (values.controller_type === "byol") {
+                return (
+                  <div>
+                    <Input
+                      value={values.controller_license}
+                      name="controller_license"
+                      label="Controller License"
+                      variant="outlined"
+                      fullWidth={false}
+                      customClasses="--small --blue"
+                      onChange={handleChange}
+                      error={Boolean(errors.controller_license)}
+                      helperText={errors.controller_license}
+                      disabled={pageDisabled}
+                    />
+                  </div>
+                );
+              }
+            })()}
+          </div>
           <span>
             <Button
               disabled={pageDisabled}
@@ -135,6 +176,7 @@ export default function StandardForm(props: ComponentProps) {
               Continue
             </Button>
           </span>
+          {console.log({ values })}
         </form>
       )}
     </Formik>

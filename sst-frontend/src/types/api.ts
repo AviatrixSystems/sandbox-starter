@@ -47,6 +47,8 @@ export type GetStepResponse = {
         email: string;
         password: string;
         recovery_email: string;
+        controller_type: string;
+        controller_license: string;
       };
       launchAviatrixTransit?: {
         state: "yes" | "no";
@@ -122,4 +124,6 @@ export type ControllerPayload = {
   recovery_email: string;
   password: string;
   confirm_password: string;
+  controller_type: string;
+  controller_license?: string;
 };
