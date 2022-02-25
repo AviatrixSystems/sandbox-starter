@@ -191,6 +191,8 @@ def launch_controller(controller_data):
     recovery_email = controller_data.get('recovery_email')
     password = controller_data.get('password')
     confirm_password = controller_data.get('confirm_password')
+    controller_license_type = controller_data.get('controller_license_type')
+    controller_license = controller_data.get('controller_license')
 
     with open('state.txt') as json_file:
         data = json.load(json_file)
@@ -198,6 +200,8 @@ def launch_controller(controller_data):
     controller = {
         'email': email,
         'recovery_email': recovery_email,
+        'controller_license_type': controller_license_type,
+        "controller_license": controller_license
     }
 
     data['processedData'].update({'controller': controller})

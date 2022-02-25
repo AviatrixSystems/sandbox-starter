@@ -45,23 +45,23 @@ export default function AdvanceForm(props: ComponentProps) {
   const { controller } = processedData;
   const inputValues: typeof initialValuesAdvance = controller
     ? {
-      email: controller.email,
-      password: controller.password,
-      confirm_password: controller.confirm_password,
-      az: step2_variables?.az || "",
-      region: step2_variables?.region || "",
-      vpc_cidr: step2_variables?.vpc_cidr || "",
-      vpc_subnet: step2_variables?.vpc_subnet || "",
-      controller_license: step2_variables?.controller_license || "",
-    }
+        email: controller.email,
+        password: controller.password,
+        confirm_password: controller.confirm_password,
+        az: step2_variables?.az || "",
+        region: step2_variables?.region || "",
+        vpc_cidr: step2_variables?.vpc_cidr || "",
+        vpc_subnet: step2_variables?.vpc_subnet || "",
+        controller_license_type: step2_variables?.controller_license_type || "",
+      }
     : {
-      ...initialValuesAdvance,
-      az: step2_variables?.az || "",
-      region: step2_variables?.region || "",
-      vpc_cidr: step2_variables?.vpc_cidr || "",
-      vpc_subnet: step2_variables?.vpc_subnet || "",
-      controller_license: step2_variables?.controller_license || "",
-    };
+        ...initialValuesAdvance,
+        az: step2_variables?.az || "",
+        region: step2_variables?.region || "",
+        vpc_cidr: step2_variables?.vpc_cidr || "",
+        vpc_subnet: step2_variables?.vpc_subnet || "",
+        controller_license_type: step2_variables?.controller_license_type || "",
+      };
 
   useEffect(() => {
     dispatch(sendVariableCall("step2_variables", history));
@@ -87,7 +87,10 @@ export default function AdvanceForm(props: ComponentProps) {
       {({ values, handleChange, handleSubmit, errors }) => (
         <form onSubmit={handleSubmit} className="launch-controller-grid">
           <div className="text-block">
-            <Heading customClasses="--dark" text="Launch Controller and Copilot"></Heading>
+            <Heading
+              customClasses="--dark"
+              text="Launch Controller and Copilot"
+            ></Heading>
             <Paragraph
               customClasses="--light"
               text={
@@ -204,15 +207,15 @@ export default function AdvanceForm(props: ComponentProps) {
             />{" "}
             <Separator />
             <Input
-              value={values.controller_license}
-              name="controller_license"
-              label="Controller License"
+              value={values.controller_license_type}
+              name="controller_license_type"
+              label="Controller License Type"
               variant="outlined"
               fullWidth={false}
               customClasses="--small --blue"
               onChange={handleChange}
-              error={Boolean(errors.controller_license)}
-              helperText={errors.controller_license}
+              error={Boolean(errors.controller_license_type)}
+              helperText={errors.controller_license_type}
               disabled={pageDisabled}
             />
             <Separator />

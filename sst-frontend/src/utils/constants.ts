@@ -39,7 +39,7 @@ export const FORM_CONFIGS = {
       email: "",
       password: "",
       confirm_password: "",
-      controller_type: "",
+      controller_license_type: "",
       controller_license: "",
     },
     initialValuesAdvance: {
@@ -50,7 +50,7 @@ export const FORM_CONFIGS = {
       az: "",
       vpc_cidr: "",
       vpc_subnet: "",
-      controller_license: "",
+      controller_license_type: "",
     },
     validations: yup.object({
       email: yup
@@ -65,10 +65,7 @@ export const FORM_CONFIGS = {
           "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case (@!%*#?) Character"
         ),
       confirm_password: yup.string().required("Required"),
-      controller_license: yup
-        .string()
-        .required("Required")
-        .matches(licenseRegex, licenseInvalidMessage),
+      controller_license: yup.string(),
     }),
     validationsAdvance: yup.object({
       email: yup
@@ -93,7 +90,7 @@ export const FORM_CONFIGS = {
         .string()
         .required("Required")
         .matches(ipRegex, ipInvalidMessage),
-      controller_license: yup
+      controller_license_type: yup
         .string()
         .required("Required")
         .matches(licenseRegex, licenseInvalidMessage),

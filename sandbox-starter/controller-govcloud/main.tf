@@ -73,7 +73,7 @@ module "avtx_controller_instance" {
   subnet                 = aws_subnet.avtx_ctrl_subnet.id
   keypair                = aws_key_pair.avtx_ctrl_key.key_name
   ec2role                = "aviatrix-role-ec2"
-  type                   = var.controller_license
+  type                   = var.controller_license_type
   termination_protection = false
 }
 
