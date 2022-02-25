@@ -206,18 +206,19 @@ export default function AdvanceForm(props: ComponentProps) {
               disabled={pageDisabled}
             />{" "}
             <Separator />
-            <Input
-              value={values.controller_license_type}
+            <select
               name="controller_license_type"
-              label="Controller License Type"
-              variant="outlined"
-              fullWidth={false}
-              customClasses="--small --blue"
+              id="controller_license_type"
               onChange={handleChange}
-              error={Boolean(errors.controller_license_type)}
-              helperText={errors.controller_license_type}
-              disabled={pageDisabled}
-            />
+              value={values.controller_license_type}
+              required
+            >
+              <option value="" disabled hidden>
+                Select Controller License Type
+              </option>
+              <option value="meteredplatinum">Metered Platinum</option>
+              <option value="byol">BYOL</option>
+            </select>
             <Separator />
           </>
           <span>
