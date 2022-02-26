@@ -28,6 +28,14 @@ controller_file_change(){
   sed -i "s#variable \"controller_license_type\".*#variable \"controller_license_type\" { default = \"$controller_license_type\" }#g"  /root/controller/variables.tf
 
 }
+controller_file_change_std(){
+
+  local controller_license_type=$1
+
+  sed -i "s/variable \"controller_license_type\".*/variable \"controller_license_type\" { default = \"$controller_license_type\" }/g"  /root/controller/variables.tf
+  printf 'Controller_License_tYPE' "$AWS_ACCOUNT"
+}
+
 
 #generic function to change pattren with spoke vars
 change_variable_with_spoke(){

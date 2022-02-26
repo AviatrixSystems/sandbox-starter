@@ -3,6 +3,7 @@ import json
 import os
 import re
 import subprocess
+from sys import stdout
 
 from .process_utils import (controller_file_change,
                             mcna_file_change_aws,
@@ -184,16 +185,14 @@ def aws_configuration_process(key_id, secret_key):
 def launch_controller(controller_data):
     """Step two (launch controller )"""
     # keeping state of control launcher
-    saved_mode = check_mode()
-    if saved_mode:
-        controller_file_change(controller_data)
+
+    controller_file_change(controller_data)
     email = controller_data.get('email')
     recovery_email = controller_data.get('recovery_email')
     password = controller_data.get('password')
     confirm_password = controller_data.get('confirm_password')
     controller_license_type = controller_data.get('controller_license_type')
     controller_license = controller_data.get('controller_license')
-
     with open('state.txt') as json_file:
         data = json.load(json_file)
 

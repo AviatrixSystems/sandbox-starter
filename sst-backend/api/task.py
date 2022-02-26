@@ -243,7 +243,7 @@ class GetStateStatus(Resource):  # pylint: disable=too-few-public-methods
         return {"message": "Resource Data", "data": self.data}, 200
 
 
-class GetStep2Variables(Resource):
+class GetStep2Variables(Resource): #reading from variables.tf advance mode
     """get step2 variables data"""
 
     def get(self):
