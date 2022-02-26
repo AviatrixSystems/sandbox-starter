@@ -149,7 +149,6 @@ export default function AdvanceForm(props: ComponentProps) {
             helperText={errors.confirm_password}
             disabled={pageDisabled}
           />
-
           <>
             <Separator />
             <Input
@@ -221,6 +220,7 @@ export default function AdvanceForm(props: ComponentProps) {
             </select>
             <Separator />
           </>
+          {console.log(values)}
           <span>
             <Button
               disabled={pageDisabled}

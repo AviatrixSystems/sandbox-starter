@@ -90,10 +90,6 @@ export const FORM_CONFIGS = {
         .string()
         .required("Required")
         .matches(ipRegex, ipInvalidMessage),
-      controller_license_type: yup
-        .string()
-        .required("Required")
-        .matches(licenseRegex, licenseInvalidMessage),
     }),
   },
   launch_transit_aws: {

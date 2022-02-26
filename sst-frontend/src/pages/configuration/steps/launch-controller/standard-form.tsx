@@ -130,12 +130,13 @@ export default function StandardForm(props: ComponentProps) {
             disabled={pageDisabled}
           />
           <select
-            name="controller_type"
-            id="controller_type"
+            name="controller_license_type"
+            id="controller_license_type"
             onChange={handleChange}
+            value={values.controller_license_type}
             required
           >
-            <option value="" disabled hidden>
+            <option value="" selected disabled hidden>
               Select Controller License Type
             </option>
             <option value="meteredplatinum">Metered Platinum</option>
