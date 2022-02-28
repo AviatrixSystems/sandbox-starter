@@ -136,10 +136,9 @@ export default function StandardForm(props: ComponentProps) {
             value={values.controller_license_type}
             required
           >
-            <option value="" selected disabled hidden>
-              Select Controller License Type
+            <option value="meteredplatinum" selected>
+              Metered Platinum
             </option>
-            <option value="meteredplatinum">Metered Platinum</option>
             <option value="byol">BYOL</option>
           </select>
           {(() => {

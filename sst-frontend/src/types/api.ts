@@ -83,6 +83,7 @@ export type Step2Variables = {
     vpc_cidr: string;
     vpc_subnet: string;
     controller_license_type: string;
+    controller_license: string;
   };
   message: string;
 };

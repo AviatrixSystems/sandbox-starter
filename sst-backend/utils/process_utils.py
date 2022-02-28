@@ -38,16 +38,17 @@ def controller_file_change(data):
     vpc_cidr = data.get('vpc_cidr')
     vpc_subnet = data.get('vpc_subnet')
     controller_license_type = data.get('controller_license_type')
-
+    if not controller_license_type:
+        controller_license_type = "meteredplatinum"
     if region and az and vpc_cidr and vpc_subnet and controller_license_type:
         print('make it 1', flush=True)
         command = ['bash', '-c', '. /root/sandbox_starter_web.sh;'
-                                ' controller_file_change "' + region + '" "'
-                + az + '" "' + vpc_cidr + '" "' + vpc_subnet + '" "' + controller_license_type + '"']
+                                    ' controller_file_change "' + region + '" "'
+                    + az + '" "' + vpc_cidr + '" "' + vpc_subnet + '" "' + controller_license_type + '"']
     else:
         print('make it 2', flush=True)
         command = ['bash', '-c', '. /root/sandbox_starter_web.sh;'
-                             ' controller_file_change_std "' + controller_license_type + '"']
+                                ' controller_file_change_std "' + controller_license_type + '"']
 
     proccess_file(command)
 

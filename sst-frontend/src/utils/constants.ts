@@ -8,9 +8,6 @@ const passwordRegex =
 const ipRegex =
   /([1-9]|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])(\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])){3}\/\d+/;
 const ipInvalidMessage = "Need with IP with subnet mask";
-const licenseRegex = /(meteredplatinum|BYOL)/;
-const licenseInvalidMessage =
-  "Choose a controller license type: meteredplatinum or BYOL. Do not change this value unless you already have a license key.";
 
 export const ROUTES = {
   configuration: "/configuration",
@@ -51,6 +48,7 @@ export const FORM_CONFIGS = {
       vpc_cidr: "",
       vpc_subnet: "",
       controller_license_type: "",
+      controller_license: "",
     },
     validations: yup.object({
       email: yup

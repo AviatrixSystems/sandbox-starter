@@ -192,6 +192,8 @@ def launch_controller(controller_data):
     password = controller_data.get('password')
     confirm_password = controller_data.get('confirm_password')
     controller_license_type = controller_data.get('controller_license_type')
+    if not controller_license_type:
+        controller_license_type = "meteredplatinum"
     controller_license = controller_data.get('controller_license')
     with open('state.txt') as json_file:
         data = json.load(json_file)
