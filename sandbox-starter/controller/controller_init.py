@@ -109,8 +109,7 @@ def onboard_controller(ctrl_url, account_id, cid, email, password):
         print("Upgrade failed", flush=True)
         sys.exit(1)
         
-    post_upgrade_cid = login(ctrl_url, password=password)
-    return post_upgrade_cid
+
 
 
 def configure_controller_copilot(ctrl_url, password, ctrl_ip, cplt_ip):
@@ -209,16 +208,19 @@ def main():
               public_ip, " Please verify new password")
         sys.exit(1)
 
-    post_upgrade_cid = onboard_controller(ctrl_url=ctrl_url,
+    onboard_controller(ctrl_url=ctrl_url,
                        account_id=account_id, cid=cid, email=email, password=password)
 
-    time.sleep(150)
+
+    time.sleep(180)
+
 
     with open("/root/state.txt") as json_file:
         data = json.load(json_file)
         new_CID =data['processedData']['controller']['controller_license']
         print(new_CID, flush = True)
         if new_CID:
+            post_upgrade_cid = login(ctrl_url, password=password)
             set_CID  = {"action":"setup_customer_id", "CID": post_upgrade_cid, "customer_id": new_CID}
             setup_customer_id= requests.post(ctrl_url, data=set_CID, verify=False)
             print(setup_customer_id.text.encode('utf8'), flush= True)

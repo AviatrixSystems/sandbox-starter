@@ -213,6 +213,7 @@ export default function AdvanceForm(props: ComponentProps) {
               onChange={handleChange}
               value={values.controller_license_type}
               required
+              disabled={pageDisabled}
             >
               <option value="meteredplatinum" selected>
                 Metered Platinum

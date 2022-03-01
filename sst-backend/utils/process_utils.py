@@ -41,18 +41,16 @@ def controller_file_change(data):
     if not controller_license_type:
         controller_license_type = "meteredplatinum"
     if region and az and vpc_cidr and vpc_subnet and controller_license_type:
-        print('make it 1', flush=True)
+
         command = ['bash', '-c', '. /root/sandbox_starter_web.sh;'
                                     ' controller_file_change "' + region + '" "'
                     + az + '" "' + vpc_cidr + '" "' + vpc_subnet + '" "' + controller_license_type + '"']
-    else:
-        print('make it 2', flush=True)
+    else:        
         command = ['bash', '-c', '. /root/sandbox_starter_web.sh;'
                                 ' controller_file_change_std "' + controller_license_type + '"']
 
     proccess_file(command)
 
-    return {"message": 'i wrote some file yay'}, 200
 
 
 def mcna_file_change_aws(data):
