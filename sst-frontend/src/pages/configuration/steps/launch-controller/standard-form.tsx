@@ -121,6 +121,7 @@ export default function StandardForm(props: ComponentProps) {
             helperText={errors.confirm_password}
             disabled={pageDisabled}
           />
+          Select Controller License Type
           <select
             name="controller_license_type"
             id="controller_license_type"
