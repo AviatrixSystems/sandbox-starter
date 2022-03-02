@@ -5,6 +5,7 @@ import { Input, Button, Heading, Paragraph } from "components/base";
 import { FORM_CONFIGS } from "utils/constants";
 import { launchController } from "store/actions/configuration";
 import { ConfigurationState } from "types/store";
+
 interface ComponentProps {
   processedData: ConfigurationState["processedData"];
   pageDisabled: boolean;
@@ -77,16 +78,7 @@ export default function StandardForm(props: ComponentProps) {
                 <span>
                   Enter email for controller password recovery and for Aviatrix
                   support to reach out in case of issues (the email will be
-                  shared with Aviatrix) <br /> Perform the pre-requisites at{" "}
-                  <a
-                    target="blank"
-                    href="https://aws.amazon.com/marketplace/pp/B08NTSDHKG"
-                  >
-                    https://aws.amazon.com/marketplace/pp/B08NTSDHKG
-                  </a>{" "}
-                  and subscribe to the Aviatrix platform. Click on "Continue to
-                  subscribe", and accept the terms. Do NOT click on "Continue to
-                  Configuration".
+                  shared with Aviatrix)
                 </span>
               }
             ></Paragraph>
@@ -145,18 +137,57 @@ export default function StandardForm(props: ComponentProps) {
           {(() => {
             if (values.controller_license_type === "byol") {
               return (
-                <Input
-                  value={values.controller_license}
-                  name="controller_license"
-                  label="Controller License"
-                  variant="outlined"
-                  fullWidth={false}
-                  customClasses="--small --blue"
-                  onChange={handleChange}
-                  error={Boolean(errors.controller_license)}
-                  helperText={errors.controller_license}
-                  disabled={pageDisabled}
-                />
+                <>
+                  <Input
+                    value={values.controller_license}
+                    name="controller_license"
+                    label="Controller License"
+                    variant="outlined"
+                    fullWidth={false}
+                    customClasses="--small --blue"
+                    onChange={handleChange}
+                    error={Boolean(errors.controller_license)}
+                    helperText={errors.controller_license}
+                    disabled={pageDisabled}
+                  />
+                  <Paragraph
+                    customClasses="--light"
+                    text={
+                      <span>
+                        Perform the pre-requisites at{" "}
+                        <a
+                          target="blank"
+                          href="https://aws.amazon.com/marketplace/pp/prodview-nsys2ingy6m3w"
+                        >
+                          https://aws.amazon.com/marketplace/pp/prodview-nsys2ingy6m3w
+                        </a>{" "}
+                        and subscribe to the Aviatrix platform. Click on
+                        "Continue to subscribe", and accept the terms. Do NOT
+                        click on "Continue to Configuration".
+                      </span>
+                    }
+                  ></Paragraph>
+                </>
+              );
+            } else {
+              return (
+                <Paragraph
+                  customClasses="--light"
+                  text={
+                    <span>
+                      Perform the pre-requisites at{" "}
+                      <a
+                        target="blank"
+                        href="https://aws.amazon.com/marketplace/pp/B08NTSDHKG"
+                      >
+                        https://aws.amazon.com/marketplace/pp/B08NTSDHKG
+                      </a>{" "}
+                      and subscribe to the Aviatrix platform. Click on "Continue
+                      to subscribe", and accept the terms. Do NOT click on
+                      "Continue to Configuration".
+                    </span>
+                  }
+                ></Paragraph>
               );
             }
           })()}
