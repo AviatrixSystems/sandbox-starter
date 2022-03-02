@@ -2,7 +2,6 @@
 import json
 from multiprocessing import Process
 from sys import stdout
-from time import process_time
 
 import hcl
 from flask import request

@@ -212,7 +212,7 @@ def main():
                        account_id=account_id, cid=cid, email=email, password=password)
 
 
-    time.sleep(180)
+    time.sleep(300)
 
 
     with open("/root/state.txt") as json_file:
