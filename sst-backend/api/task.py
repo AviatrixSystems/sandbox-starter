@@ -2,6 +2,7 @@
 import json
 from multiprocessing import Process
 from sys import stdout
+from time import process_time
 
 import hcl
 from flask import request
@@ -88,6 +89,7 @@ class LaunchController(Resource):  # pylint: disable=too-few-public-methods
         process = Process(target=launch_controller,
                           args=(self.data,))
         process.start()
+        process.join()
 
         return {"message": "Controller Launched Successfully"}, 200
 
