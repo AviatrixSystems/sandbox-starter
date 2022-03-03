@@ -212,18 +212,16 @@ def main():
                        account_id=account_id, cid=cid, email=email, password=password)
 
 
-    time.sleep(300)
+    time.sleep(180)
 
 
-    with open("/root/state.txt") as json_file:
-        data = json.load(json_file)
-        new_CID =data['processedData']['controller']['controller_license']
-        print(new_CID, flush = True)
-        if new_CID:
-            post_upgrade_cid = login(ctrl_url, password=password)
-            set_CID  = {"action":"setup_customer_id", "CID": post_upgrade_cid, "customer_id": new_CID}
-            setup_customer_id= requests.post(ctrl_url, data=set_CID, verify=False)
-            print(setup_customer_id.text.encode('utf8'), flush= True)
+    new_CID = os.environ['CONTROLLER_LICENSE']
+    print(new_CID, flush = True)
+    if new_CID:
+        post_upgrade_cid = login(ctrl_url, password=password)
+        set_CID  = {"action":"setup_customer_id", "CID": post_upgrade_cid, "customer_id": new_CID}
+        setup_customer_id= requests.post(ctrl_url, data=set_CID, verify=False)
+        print("Setup Customer ID", setup_customer_id.text.encode('utf8'), flush= True)
 
     configure_controller_copilot(
         ctrl_url, password, ctrl_ip=public_ip, cplt_ip=copilot_public_ip)

@@ -241,16 +241,16 @@ export default function AdvanceForm(props: ComponentProps) {
                       customClasses="--light"
                       text={
                         <span>
-                          Perform the pre-requisites at{" "}
+                          Subscribe to the{" "}
                           <a
                             target="blank"
                             href="https://aws.amazon.com/marketplace/pp/prodview-nsys2ingy6m3w"
                           >
-                            https://aws.amazon.com/marketplace/pp/prodview-nsys2ingy6m3w
+                            Aviatrix BYOL Platform
                           </a>{" "}
-                          and subscribe to the Aviatrix platform. Click on
-                          "Continue to subscribe", and accept the terms. Do NOT
-                          click on "Continue to Configuration".
+                          on AWS Marketplace. Click on "Continue to subscribe",
+                          and accept the terms. Do NOT click on "Continue to
+                          Configuration".
                         </span>
                       }
                     ></Paragraph>
@@ -262,16 +262,16 @@ export default function AdvanceForm(props: ComponentProps) {
                     customClasses="--light"
                     text={
                       <span>
-                        Perform the pre-requisites at{" "}
+                        Subscribe to the{" "}
                         <a
                           target="blank"
                           href="https://aws.amazon.com/marketplace/pp/B08NTSDHKG"
                         >
-                          https://aws.amazon.com/marketplace/pp/B08NTSDHKG
+                          Aviatrix Metered Platform
                         </a>{" "}
-                        and subscribe to the Aviatrix platform. Click on
-                        "Continue to subscribe", and accept the terms. Do NOT
-                        click on "Continue to Configuration".
+                        on AWS Marketplace. Click on "Continue to subscribe",
+                        and accept the terms. Do NOT click on "Continue to
+                        Configuration".
                       </span>
                     }
                   ></Paragraph>
@@ -280,7 +280,6 @@ export default function AdvanceForm(props: ComponentProps) {
             })()}
             <Separator />
           </>
-          {console.log(values)}
           <span>
             <Button
               disabled={pageDisabled}

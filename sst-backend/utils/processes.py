@@ -201,8 +201,7 @@ def launch_controller(controller_data):
     controller = {
         'email': email,
         'recovery_email': recovery_email,
-        'controller_license_type': controller_license_type,
-        "controller_license": controller_license
+        'controller_license_type': controller_license_type
     }
 
     data['processedData'].update({'controller': controller})
@@ -213,7 +212,7 @@ def launch_controller(controller_data):
     command = ['bash', '-c', '. /root/sandbox_starter_web.sh;'
                              ' launch_controller '
                + email + ' ' + recovery_email + ' '
-               + password + ' ' + confirm_password]
+               + password + ' ' + controller_license]
     state = 2
     stateName = 'launchController'
     proccess(command, state, stateName)

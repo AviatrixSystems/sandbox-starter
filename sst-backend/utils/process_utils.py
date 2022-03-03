@@ -22,14 +22,6 @@ def proccess_file(command):
         else:
             return 0
 
-# def controller_file_change_std(data):
-#     """controller variable change in this fucntion"""
-#     controller_license_type = data.get('controller_license_type')
-#     command = ['bash', '-c', '. /root/sandbox_starter_web.sh;'
-#                              ' controller_file_change_std "' + controller_license_type + '" "']
-
-#     proccess_file(command)
-#     return {"message": 'i wrote some file yay'}, 200
 
 def controller_file_change(data):
     """controller variable change in this fucntion"""

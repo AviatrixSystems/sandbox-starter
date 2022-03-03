@@ -33,7 +33,6 @@ controller_file_change_std(){
   local controller_license_type=$1
 
   sed -i "s/variable \"controller_license_type\".*/variable \"controller_license_type\" { default = \"$controller_license_type\" }/g"  /root/controller/variables.tf
-  printf 'Controller_License_tYPE' "$AWS_ACCOUNT"
 }
 
 
@@ -458,7 +457,8 @@ controller_init()
 {
     email=$1
     password=$2
-    confirm_password=$3
+    recovery_email=$3
+    controller_license=$4
 
     if [ -z $KS_GOVCLOUD ]; then
     echo 'Into govt'
@@ -489,6 +489,9 @@ controller_init()
     export AVIATRIX_USERNAME=admin
     echo 'export AVIATRIX_USERNAME=admin' >> $f
 
+    export CONTROLLER_LICENSE=$controller_license
+    echo "export CONTROLLER_LICENSE='$controller_license'" >> $f 
+    
     python3 controller_init.py
     if [ $? != 0 ]; then
 	echo "--> Controller init failed"
@@ -640,7 +643,7 @@ launch_controller()
     email=$1
     recovery_email=$2
     password=$3
-    confirm_password=$4
+    controller_license=$4
 
 
     if [[ -v CONTROLLER_PUBLIC_IP ]]; then
@@ -660,10 +663,10 @@ launch_controller()
     if [[ -v SANDBOX_STARTER_CONTROLLER_INIT_DONE ]]; then
         echo "--> Controller already initialized, skipping."
     else
-        controller_init $email $password $confirm_password
+        controller_init $email $password $recovery_email $controller_license
         if [ $? != 0 ]; then
         echo "--> Controller init failed, retrying."
-        controller_init $email $password $confirm_password
+        controller_init $email $password $recovery_email $controller_license
         if [ $? != 0 ]; then
             echo "--> Controller init failed, exiting."
             return 1
