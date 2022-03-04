@@ -159,6 +159,7 @@ export default function StandardForm(props: ComponentProps) {
               return (
                 <>
                   <Input
+                    required
                     value={values.controller_license}
                     name="controller_license"
                     label="Controller License"
