@@ -150,6 +150,7 @@ export default function StandardForm(props: ComponentProps) {
                 color: "black",
                 fontSize: 14,
               }}
+              disabled={pageDisabled}
             >
               <MenuItem value="meteredplatinum">Metered Platinum</MenuItem>
               <MenuItem value="byol">BYOL</MenuItem>
@@ -213,7 +214,6 @@ export default function StandardForm(props: ComponentProps) {
             }
           })()}
           <span>
-            {console.log(values)}
             <Button
               disabled={pageDisabled}
               type="submit"

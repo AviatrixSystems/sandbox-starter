@@ -88,7 +88,6 @@ class LaunchController(Resource):  # pylint: disable=too-few-public-methods
         process = Process(target=launch_controller,
                           args=(self.data,))
         process.start()
-        process.join()
 
         return {"message": "Controller Launched Successfully"}, 200
 

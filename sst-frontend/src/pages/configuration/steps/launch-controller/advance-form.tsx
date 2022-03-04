@@ -245,6 +245,7 @@ export default function AdvanceForm(props: ComponentProps) {
                   color: "black",
                   fontSize: 14,
                 }}
+                disabled={pageDisabled}
               >
                 <MenuItem value="meteredplatinum">Metered Platinum</MenuItem>
                 <MenuItem value="byol">BYOL</MenuItem>
@@ -309,7 +310,6 @@ export default function AdvanceForm(props: ComponentProps) {
             })()}
             <Separator />
           </>
-          {console.log(values)}
           <span>
             <Button
               disabled={pageDisabled}
