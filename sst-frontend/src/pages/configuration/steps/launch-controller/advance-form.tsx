@@ -8,6 +8,9 @@ import {
   sendVariableCall,
 } from "store/actions/configuration";
 import { ConfigurationState } from "types/store";
+import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
+import { classNames } from "react-select/dist/declarations/src/utils";
+import { fontSize } from "@mui/system";
 
 interface ComponentProps {
   processedData: ConfigurationState["processedData"];
@@ -71,7 +74,17 @@ export default function AdvanceForm(props: ComponentProps) {
 
   return step2_variables ? (
     <Formik
-      initialValues={inputValues}
+      initialValues={{
+        email: "",
+        password: "",
+        confirm_password: "",
+        controller_license_type: "meteredplatinum",
+        controller_license: "",
+        az: "us-east-1a",
+        region: "us-east-1",
+        vpc_cidr: "10.255.0.0/20",
+        vpc_subnet: "10.255.0.0/28",
+      }}
       onSubmit={onSubmit}
       validationSchema={validationsAdvance}
       validate={(values) => {
@@ -207,20 +220,36 @@ export default function AdvanceForm(props: ComponentProps) {
               disabled={pageDisabled}
             />{" "}
             <Separator />
-            Select Controller License Type
-            <select
-              name="controller_license_type"
-              id="controller_license_type"
-              onChange={handleChange}
-              value={values.controller_license_type}
-              required
-              disabled={pageDisabled}
+            <FormControl
+              variant="outlined"
+              size="medium"
+              style={{ width: 360 }}
             >
-              <option value="meteredplatinum" selected>
-                Metered Platinum
-              </option>
-              <option value="byol">BYOL</option>
-            </select>
+              <InputLabel
+                variant="outlined"
+                style={{
+                  fontSize: 14,
+                }}
+                htmlFor="controller_license_type"
+              >
+                Controller License Type
+              </InputLabel>
+              <Select
+                labelId="controller_license_type"
+                name="controller_license_type"
+                value={values.controller_license_type}
+                onChange={handleChange}
+                label="Controller License Type"
+                variant="outlined"
+                style={{
+                  color: "black",
+                  fontSize: 14,
+                }}
+              >
+                <MenuItem value="meteredplatinum">Metered Platinum</MenuItem>
+                <MenuItem value="byol">BYOL</MenuItem>
+              </Select>
+            </FormControl>
             {(() => {
               if (values.controller_license_type === "byol") {
                 return (
@@ -280,6 +309,7 @@ export default function AdvanceForm(props: ComponentProps) {
             })()}
             <Separator />
           </>
+          {console.log(values)}
           <span>
             <Button
               disabled={pageDisabled}

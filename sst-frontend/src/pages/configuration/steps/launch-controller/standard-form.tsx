@@ -5,6 +5,9 @@ import { Input, Button, Heading, Paragraph } from "components/base";
 import { FORM_CONFIGS } from "utils/constants";
 import { launchController } from "store/actions/configuration";
 import { ConfigurationState } from "types/store";
+import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
+import { styled } from "@mui/material/styles";
+import { useState } from "react";
 
 interface ComponentProps {
   processedData: ConfigurationState["processedData"];
@@ -19,7 +22,6 @@ const {
 
 export default function StandardForm(props: ComponentProps) {
   const { processedData = {}, pageDisabled, dispatch, history } = props;
-
   const onSubmit = useCallback(
     (values) => {
       dispatch(
@@ -50,7 +52,13 @@ export default function StandardForm(props: ComponentProps) {
     : initialValues;
   return (
     <Formik
-      initialValues={inputValues}
+      initialValues={{
+        email: "",
+        password: "",
+        confirm_password: "",
+        controller_license_type: "meteredplatinum",
+        controller_license: "",
+      }}
       onSubmit={onSubmit}
       validationSchema={validations}
       validate={(values) => {
@@ -121,20 +129,32 @@ export default function StandardForm(props: ComponentProps) {
             helperText={errors.confirm_password}
             disabled={pageDisabled}
           />
-          Select Controller License Type
-          <select
-            name="controller_license_type"
-            id="controller_license_type"
-            onChange={handleChange}
-            value={values.controller_license_type}
-            required
-            disabled={pageDisabled}
-          >
-            <option value="meteredplatinum" selected>
-              Metered Platinum
-            </option>
-            <option value="byol">BYOL</option>
-          </select>
+          <FormControl variant="outlined" size="medium" style={{ width: 360 }}>
+            <InputLabel
+              style={{
+                fontSize: 14,
+              }}
+              variant="outlined"
+              htmlFor="controller_license_type"
+            >
+              Controller License Type
+            </InputLabel>
+            <Select
+              labelId="controller_license_type"
+              name="controller_license_type"
+              value={values.controller_license_type}
+              onChange={handleChange}
+              label="Controller License Type"
+              variant="outlined"
+              style={{
+                color: "black",
+                fontSize: 14,
+              }}
+            >
+              <MenuItem value="meteredplatinum">Metered Platinum</MenuItem>
+              <MenuItem value="byol">BYOL</MenuItem>
+            </Select>
+          </FormControl>
           {(() => {
             if (values.controller_license_type === "byol") {
               return (
@@ -193,6 +213,7 @@ export default function StandardForm(props: ComponentProps) {
             }
           })()}
           <span>
+            {console.log(values)}
             <Button
               disabled={pageDisabled}
               type="submit"
