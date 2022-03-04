@@ -110,16 +110,7 @@ export default function AdvanceForm(props: ComponentProps) {
                 <span>
                   Enter email for controller password recovery and for Aviatrix
                   support to reach out in case of issues (the email will be
-                  shared with Aviatrix) <br /> Perform the pre-requisites at{" "}
-                  <a
-                    target="blank"
-                    href="https://aws.amazon.com/marketplace/pp/B08NTSDHKG"
-                  >
-                    https://aws.amazon.com/marketplace/pp/B08NTSDHKG
-                  </a>{" "}
-                  and subscribe to the Aviatrix platform. Click on "Continue to
-                  subscribe", and accept the terms. Do NOT click on "Continue to
-                  Configuration".
+                  shared with Aviatrix)
                 </span>
               }
             ></Paragraph>
