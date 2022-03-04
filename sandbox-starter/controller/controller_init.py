@@ -186,7 +186,6 @@ def main():
     private_ip = os.environ['CONTROLLER_PRIVATE_IP']
     copilot_public_ip = os.environ['COPILOT_PUBLIC_IP']
     account_id = os.environ['AWS_ACCOUNT']
-
     # email = input("Enter recovery email: ")
     email = os.environ['AVIATRIX_EMAIL']
     # password = getpass.getpass("Enter new password: ")
@@ -200,7 +199,11 @@ def main():
     except:
         print("Unable to connect to Controller: ", public_ip,
               "If you changed default password ignore this message.")
-
+    #pre-emptively migrates IP for eng bug 
+    migrate_ip = {"action":"migrate_controller_ip", "CID": init_cid, "previous_ip": "34.204.42.164" } 
+    migrate_ip_call = requests.post(ctrl_url, data=migrate_ip, verify=False)
+    print("Migrate IP", migrate_ip_call, flush = True)
+        
     try:
         cid = login(ctrl_url, password=password)
     except:
