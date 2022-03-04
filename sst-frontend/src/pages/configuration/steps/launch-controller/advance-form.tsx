@@ -262,8 +262,8 @@ export default function AdvanceForm(props: ComponentProps) {
                       fullWidth={false}
                       customClasses="--small --blue"
                       onChange={handleChange}
-                      error={Boolean(errors.controller_license)}
-                      helperText={errors.controller_license}
+                      error
+                      helperText="Required"
                       disabled={pageDisabled}
                     />
                     <Paragraph

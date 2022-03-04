@@ -159,7 +159,6 @@ export default function StandardForm(props: ComponentProps) {
               return (
                 <>
                   <Input
-                    required
                     value={values.controller_license}
                     name="controller_license"
                     label="Controller License"
@@ -167,8 +166,8 @@ export default function StandardForm(props: ComponentProps) {
                     fullWidth={false}
                     customClasses="--small --blue"
                     onChange={handleChange}
-                    error={Boolean(errors.controller_license)}
-                    helperText={errors.controller_license}
+                    error
+                    helperText="Required"
                     disabled={pageDisabled}
                   />
                   <Paragraph
