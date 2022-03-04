@@ -9,8 +9,6 @@ import {
 } from "store/actions/configuration";
 import { ConfigurationState } from "types/store";
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
-import { classNames } from "react-select/dist/declarations/src/utils";
-import { fontSize } from "@mui/system";
 
 interface ComponentProps {
   processedData: ConfigurationState["processedData"];
