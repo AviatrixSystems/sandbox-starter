@@ -57,5 +57,5 @@
     "@types/yup": "^0.29.9",
     "serve": "^11.3.2"
   },
-  "proxy": "http://localhost:5000/api/v1.0"
+  "proxy": "http://localhost:5001/api/v1.0"
 }
