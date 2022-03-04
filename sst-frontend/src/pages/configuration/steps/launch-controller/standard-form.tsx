@@ -6,8 +6,6 @@ import { FORM_CONFIGS } from "utils/constants";
 import { launchController } from "store/actions/configuration";
 import { ConfigurationState } from "types/store";
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
-import { styled } from "@mui/material/styles";
-import { useState } from "react";
 
 interface ComponentProps {
   processedData: ConfigurationState["processedData"];
