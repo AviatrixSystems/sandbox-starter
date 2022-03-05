@@ -88,6 +88,7 @@ export const FORM_CONFIGS = {
         .string()
         .required("Required")
         .matches(ipRegex, ipInvalidMessage),
+      controller_license: yup.string().required("Required"),
     }),
   },
   launch_transit_aws: {
