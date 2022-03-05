@@ -166,8 +166,8 @@ export default function StandardForm(props: ComponentProps) {
                     fullWidth={false}
                     customClasses="--small --blue"
                     onChange={handleChange}
-                    error
-                    helperText="Required"
+                    error={Boolean(errors.controller_license)}
+                    helperText={errors.controller_license}
                     disabled={pageDisabled}
                   />
                   <Paragraph

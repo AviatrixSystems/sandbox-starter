@@ -63,7 +63,7 @@ export const FORM_CONFIGS = {
           "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case (@!%*#?) Character"
         ),
       confirm_password: yup.string().required("Required"),
-      controller_license: yup.string(),
+      controller_license: yup.string().required("Required"),
     }),
     validationsAdvance: yup.object({
       email: yup
