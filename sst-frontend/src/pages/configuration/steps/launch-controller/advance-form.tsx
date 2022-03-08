@@ -297,7 +297,6 @@ export default function AdvanceForm(props: ComponentProps) {
                 );
               }
             })()}
-            {console.log(values)}
             <Separator />
           </>
           <span>

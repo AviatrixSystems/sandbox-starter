@@ -211,7 +211,6 @@ export default function StandardForm(props: ComponentProps) {
               );
             }
           })()}
-          {console.log(values)}
           <span>
             <Button
               disabled={pageDisabled}
