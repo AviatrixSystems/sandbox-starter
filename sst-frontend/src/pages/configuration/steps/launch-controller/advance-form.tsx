@@ -245,7 +245,6 @@ export default function AdvanceForm(props: ComponentProps) {
                 return (
                   <>
                     <Input
-                      required
                       value={values.controller_license}
                       name="controller_license"
                       label="Controller License"
@@ -298,6 +297,7 @@ export default function AdvanceForm(props: ComponentProps) {
                 );
               }
             })()}
+            {console.log(values)}
             <Separator />
           </>
           <span>

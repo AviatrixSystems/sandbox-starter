@@ -199,10 +199,6 @@ def main():
     except:
         print("Unable to connect to Controller: ", public_ip,
               "If you changed default password ignore this message.")
-    else:
-        migrate_ip = {"action":"migrate_controller_ip", "CID": init_cid, "previous_ip": "34.204.42.164" } 
-        migrate_ip_call = requests.post(ctrl_url, data=migrate_ip, verify=False)
-        print("Migrate IP", migrate_ip_call, flush = True)
         
     try:
         cid = login(ctrl_url, password=password)
@@ -219,12 +215,18 @@ def main():
 
 
     new_CID = os.environ['CONTROLLER_LICENSE']
-    print(new_CID, flush = True)
+
     if new_CID:
         post_upgrade_cid = login(ctrl_url, password=password)
-        set_CID  = {"action":"setup_customer_id", "CID": post_upgrade_cid, "customer_id": new_CID}
-        setup_customer_id= requests.post(ctrl_url, data=set_CID, verify=False)
+        set_Customer_ID  = {"action":"setup_customer_id", "CID": post_upgrade_cid, "customer_id": new_CID}
+        setup_customer_id= requests.post(ctrl_url, data=set_Customer_ID, verify=False)
         print("Setup Customer ID", setup_customer_id.text.encode('utf8'), flush= True)
+
+    cid = login(ctrl_url, password=password)
+    migrate_ip = {"action":"migrate_controller_ip", "CID": cid, "previous_ip": "34.204.42.164" } 
+    migrate_ip_call = requests.post(ctrl_url, data=migrate_ip, verify=False)
+    print("Migrate IP", migrate_ip_call, flush = True)
+
 
     configure_controller_copilot(
         ctrl_url, password, ctrl_ip=public_ip, cplt_ip=copilot_public_ip)
