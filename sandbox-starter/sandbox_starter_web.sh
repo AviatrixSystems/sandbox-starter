@@ -12,22 +12,29 @@ timer()
     echo ""
 }
 
-#change controller file
+#change controller file sima:only used in advanced mode
 controller_file_change(){
 
   local region=$1
   local az=$2
   local vpc_cidr=$3
   local vpc_subnet=$4
-  local controller_license=$5
+  local controller_license_type=$5
 
   sed -i "s/variable \"region\".*/variable \"region\" { default = \"$region\" }/g" /root/controller/variables.tf
   sed -i "s/variable \"az\".*/variable \"az\" { default = \"$az\" }/g" /root/controller/variables.tf
   sed -i "s#variable \"vpc_cidr\".*#variable \"vpc_cidr\" { default = \"$vpc_cidr\" }#g"  /root/controller/variables.tf
   sed -i "s#variable \"vpc_subnet\".*#variable \"vpc_subnet\" { default = \"$vpc_subnet\" }#g"  /root/controller/variables.tf
-  sed -i "s#variable \"controller_license\".*#variable \"controller_license\" { default = \"$controller_license\" }#g"  /root/controller/variables.tf
+  sed -i "s#variable \"controller_license_type\".*#variable \"controller_license_type\" { default = \"$controller_license_type\" }#g"  /root/controller/variables.tf
 
 }
+controller_file_change_std(){
+
+  local controller_license_type=$1
+
+  sed -i "s/variable \"controller_license_type\".*/variable \"controller_license_type\" { default = \"$controller_license_type\" }/g"  /root/controller/variables.tf
+}
+
 
 #generic function to change pattren with spoke vars
 change_variable_with_spoke(){
@@ -400,6 +407,11 @@ controller_launch()
     fi
 
     read -n 1 -r -s -p $'--> To abort, close the window or press Ctrl-C. To continue, press any key.\n'
+
+    # Check if the Avx ec2 role exists
+    check_ec2_role
+
+    # Launch Controller/Copilot
     terraform init
     terraform apply -auto-approve
 
@@ -450,7 +462,8 @@ controller_init()
 {
     email=$1
     password=$2
-    confirm_password=$3
+    recovery_email=$3
+    controller_license=$4
 
     if [ -z $KS_GOVCLOUD ]; then
     echo 'Into govt'
@@ -481,6 +494,9 @@ controller_init()
     export AVIATRIX_USERNAME=admin
     echo 'export AVIATRIX_USERNAME=admin' >> $f
 
+    export CONTROLLER_LICENSE=$controller_license
+    echo "export CONTROLLER_LICENSE='$controller_license'" >> $f 
+    
     python3 controller_init.py
     if [ $? != 0 ]; then
 	echo "--> Controller init failed"
@@ -632,7 +648,7 @@ launch_controller()
     email=$1
     recovery_email=$2
     password=$3
-    confirm_password=$4
+    controller_license=$4
 
 
     if [[ -v CONTROLLER_PUBLIC_IP ]]; then
@@ -652,10 +668,10 @@ launch_controller()
     if [[ -v SANDBOX_STARTER_CONTROLLER_INIT_DONE ]]; then
         echo "--> Controller already initialized, skipping."
     else
-        controller_init $email $password $confirm_password
+        controller_init $email $password $recovery_email $controller_license
         if [ $? != 0 ]; then
         echo "--> Controller init failed, retrying."
-        controller_init $email $password $confirm_password
+        controller_init $email $password $recovery_email $controller_license
         if [ $? != 0 ]; then
             echo "--> Controller init failed, exiting."
             return 1
@@ -758,6 +774,23 @@ get_copilot_ip()
     export $COPILOT_PUBLIC_IP
     echo "$COPILOT_PUBLIC_IP"
 
+}
+
+check_ec2_role()
+{
+    FILE=./check_ec2_role.chk
+    if [ -f "$FILE" ]; then
+    echo "Skipping check_ec2_role"
+    else
+        touch $FILE
+        role_exists=$(aws iam get-role --role-name aviatrix-role-ec2)
+        if [ -z $role_exists ]; then
+        echo "Avx iam roles need to be created"
+        else
+        echo "Avx iam roles already exist"
+        sed -i "s#variable \"pre_existing_iam_roles\".*#variable \"pre_existing_iam_roles\" { default = true }#g"  /root/controller/variables.tf    
+        fi
+    fi
 }
 
 #destroy terraform here

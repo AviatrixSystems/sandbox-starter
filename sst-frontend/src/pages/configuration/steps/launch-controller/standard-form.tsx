@@ -5,6 +5,7 @@ import { Input, Button, Heading, Paragraph } from "components/base";
 import { FORM_CONFIGS } from "utils/constants";
 import { launchController } from "store/actions/configuration";
 import { ConfigurationState } from "types/store";
+import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
 
 interface ComponentProps {
   processedData: ConfigurationState["processedData"];
@@ -19,7 +20,6 @@ const {
 
 export default function StandardForm(props: ComponentProps) {
   const { processedData = {}, pageDisabled, dispatch, history } = props;
-
   const onSubmit = useCallback(
     (values) => {
       dispatch(
@@ -29,6 +29,8 @@ export default function StandardForm(props: ComponentProps) {
             recovery_email: values.email,
             password: values.password,
             confirm_password: values.confirm_password,
+            controller_license_type: values.controller_license_type,
+            controller_license: values.controller_license,
           },
           history
         )
@@ -42,12 +44,19 @@ export default function StandardForm(props: ComponentProps) {
       email: controller.email,
       password: controller.password,
       confirm_password: controller.confirm_password,
+      controller_license_type: controller.controller_license_type,
+      controller_license: controller.controller_license,
     }
     : initialValues;
-
   return (
     <Formik
-      initialValues={inputValues}
+      initialValues={{
+        email: "",
+        password: "",
+        confirm_password: "",
+        controller_license_type: "meteredplatinum",
+        controller_license: "",
+      }}
       onSubmit={onSubmit}
       validationSchema={validations}
       validate={(values) => {
@@ -65,23 +74,17 @@ export default function StandardForm(props: ComponentProps) {
       {({ values, handleChange, handleSubmit, errors }) => (
         <form onSubmit={handleSubmit} className="launch-controller-grid">
           <div className="text-block">
-            <Heading customClasses="--dark" text="Launch Controller and Copilot"></Heading>
+            <Heading
+              customClasses="--dark"
+              text="Launch Controller and Copilot"
+            ></Heading>
             <Paragraph
               customClasses="--light"
               text={
                 <span>
                   Enter email for controller password recovery and for Aviatrix
                   support to reach out in case of issues (the email will be
-                  shared with Aviatrix) <br /> Perform the pre-requisites at{" "}
-                  <a
-                    target="blank"
-                    href="https://aws.amazon.com/marketplace/pp/B08NTSDHKG"
-                  >
-                    https://aws.amazon.com/marketplace/pp/B08NTSDHKG
-                  </a>{" "}
-                  and subscribe to the Aviatrix platform. Click on "Continue to
-                  subscribe", and accept the terms. Do NOT click on "Continue to
-                  Configuration".
+                  shared with Aviatrix)
                 </span>
               }
             ></Paragraph>
@@ -124,7 +127,104 @@ export default function StandardForm(props: ComponentProps) {
             helperText={errors.confirm_password}
             disabled={pageDisabled}
           />
-
+          <FormControl variant="outlined" size="medium" style={{ width: 360 }}>
+            <InputLabel
+              style={{
+                fontSize: 14,
+              }}
+              variant="outlined"
+              htmlFor="controller_license_type"
+            >
+              Controller License Type
+            </InputLabel>
+            <Select
+              labelId="controller_license_type"
+              name="controller_license_type"
+              value={values.controller_license_type}
+              onChange={handleChange}
+              label="Controller License Type"
+              variant="outlined"
+              style={{
+                color: "black",
+                fontSize: 14,
+              }}
+              disabled={pageDisabled}
+            >
+              <MenuItem value="meteredplatinum">Metered Platinum</MenuItem>
+              <MenuItem value="byol">BYOL</MenuItem>
+            </Select>
+          </FormControl>
+          {(() => {
+            if (values.controller_license_type === "byol") {
+              return (
+                <>
+                  <Input
+                    value={values.controller_license}
+                    name="controller_license"
+                    label="Controller License"
+                    variant="outlined"
+                    fullWidth={false}
+                    customClasses="--small --blue"
+                    onChange={handleChange}
+                    error={Boolean(errors.controller_license)}
+                    helperText={errors.controller_license}
+                    disabled={pageDisabled}
+                  />
+                  <Paragraph
+                    customClasses="--light"
+                    text={
+                      <span>
+                        Before clicking 'Continue' below, subscribe to both{" "}
+                        <a
+                          target="blank"
+                          href="https://aws.amazon.com/marketplace/pp/prodview-nsys2ingy6m3w"
+                        >
+                          Aviatrix Secure Networking Platform - BYOL
+                        </a>{" "}
+                        and{" "}
+                        <a
+                          target="blank"
+                          href="https://aws.amazon.com/marketplace/pp/prodview-hr74smekrfqiu"
+                        >
+                          Aviatrix CoPilot
+                        </a>{" "}
+                        in the AWS Marketplace. Click on "Continue to subscribe",
+                        and accept the terms. Do NOT click on "Continue to
+                        Configuration".
+                      </span>
+                    }
+                  ></Paragraph>
+                </>
+              );
+            } else {
+              return (
+                <Paragraph
+                  customClasses="--light"
+                  text={
+                    <span>
+                      Before clicking 'Continue' below, subscribe to both{" "}
+                      <a
+                        target="blank"
+                        href="https://aws.amazon.com/marketplace/pp/B08NTSDHKG"
+                      >
+                        Aviatrix Secure Networking Platform Metered
+                      </a>{" "}
+                      and{" "}
+                      <a
+                        target="blank"
+                        href="https://aws.amazon.com/marketplace/pp/prodview-hr74smekrfqiu"
+                      >
+                        Aviatrix CoPilot
+                      </a>{" "}
+                      in the AWS Marketplace. Click on "Continue to subscribe",
+                      and accept the terms. Do NOT click on "Continue to
+                      Configuration".
+                    </span>
+                  }
+                ></Paragraph>
+              );
+            }
+          })()}
           <span>
             <Button
               disabled={pageDisabled}

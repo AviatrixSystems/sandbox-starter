@@ -1,6 +1,7 @@
 """API views"""
 import json
 from multiprocessing import Process
+from sys import stdout
 
 import hcl
 from flask import request
@@ -42,7 +43,6 @@ class AwsConfiguration(Resource):  # pylint: disable=too-few-public-methods
     def __init__(self):
         """getting and assigning data from api"""
         self.data = json.loads(request.data.decode('utf-8'))
-
     def post(self):
         """post call data  set in .aws file"""
         key_id = self.data.get("key_id", None)
@@ -243,7 +243,7 @@ class GetStateStatus(Resource):  # pylint: disable=too-few-public-methods
         return {"message": "Resource Data", "data": self.data}, 200
 
 
-class GetStep2Variables(Resource):
+class GetStep2Variables(Resource): #reading from variables.tf advance mode
     """get step2 variables data"""
 
     def get(self):
@@ -256,7 +256,7 @@ class GetStep2Variables(Resource):
             'az': controler_vars['variable']['az']['default'],
             'vpc_cidr': controler_vars['variable']['vpc_cidr']['default'],
             'vpc_subnet': controler_vars['variable']['vpc_subnet']['default'],
-            'controller_license': controler_vars['variable']['controller_license']['default'],
+            'controller_license_type': controler_vars['variable']['controller_license_type']['default'],
         }
         return {"message": "State 2 data ", "data": data}, 200
 

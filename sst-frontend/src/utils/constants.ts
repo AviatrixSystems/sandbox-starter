@@ -3,11 +3,11 @@ import * as yup from "yup";
 
 export const SEC_15 = 15000;
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?])[A-Za-z\d@!%*#?]{8,}$/;
-const ipRegex = /([1-9]|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])(\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])){3}\/\d+/;
+const passwordRegex =
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?])[A-Za-z\d@!%*#?]{8,}$/;
+const ipRegex =
+  /([1-9]|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])(\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])){3}\/\d+/;
 const ipInvalidMessage = "Need with IP with subnet mask";
-const licenseRegex = /(meteredplatinum|BYOL)/;
-const licenseInvalidMessage = "Choose a controller license type: meteredplatinum or BYOL. Do not change this value unless you already have a license key.";
 
 export const ROUTES = {
   configuration: "/configuration",
@@ -36,6 +36,8 @@ export const FORM_CONFIGS = {
       email: "",
       password: "",
       confirm_password: "",
+      controller_license_type: "",
+      controller_license: "",
     },
     initialValuesAdvance: {
       email: "",
@@ -45,6 +47,7 @@ export const FORM_CONFIGS = {
       az: "",
       vpc_cidr: "",
       vpc_subnet: "",
+      controller_license_type: "",
       controller_license: "",
     },
     validations: yup.object({
@@ -59,7 +62,13 @@ export const FORM_CONFIGS = {
           passwordRegex,
           "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case (@!%*#?) Character"
         ),
+      controller_license_type: yup.string().oneOf(["meteredplatinum", "byol"]),
       confirm_password: yup.string().required("Required"),
+      controller_license: yup.string().when("controller_license_type", {
+        is: (val) => val === "byol",
+        then: yup.string().required("Required"),
+        otherwise: yup.string().notRequired(),
+      }),
     }),
     validationsAdvance: yup.object({
       email: yup
@@ -73,9 +82,11 @@ export const FORM_CONFIGS = {
           passwordRegex,
           "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case (@!%*#?) Character"
         ),
+
       confirm_password: yup.string().required("Required"),
       region: yup.string().required("Required"),
       az: yup.string().required("Required"),
+      controller_license_type: yup.string().oneOf(["meteredplatinum", "byol"]),
       vpc_cidr: yup
         .string()
         .required("Required")
@@ -84,10 +95,11 @@ export const FORM_CONFIGS = {
         .string()
         .required("Required")
         .matches(ipRegex, ipInvalidMessage),
-      controller_license: yup
-        .string()
-        .required("Required")
-        .matches(licenseRegex, licenseInvalidMessage),
+      controller_license: yup.string().when("controller_license_type", {
+        is: (val) => val === "byol",
+        then: yup.string().required("Required"),
+        otherwise: yup.string().notRequired(),
+      }),
     }),
   },
   launch_transit_aws: {

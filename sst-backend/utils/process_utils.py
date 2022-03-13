@@ -1,5 +1,6 @@
 """proccess utils for changing file data"""
 import subprocess
+import sys
 
 
 def proccess_file(command):
@@ -28,13 +29,20 @@ def controller_file_change(data):
     az = data.get('az')
     vpc_cidr = data.get('vpc_cidr')
     vpc_subnet = data.get('vpc_subnet')
-    controller_license = data.get('controller_license')
+    controller_license_type = data.get('controller_license_type')
+    if not controller_license_type:
+        controller_license_type = "meteredplatinum"
+    if region and az and vpc_cidr and vpc_subnet and controller_license_type:
 
-    command = ['bash', '-c', '. /root/sandbox_starter_web.sh;'
-                             ' controller_file_change "' + region + '" "'
-               + az + '" "' + vpc_cidr + '" "' + vpc_subnet + '" "' + controller_license + '"']
+        command = ['bash', '-c', '. /root/sandbox_starter_web.sh;'
+                                    ' controller_file_change "' + region + '" "'
+                    + az + '" "' + vpc_cidr + '" "' + vpc_subnet + '" "' + controller_license_type + '"']
+    else:        
+        command = ['bash', '-c', '. /root/sandbox_starter_web.sh;'
+                                ' controller_file_change_std "' + controller_license_type + '"']
 
     proccess_file(command)
+
 
 
 def mcna_file_change_aws(data):

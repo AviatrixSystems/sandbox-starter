@@ -1,4 +1,4 @@
-VERSION ?= 1.1.2
+VERSION ?= 1.1.3
 
 build:
 	sed -i'' -e 's+version = ".*"+version = "${VERSION}"+g' sst-frontend/src/components/app-bar/index.tsx
@@ -19,13 +19,24 @@ run:
 
 run-latest:
 	docker volume create TF
-	docker run -v TF:/root -p 5000:5000 -d aviatrix/sandbox-starter:latest
+	docker run -v TF:/root -p 5001:5000 -d aviatrix/sandbox-starter:latest
 
 run-byol:
 	docker volume create TF
-	docker run -v TF:/root -p 5000:5000 -d aviatrix/sandbox-starter:${VERSION}
+	docker run -v TF:/root -p 5001:5000 -d aviatrix/sandbox-starter:${VERSION}
 	docker exec $$(docker ps -aqf "ancestor=aviatrix/sandbox-starter") sed -i 's/"meteredplatinum"/"BYOL"/g' /root/controller/aviatrix-controller-build/variables.tf
 
 release:
 	docker tag aviatrix/sandbox-starter:${VERSION} aviatrix/sandbox-starter:latest
 	docker push aviatrix/sandbox-starter:latest
+
+run-m1:
+	docker volume create TF
+	docker run --platform linux/amd64 -v TF:/root -p 5001:5000 -d aviatrix/sandbox-starter:${VERSION}
+
+build-m1:
+	sed -i'' -e 's+version = ".*"+version = "${VERSION}"+g' sst-frontend/src/components/app-bar/index.tsx
+	cd sst-frontend; yarn install
+	cd sst-frontend; yarn build
+	cd sst-frontend; cp -r build ../sst-backend/frontend
+	docker build --platform linux/amd64 --file=Dockerfile --no-cache --tag=aviatrix/sandbox-starter:${VERSION} .
