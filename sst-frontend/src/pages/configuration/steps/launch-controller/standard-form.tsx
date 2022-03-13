@@ -41,12 +41,12 @@ export default function StandardForm(props: ComponentProps) {
   const { controller } = processedData;
   const inputValues: typeof initialValues = controller
     ? {
-        email: controller.email,
-        password: controller.password,
-        confirm_password: controller.confirm_password,
-        controller_license_type: controller.controller_license_type,
-        controller_license: controller.controller_license,
-      }
+      email: controller.email,
+      password: controller.password,
+      confirm_password: controller.confirm_password,
+      controller_license_type: controller.controller_license_type,
+      controller_license: controller.controller_license,
+    }
     : initialValues;
   return (
     <Formik
@@ -174,14 +174,21 @@ export default function StandardForm(props: ComponentProps) {
                     customClasses="--light"
                     text={
                       <span>
-                        Subscribe to the{" "}
+                        Before clicking 'Continue' below, subscribe to both{" "}
                         <a
                           target="blank"
                           href="https://aws.amazon.com/marketplace/pp/prodview-nsys2ingy6m3w"
                         >
-                          Aviatrix BYOL Platform
+                          Aviatrix Secure Networking Platform - BYOL
                         </a>{" "}
-                        on AWS Marketplace. Click on "Continue to subscribe",
+                        and{" "}
+                        <a
+                          target="blank"
+                          href="https://aws.amazon.com/marketplace/pp/prodview-hr74smekrfqiu"
+                        >
+                          Aviatrix CoPilot
+                        </a>{" "}
+                        in the AWS Marketplace. Click on "Continue to subscribe",
                         and accept the terms. Do NOT click on "Continue to
                         Configuration".
                       </span>
@@ -195,15 +202,22 @@ export default function StandardForm(props: ComponentProps) {
                   customClasses="--light"
                   text={
                     <span>
-                      Subscribe to the{" "}
+                      Before clicking 'Continue' below, subscribe to both{" "}
                       <a
                         target="blank"
                         href="https://aws.amazon.com/marketplace/pp/B08NTSDHKG"
                       >
-                        Aviatrix Metered Platform
+                        Aviatrix Secure Networking Platform Metered
                       </a>{" "}
-                      on AWS Marketplace. Click on "Continue to subscribe", and
-                      accept the terms. Do NOT click on "Continue to
+                      and{" "}
+                      <a
+                        target="blank"
+                        href="https://aws.amazon.com/marketplace/pp/prodview-hr74smekrfqiu"
+                      >
+                        Aviatrix CoPilot
+                      </a>{" "}
+                      in the AWS Marketplace. Click on "Continue to subscribe",
+                      and accept the terms. Do NOT click on "Continue to
                       Configuration".
                     </span>
                   }

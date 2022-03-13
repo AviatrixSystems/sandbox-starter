@@ -46,25 +46,25 @@ export default function AdvanceForm(props: ComponentProps) {
   const { controller } = processedData;
   const inputValues: typeof initialValuesAdvance = controller
     ? {
-        email: controller.email,
-        password: controller.password,
-        confirm_password: controller.confirm_password,
-        az: step2_variables?.az || "",
-        region: step2_variables?.region || "",
-        vpc_cidr: step2_variables?.vpc_cidr || "",
-        vpc_subnet: step2_variables?.vpc_subnet || "",
-        controller_license_type: step2_variables?.controller_license_type || "",
-        controller_license: step2_variables?.controller_license || "",
-      }
+      email: controller.email,
+      password: controller.password,
+      confirm_password: controller.confirm_password,
+      az: step2_variables?.az || "",
+      region: step2_variables?.region || "",
+      vpc_cidr: step2_variables?.vpc_cidr || "",
+      vpc_subnet: step2_variables?.vpc_subnet || "",
+      controller_license_type: step2_variables?.controller_license_type || "",
+      controller_license: step2_variables?.controller_license || "",
+    }
     : {
-        ...initialValuesAdvance,
-        az: step2_variables?.az || "",
-        region: step2_variables?.region || "",
-        vpc_cidr: step2_variables?.vpc_cidr || "",
-        vpc_subnet: step2_variables?.vpc_subnet || "",
-        controller_license_type: step2_variables?.controller_license_type || "",
-        controller_license: step2_variables?.controller_license || "",
-      };
+      ...initialValuesAdvance,
+      az: step2_variables?.az || "",
+      region: step2_variables?.region || "",
+      vpc_cidr: step2_variables?.vpc_cidr || "",
+      vpc_subnet: step2_variables?.vpc_subnet || "",
+      controller_license_type: step2_variables?.controller_license_type || "",
+      controller_license: step2_variables?.controller_license || "",
+    };
 
   useEffect(() => {
     dispatch(sendVariableCall("step2_variables", history));
@@ -260,14 +260,21 @@ export default function AdvanceForm(props: ComponentProps) {
                       customClasses="--light"
                       text={
                         <span>
-                          Subscribe to the{" "}
+                          Before clicking 'Continue' below, subscribe to both{" "}
                           <a
                             target="blank"
                             href="https://aws.amazon.com/marketplace/pp/prodview-nsys2ingy6m3w"
                           >
-                            Aviatrix BYOL Platform
+                            Aviatrix Secure Networking Platform - BYOL
                           </a>{" "}
-                          on AWS Marketplace. Click on "Continue to subscribe",
+                          and{" "}
+                          <a
+                            target="blank"
+                            href="https://aws.amazon.com/marketplace/pp/prodview-hr74smekrfqiu"
+                          >
+                            Aviatrix CoPilot
+                          </a>{" "}
+                          in the AWS Marketplace. Click on "Continue to subscribe",
                           and accept the terms. Do NOT click on "Continue to
                           Configuration".
                         </span>
@@ -281,14 +288,21 @@ export default function AdvanceForm(props: ComponentProps) {
                     customClasses="--light"
                     text={
                       <span>
-                        Subscribe to the{" "}
+                        Before clicking 'Continue' below, subscribe to both{" "}
                         <a
                           target="blank"
                           href="https://aws.amazon.com/marketplace/pp/B08NTSDHKG"
                         >
-                          Aviatrix Metered Platform
+                          Aviatrix Secure Networking Platform Metered
                         </a>{" "}
-                        on AWS Marketplace. Click on "Continue to subscribe",
+                        and{" "}
+                        <a
+                          target="blank"
+                          href="https://aws.amazon.com/marketplace/pp/prodview-hr74smekrfqiu"
+                        >
+                          Aviatrix CoPilot
+                        </a>{" "}
+                        in the AWS Marketplace. Click on "Continue to subscribe",
                         and accept the terms. Do NOT click on "Continue to
                         Configuration".
                       </span>

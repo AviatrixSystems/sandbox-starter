@@ -6,3 +6,4 @@ variable "vpc_cidr" { default = "10.255.0.0/20" }
 variable "vpc_subnet" { default = "10.255.0.0/28" }
 
 variable "controller_license_type" { default = "meteredplatinum" }
+variable "pre_existing_iam_roles" { default = false }

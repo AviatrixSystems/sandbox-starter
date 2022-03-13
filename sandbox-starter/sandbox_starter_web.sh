@@ -407,6 +407,11 @@ controller_launch()
     fi
 
     read -n 1 -r -s -p $'--> To abort, close the window or press Ctrl-C. To continue, press any key.\n'
+
+    # Check if the Avx ec2 role exists
+    check_ec2_role
+
+    # Launch Controller/Copilot
     terraform init
     terraform apply -auto-approve
 
@@ -769,6 +774,23 @@ get_copilot_ip()
     export $COPILOT_PUBLIC_IP
     echo "$COPILOT_PUBLIC_IP"
 
+}
+
+check_ec2_role()
+{
+    FILE=./check_ec2_role.chk
+    if [ -f "$FILE" ]; then
+    echo "Skipping check_ec2_role"
+    else
+        touch $FILE
+        role_exists=$(aws iam get-role --role-name aviatrix-role-ec2)
+        if [ -z $role_exists ]; then
+        echo "Avx iam roles need to be created"
+        else
+        echo "Avx iam roles already exist"
+        sed -i "s#variable \"pre_existing_iam_roles\".*#variable \"pre_existing_iam_roles\" { default = true }#g"  /root/controller/variables.tf    
+        fi
+    fi
 }
 
 #destroy terraform here

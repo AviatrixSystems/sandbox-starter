@@ -55,13 +55,8 @@ resource "aws_key_pair" "avtx_ctrl_key" {
 
 
 #### IAM Role
-# check if role exists
-data "external" "aviatrix_role_app" {
-  program = ["bash", "${path.root}/check_role.sh"]
-}
-
 module "avtx_iam_role" {
-  count  = data.external.aviatrix_role_app.result["role_exists"] == "aviatrix-role-ec2" ? 0 : 1
+  count  = var.pre_existing_iam_roles ? 0 : 1
   source = "./aviatrix-controller-iam-roles"
 }
 
