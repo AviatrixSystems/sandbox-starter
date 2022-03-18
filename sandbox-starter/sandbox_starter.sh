@@ -179,7 +179,7 @@ controller_init()
     if [ ! -z $KS_GOVCLOUD ]; then
 	cat /root/.eagle
     fi
-    echo -e "\n--> Controller init has completed. Controller is ready. Do not manually change the controller version while Sandbox Starter is running."
+    echo -e "\n--> Controller init has completed. Controller and CoPilot are now running. Please note that if you are going to manually upgrade the Controller, only Build release upgrades are supported. For example, manual upgrades from 6.6.x to 6.6.y are supported, but manual upgrades of Minor releases, such as from 6.6.x to 6.7.y are NOT supported."
 }
 
 mcna_aws_transit()

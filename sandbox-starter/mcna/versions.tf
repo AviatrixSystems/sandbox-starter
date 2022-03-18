@@ -3,9 +3,8 @@ terraform {
     aviatrix = {
       # Make sure to keep the version up to date with the controller version.
       # https://registry.terraform.io/providers/AviatrixSystems/aviatrix/latest/docs/guides/release-compatibility.
-      source = "aviatrixsystems/aviatrix"
-      # version = "= 2.21.0-6.6.ga"
-      version = "= 2.20.0"
+      source  = "aviatrixsystems/aviatrix"
+      version = "2.21.1-6.6.ga"
     }
     aws = {
       source  = "hashicorp/aws"
@@ -16,5 +15,5 @@ terraform {
       version = "~>2.63.0"
     }
   }
-  required_version = ">= 1.0.0"
+  required_version = ">= 1.1.7"
 }
