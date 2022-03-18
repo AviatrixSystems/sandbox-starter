@@ -1,6 +1,6 @@
 FROM alpine:3.13.5
 
-ENV TERRAFORM_VERSION=1.0.0
+ENV TERRAFORM_VERSION=1.1.7
 # Dependencies. #Terraform # Awscli # make directory
 RUN apk update && \
     apk add curl jq python3 py3-pip bash ca-certificates git openssl unzip wget openssh-keygen && \

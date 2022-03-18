@@ -97,8 +97,7 @@ def onboard_controller(ctrl_url, account_id, cid, email, password):
 
 # Upgrade Controller
     print("Upgrading controller. It can take several minutes")
-    upgrade = {'action': 'upgrade', 'CID': cid, 'version': '6.5'}
-    # upgrade = {'action': 'upgrade', 'CID': cid, 'version': '6.6'}
+    upgrade = {'action': 'upgrade', 'CID': cid, 'version': '6.6'}
     print("Upgrading to latest release")
     try:
         upgrade_latest = requests.request(
