@@ -799,6 +799,13 @@ delete_terraform()
     cd /root/
     . keys.sh # Load variables from file
 
+    # Reset Copilot license if one has been configured
+    cplt_auth=$(curl -c ./cookie.txt -X POST -H 'Content-Type: application/x-www-form-urlencoded' -d "controllerIp=$CONTROLLER_PUBLIC_IP&username=admin&password=$AVIATRIX_PASSWORD" https://$COPILOT_PUBLIC_IP/login --insecure)
+    get_cplt_license=$(curl -b ./cookie.txt -X GET https://$COPILOT_PUBLIC_IP/getlicenseinfo --insecure)
+    licenseId=$(echo $get_cplt_license | jq -r .licenseId)
+    customerId=$(echo $get_cplt_license | jq -r .customerId)
+    reset_cplt_license=$(curl -b ./cookie.txt -X POST -H 'Content-Type: application/x-www-form-urlencoded' -d "username=admin&password=$AVIATRIX_PASSWORD&customerId=$customerId&licenseId=$licenseId" https://$COPILOT_PUBLIC_IP/resetlicense --insecure)
+
     terraform init
     cd /root/mcna
     terraform destroy -auto-approve
