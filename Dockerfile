@@ -1,4 +1,4 @@
-FROM alpine:3.13.5
+FROM alpine:3.15.0
 
 ENV TERRAFORM_VERSION=1.1.7
 # Dependencies. #Terraform # Awscli # make directory
