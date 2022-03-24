@@ -1,6 +1,6 @@
 module "sst" {
   source       = "terraform-aviatrix-modules/aws-sandbox-starter/aviatrix"
-  version      = "1.0.0"
+  version      = "1.0.2"
   keypair_name = var.keypair
 }
 
