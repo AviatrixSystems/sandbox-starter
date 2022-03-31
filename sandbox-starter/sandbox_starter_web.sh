@@ -799,6 +799,10 @@ delete_terraform()
     cd /root/
     . keys.sh # Load variables from file
 
+    # Disable AWS account security to allow terraform to destroy the vpc
+    init_ctrl_auth=$(curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' -d "action=login&username=admin&password=$AVIATRIX_PASSWORD" https://$CONTROLLER_PUBLIC_IP/v1/api --insecure)
+    CID=$(echo $init_ctrl_auth | jq -r .CID)
+    disable_aws_sg=$(curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' -d "action=disable_controller_security_group_management&CID=$CID" https://$CONTROLLER_PUBLIC_IP/v1/api --insecure)
     # Reset Copilot license if one has been configured
     cplt_auth=$(curl -c ./cookie.txt -X POST -H 'Content-Type: application/x-www-form-urlencoded' -d "controllerIp=$CONTROLLER_PUBLIC_IP&username=admin&password=$AVIATRIX_PASSWORD" https://$COPILOT_PUBLIC_IP/login --insecure)
     get_cplt_license=$(curl -b ./cookie.txt -X GET https://$COPILOT_PUBLIC_IP/getlicenseinfo --insecure)
