@@ -1,5 +1,4 @@
-
-VERSION ?= 1.1.5
+VERSION ?= 1.1.6
 
 build:
 	sed -i'' -e 's+version = ".*"+version = "${VERSION}"+g' sst-frontend/src/components/app-bar/index.tsx
