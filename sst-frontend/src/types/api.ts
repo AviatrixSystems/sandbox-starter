@@ -28,8 +28,7 @@ export type SimpleMessageResponse = {
 
 export type DeleteConfigResponse = SimpleMessageResponse;
 
-export type AddAWSCredentialsResponse = SimpleMessageResponse;
-
+export type AddCloudACredentialsResponse = SimpleMessageResponse;
 export type GetStepResponse = {
   data: {
     status: "success" | "in-progress" | "failed";
@@ -38,9 +37,15 @@ export type GetStepResponse = {
     error: string[] | null;
     progress: string | null;
     processedData: {
-      awsConfigurations?: {
+      cloudACredentials?: {
+        cloud_selection: string;
         key_id: string;
         secret_key: string;
+        azure_application_id: string;
+        azure_application_key: string;
+        azure_subscription_id: string;
+        azure_directory_id: string;
+        gcp_credentials: string;
       };
       controller?: {
         confirm_password: string;
@@ -72,6 +77,7 @@ export type GetStepResponse = {
       publicSpokeVm2: string;
     };
     is_advance?: boolean;
+    cloudA?: string;
   };
   message: string;
 };

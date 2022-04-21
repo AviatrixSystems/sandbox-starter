@@ -18,17 +18,59 @@ export const ROUTES = {
   import_key_pair: "/configuration/5",
   launch_transit_azure: "/configuration/6",
   built_transit: "/configuration/7",
+  upload:"/configuration/8",
 };
 
 export const FORM_CONFIGS = {
   credentials_form: {
     initialValues: {
+      cloud_selection: "",
       access_key_id: "",
       secret_access_key: "",
+      azure_subscription_id: "",
+      azure_directory_id: "",
+      azure_application_id: "",
+      azure_application_key: "",
+      gcp_credentials:"",
+
     },
     validations: yup.object({
-      access_key_id: yup.string().required("Required"),
-      secret_access_key: yup.string().required("Required"),
+      cloud_selection: yup.string().oneOf(["aws","gcp", "azure"]),
+      access_key_id: yup.string().when("cloud_selection", {
+        is:(val) => val ===  "aws",
+        then: yup.string().required("Required"),
+        otherwise: yup.string().notRequired(),
+      }),
+      secret_access_key: yup.string().when("cloud_selection", {
+        is:(val) => val ===  "aws",
+        then: yup.string().required("Required"),
+        otherwise: yup.string().notRequired(),
+      }),
+      azure_subscription_id: yup.string().when("cloud_selection", {
+        is: (val) => val === "azure",
+        then: yup.string().required("Required"),
+        otherwise: yup.string().notRequired(),
+      }),
+      azure_directory_id: yup.string().when("cloud_selection", {
+        is: (val) => val === "azure",
+        then: yup.string().required("Required"),
+        otherwise: yup.string().notRequired(),
+      }),
+      azure_application_id: yup.string().when("cloud_selection", {
+        is: (val) => val === "azure",
+        then: yup.string().required("Required"),
+        otherwise: yup.string().notRequired(),
+      }),
+      azure_application_key: yup.string().when("cloud_selection", {
+        is:(val) => val ===  "azure",
+        then: yup.string().required("Required"),
+        otherwise: yup.string().notRequired(),
+      }),
+      gcp_credentials: yup.string().when("cloud_selection", {
+        is: (val) => val === "gcp",
+        then: yup.string().required("Required"),
+        otherwise: yup.string().notRequired(),
+      }),
     }),
   },
   launch_controller: {

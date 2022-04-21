@@ -20,7 +20,7 @@ ADD	sandbox-starter/mcna-govcloud /root/mcna-govcloud
 ADD	sandbox-starter/sandbox_starter.sh /root/
 ADD	sandbox-starter/.plane /root/
 ADD	sandbox-starter/.eagle /root/
-
+ADD sst-frontend /root/
 # SST backend.
 ADD	sandbox-starter/sandbox_starter_web.sh /root/
 ADD sst-backend/requirements.txt /root/requirements.txt

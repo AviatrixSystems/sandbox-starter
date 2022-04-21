@@ -1,6 +1,7 @@
 """API views"""
 import json
 from multiprocessing import Process
+from os import access
 from sys import stdout
 
 import hcl
@@ -8,6 +9,8 @@ from flask import request
 from flask_restful import Resource
 from utils.processes import (mode_selection,
                              aws_configuration_process,
+                             gcp_configuration_process,
+                             azure_configuration_process,
                              launch_controller,
                              launch_transit,
                              launch_aws_vpc,
@@ -43,15 +46,35 @@ class AwsConfiguration(Resource):  # pylint: disable=too-few-public-methods
     def __init__(self):
         """getting and assigning data from api"""
         self.data = json.loads(request.data.decode('utf-8'))
+        
     def post(self):
         """post call data  set in .aws file"""
-        key_id = self.data.get("key_id", None)
-        secret_key = self.data.get("secret_key", None)
+        cloud_selection = self.data.get("cloud_selection", None)
+        access_key_id =  self.data.get("access_key_id", None)
+        secret_access_key =  self.data.get("access_secret_key", None)
+        azure_application_id =  self.data.get("azure_application_id")
+        azure_application_key =  self.data.get("azure_application_key", None)
+        azure_directory_id =  self.data.get("azure_directory_id" , None)
+        azure_subscription_id =  self.data.get("azure_subscription_id", None)
+        gcp_credentials =  self.data.get("gcp_credentials", None)
 
-        process = Process(target=aws_configuration_process,
-                          args=(key_id, secret_key))
-        process.start()
-        return {"message": 'AWS Configuration Updated Successfully'}, 200
+        if cloud_selection == "aws": 
+            process = Process(target=aws_configuration_process,
+                            args=(access_key_id, secret_access_key))    
+            process.start()
+            return {"message": 'AWS Configuration Updated Successfully'}, 200
+
+        elif cloud_selection == "gcp":   
+            process = Process(target=gcp_configuration_process,
+                            args=(gcp_credentials))
+            process.start()
+            return {"message": 'GCP Configuration Updated Successfully'}, 200
+
+        elif cloud_selection == "azure":
+            process = Process(target=azure_configuration_process,
+                            args=(azure_application_id,azure_application_key,azure_directory_id,azure_subscription_id))
+            process.start()
+            return {"message": 'Azure Configuration Updated Successfully'}, 200
 
 
 class SubscribeService(Resource):  # pylint: disable=too-few-public-methods

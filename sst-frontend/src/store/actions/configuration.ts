@@ -1,7 +1,8 @@
+import CloudACredentials from "pages/configuration/steps/credentials";
 import { Dispatch } from "redux";
 import { AppState } from "store";
 import {
-  AddAWSCredentialsResponse,
+  AddCloudACredentialsResponse,
   ControllerPayload,
   DeleteConfigResponse,
   GetStepResponse,
@@ -220,6 +221,7 @@ export function initialization(history: any) {
             isFirstTime: false,
             ips: data.ips,
             is_advance: data.is_advance,
+            cloudA: data.processedData.cloudACredentials?.cloud_selection,
           };
           if (data.status === "in-progress") {
             history.push(getRoute(`${ROUTES.configuration}/${step}`));
@@ -256,16 +258,22 @@ export function initialization(history: any) {
   };
 }
 
-export function addAWSCredentials(
+export function addCloudACredentials(
   data: {
-    key_id: string;
-    secret_key: string;
+    cloud_selection: string;
+    key_id: string|undefined;
+    secret_key: string|undefined;
+    azure_subscription_id: string|undefined;
+    azure_directory_id: string|undefined;
+    azure_application_id: string|undefined;
+    azure_application_key: string|undefined;
+    gcp_credentials: string|undefined;
   },
   history: any
 ) {
   return (dispatch: any) => {
     dispatch(setActionPending(1));
-    getApiResponse<AddAWSCredentialsResponse>({
+    getApiResponse<AddCloudACredentialsResponse>({
       urlName: "add_credentials",
       data,
     })

@@ -73,7 +73,7 @@ export default function Configuration() {
             )}
             <Switch>
               <Route exact path={path}>
-                <Redirect to={`${path}/1`} />
+                <Redirect to={`${path}/6`} />
               </Route>
               <Route path={`${path}/:stepNo`} component={Steps} />
             </Switch>
