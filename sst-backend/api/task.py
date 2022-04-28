@@ -57,6 +57,10 @@ class AwsConfiguration(Resource):  # pylint: disable=too-few-public-methods
         azure_directory_id =  self.data.get("azure_directory_id" , None)
         azure_subscription_id =  self.data.get("azure_subscription_id", None)
         gcp_credentials =  self.data.get("gcp_credentials", None)
+        print(gcp_credentials)
+        print(type(gcp_credentials))
+        print(len(gcp_credentials))
+
 
         if cloud_selection == "aws": 
             process = Process(target=aws_configuration_process,
@@ -66,13 +70,13 @@ class AwsConfiguration(Resource):  # pylint: disable=too-few-public-methods
 
         elif cloud_selection == "gcp":   
             process = Process(target=gcp_configuration_process,
-                            args=(gcp_credentials))
+                            args=(gcp_credentials,))
             process.start()
             return {"message": 'GCP Configuration Updated Successfully'}, 200
 
         elif cloud_selection == "azure":
             process = Process(target=azure_configuration_process,
-                            args=(azure_application_id,azure_application_key,azure_directory_id,azure_subscription_id))
+                            args=(azure_application_id, azure_application_key, azure_directory_id, azure_subscription_id))
             process.start()
             return {"message": 'Azure Configuration Updated Successfully'}, 200
 

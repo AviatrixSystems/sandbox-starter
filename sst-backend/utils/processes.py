@@ -199,16 +199,18 @@ def gcp_configuration_process(gcp_credentials):
 
     with open('state.txt', 'w') as outfile:
         json.dump(data, outfile)
-    ### place holder
+    ### place holder    
+    key_id = "abcdfehjijklmn"
+    secret_key = "12345678910"
     command = ['bash', '-c', '. /root/sandbox_starter_web.sh;'
-                             ' gcp_configure ' + gcp_credentials]
+                             ' aws_configure ' + key_id + ' ' + secret_key]
 
-    stateName = 'awsConfiguration'
+    stateName = 'gcpConfiguration'
     state = 1
     proccess(command, state, stateName)
 
 
-def azure_configuration_process(gcp_credentials):
+def azure_configuration_process(azure_application_id, azure_application_key, azure_directory_id, azure_subscription_id):
     """Step one (gcp configuration settings)"""
 
     # getting previous state from file
@@ -220,16 +222,17 @@ def azure_configuration_process(gcp_credentials):
     data['processedData'] = {}
 
     # file should not save any keys
-    gcpConfiguration = {
+    azureConfiguration = {
     }
-    data['processedData'] = {'azureConfigurations': gcpConfiguration}
+    data['processedData'] = {'azureConfigurations': azureConfiguration}
 
     with open('state.txt', 'w') as outfile:
         json.dump(data, outfile)
     ### place holder
+    key_id = "abcdfehjijklmn"
+    secret_key = "12345678910"
     command = ['bash', '-c', '. /root/sandbox_starter_web.sh;'
-                             ' azure_configure ' + gcp_credentials]
-
+                             ' aws_configure ' + key_id + ' ' + secret_key]
     stateName = 'azureConfiguration'
     state = 1
     proccess(command, state, stateName)

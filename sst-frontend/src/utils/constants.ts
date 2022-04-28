@@ -189,10 +189,14 @@ export const FORM_CONFIGS = {
   },
   launch_transit_azure: {
     initialValues: {
+      cloudB: "",
       azure_subscription_id: "",
       azure_directory_id: "",
       azure_application_id: "",
       azure_application_key: "",
+      access_key:"",
+      secret_access_key: "",
+      gcp_credentials:""
     },
     initialValuesAdvance: {
       azure_subscription_id: "",
@@ -211,10 +215,42 @@ export const FORM_CONFIGS = {
       azure_spoke2_gateways_name: "",
     },
     validations: yup.object({
-      azure_subscription_id: yup.string().required("Required"),
-      azure_directory_id: yup.string().required("Required"),
-      azure_application_id: yup.string().required("Required"),
-      azure_application_key: yup.string().required("Required"),
+      cloudB: yup.string().oneOf(["aws","gcp", "azure"]),
+      access_key: yup.string().when("cloudB", {
+        is:(val) => val ===  "aws",
+        then: yup.string().required("Required"),
+        otherwise: yup.string().notRequired(),
+      }),
+      secret_access_key: yup.string().when("cloudB", {
+        is:(val) => val ===  "aws",
+        then: yup.string().required("Required"),
+        otherwise: yup.string().notRequired(),
+      }),
+      azure_subscription_id: yup.string().when("cloudB", {
+        is: (val) => val === "azure",
+        then: yup.string().required("Required"),
+        otherwise: yup.string().notRequired(),
+      }),
+      azure_directory_id: yup.string().when("cloudB", {
+        is: (val) => val === "azure",
+        then: yup.string().required("Required"),
+        otherwise: yup.string().notRequired(),
+      }),
+      azure_application_id: yup.string().when("cloudB", {
+        is: (val) => val === "azure",
+        then: yup.string().required("Required"),
+        otherwise: yup.string().notRequired(),
+      }),
+      azure_application_key: yup.string().when("cloudB", {
+        is:(val) => val ===  "azure",
+        then: yup.string().required("Required"),
+        otherwise: yup.string().notRequired(),
+      }),
+      gcp_credentials: yup.string().when("cloudB", {
+        is: (val) => val === "gcp",
+        then: yup.string().required("Required"),
+        otherwise: yup.string().notRequired(),
+      }),
     }),
     validationsAdvance: yup.object({
       azure_subscription_id: yup.string().required("Required"),
