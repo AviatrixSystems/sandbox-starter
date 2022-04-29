@@ -53,7 +53,7 @@ export default function StandardForm(props: ComponentProps) {
     CloudAAzure:false,
   })
   useEffect(()=>{
-    axios.get( "http://localhost:3003/get-statestatus")
+    axios.get( "/get-statestatus")
         .then(res=>{     
           let cloudAData=res.data.data["stateName"];
           if (cloudAData === "gcpConfiguration"){
@@ -105,10 +105,15 @@ export default function StandardForm(props: ComponentProps) {
           )}
           {transitResponse && DataGCP.CloudAGCP && (
                        <><div className="text-block">
+<Paragraph
+                customClasses="--dark"
+                text=
+                "Your Aviatrix infrastructure is launched in GCP."
+              ></Paragraph>
               <Heading
                 customClasses="--dark"
-                text="Your Aviatrix infrastructure is in GCP. \n 
-                Choose a cloud to launch Aviatrix Transit"
+                text=
+                "Choose a cloud to launch Aviatrix Transit"
               ></Heading>
             </div><RadioGroup
               row
@@ -136,12 +141,18 @@ export default function StandardForm(props: ComponentProps) {
                     height="85" />} />
               </RadioGroup></>
                     )}
+
                     {transitResponse && DataAWS.CloudAAWS && (
                       <><div className="text-block">
+                            <Paragraph
+                customClasses="--dark"
+                text=
+                "Your Aviatrix infrastructure is launched in AWS."
+              ></Paragraph>
               <Heading
                 customClasses="--dark"
-                text="Your Aviatrix infrastructure is in AWS. \n
-                Choose a cloud to launch Aviatrix Transit"
+                text=
+                "Choose a cloud to launch Aviatrix Transit"
               ></Heading>
             </div><RadioGroup
               row
@@ -172,10 +183,13 @@ export default function StandardForm(props: ComponentProps) {
           )}
            {transitResponse && DataAzure.CloudAAzure && (
              <><div className="text-block">
+              <Paragraph
+                customClasses="--dark"
+                text="Your Aviatrix infrastructure is in Azure."
+              ></Paragraph>
               <Heading
                 customClasses="--dark"
-                text="Your Aviatrix infrastructure is in Azure. \n 
-                Choose a cloud to launch Aviatrix Transit"
+                text="Choose a cloud to launch Aviatrix Transit"
               ></Heading>
             </div><RadioGroup
               row
@@ -214,7 +228,8 @@ export default function StandardForm(props: ComponentProps) {
                             customClasses="--standard --blue"
                             onChange={handleChange}
                             helperText={errors.access_key}
-                            disabled={pageDisabled} /><Input
+                            disabled={pageDisabled} />
+                            <Input
                               value={values.secret_access_key}
                               name="secret_access_key"
                               label="Secret Access Key"
@@ -224,7 +239,17 @@ export default function StandardForm(props: ComponentProps) {
                               error={Boolean(errors.secret_access_key)}
                               helperText={errors.secret_access_key}
                               disabled={pageDisabled}
-                              type="password" /></>
+                              type="password" />
+                                            <span className="btn-submit">
+                <Button
+                  type="submit"
+                  variant="contained"
+                  customClasses=" --blue"
+                  disabled={pageDisabled}
+                >
+                  Continue
+                </Button>
+              </span></>
                     )}
                     {values.cloudB=== "azure" && (
                           <>
@@ -274,26 +299,44 @@ export default function StandardForm(props: ComponentProps) {
                             disabled={pageDisabled}
                             type="password"
                           />
+                                        <span className="btn-submit">
+                <Button
+                  type="submit"
+                  variant="contained"
+                  customClasses=" --blue"
+                  disabled={pageDisabled}
+                >
+                  Continue
+                </Button>
+              </span>
                         </>
                     )}
                     {values.cloudB === "gcp" && (
-                        <Input
-                        name="gcp_credentials"
-                        label="GCP Credentials"
-                        id="gcp_credentials"
-                      placeholder="Please copy and paste your GCP Credentials"
-                      multiline
-                      minRows={10}
-                      maxRows={20}
-                      value={values.gcp_credentials}
-                      variant="outlined"
-                      onChange={handleChange}
-                      InputLabelProps={{style: {fontSize: 15}}}
-                      inputProps={{style: {fontSize: 15}}} 
-                      disabled={pageDisabled}
-                      error={Boolean(errors.gcp_credentials)}
-                      helperText={errors.gcp_credentials}
-          />
+                        <><Input
+              name="gcp_credentials"
+              label="GCP Credentials"
+              id="gcp_credentials"
+              placeholder="Please copy and paste your GCP Credentials"
+              multiline
+              minRows={10}
+              maxRows={20}
+              value={values.gcp_credentials}
+              variant="outlined"
+              onChange={handleChange}
+              InputLabelProps={{ style: { fontSize: 15 } }}
+              inputProps={{ style: { fontSize: 15 } }}
+              disabled={pageDisabled}
+              error={Boolean(errors.gcp_credentials)}
+              helperText={errors.gcp_credentials} /><span className="btn-submit">
+                <Button
+                  type="submit"
+                  variant="contained"
+                  customClasses=" --blue"
+                  disabled={pageDisabled}
+                >
+                  Continue
+                </Button>
+              </span></>
                     )
                     } 
           </form>

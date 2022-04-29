@@ -241,7 +241,6 @@ export default function CloudACredentials() {
             )
           }
           })()}
-          {console.log(values)}
           <span>
             <Button
               type="submit"
