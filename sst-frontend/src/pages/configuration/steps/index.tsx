@@ -17,7 +17,7 @@ export default function Steps() {
     case "1":
       return <Credentials />;
     case "2":
-      return <LaunchTransitAzure />;
+      return <LaunchController />;
     case "3":
       return <LaunchTransitAWS />;
     case "4":
@@ -25,7 +25,7 @@ export default function Steps() {
     case "5":
       return <ImportKeyPair />;
     case "6":
-      return <LaunchController />;
+      return <LaunchTransitAzure />;
     case "7":
       return <BuiltTransit />;
     case "8":
