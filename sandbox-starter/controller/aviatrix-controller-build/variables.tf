@@ -44,7 +44,7 @@ variable "termination_protection" {
 variable "root_volume_size" {
   type        = number
   description = "Root volume disk size for controller"
-  default     = 32
+  default     = 64
 }
 
 variable "root_volume_type" {
