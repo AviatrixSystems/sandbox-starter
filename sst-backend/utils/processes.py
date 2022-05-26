@@ -180,6 +180,62 @@ def aws_configuration_process(key_id, secret_key):
     stateName = 'awsConfiguration'
     state = 1
     proccess(command, state, stateName)
+    
+def gcp_configuration_process(gcp_credentials):
+    """Step one (gcp configuration settings)"""
+
+    # getting previous state from file
+    status_json('gcpConfiguration', 'in-progress', 1)
+
+    with open('state.txt') as json_file:
+        data = json.load(json_file)
+
+    data['processedData'] = {}
+
+    # file should not save any keys
+    gcpConfiguration = {
+    }
+    data['processedData'] = {'gcpConfigurations': gcpConfiguration}
+
+    with open('state.txt', 'w') as outfile:
+        json.dump(data, outfile)
+    ### place holder    
+    key_id = "abcdfehjijklmn"
+    secret_key = "12345678910"
+    command = ['bash', '-c', '. /root/sandbox_starter_web.sh;'
+                             ' aws_configure ' + key_id + ' ' + secret_key]
+
+    stateName = 'gcpConfiguration'
+    state = 1
+    proccess(command, state, stateName)
+
+
+def azure_configuration_process(azure_application_id, azure_application_key, azure_directory_id, azure_subscription_id):
+    """Step one (gcp configuration settings)"""
+
+    # getting previous state from file
+    status_json('azureConfiguration', 'in-progress', 1)
+
+    with open('state.txt') as json_file:
+        data = json.load(json_file)
+
+    data['processedData'] = {}
+
+    # file should not save any keys
+    azureConfiguration = {
+    }
+    data['processedData'] = {'azureConfigurations': azureConfiguration}
+
+    with open('state.txt', 'w') as outfile:
+        json.dump(data, outfile)
+    ### place holder
+    key_id = "abcdfehjijklmn"
+    secret_key = "12345678910"
+    command = ['bash', '-c', '. /root/sandbox_starter_web.sh;'
+                             ' aws_configure ' + key_id + ' ' + secret_key]
+    stateName = 'azureConfiguration'
+    state = 1
+    proccess(command, state, stateName)
 
 
 def launch_controller(controller_data):
