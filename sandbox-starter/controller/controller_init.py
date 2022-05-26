@@ -55,7 +55,7 @@ def set_controller_password(ctrl_url, private_ip, cid, password, email):
 
 # Controller initialization
 
-def onboard_controller(ctrl_url, account_id, cid, email, password):
+def onboard_controller(ctrl_url, account_id, cid, email, password, version):
 
     # Set email:
 
@@ -99,7 +99,7 @@ def onboard_controller(ctrl_url, account_id, cid, email, password):
 
 # Upgrade Controller
     print("Upgrading controller. It can take several minutes", flush=True)
-    upgrade = {'action': 'upgrade', 'CID': cid, 'version': '6.6'}
+    upgrade = {'action': 'upgrade', 'CID': cid, 'version': version}
     print("Upgrading to latest release", flush=True)
     try:
         upgrade_latest = requests.request(
@@ -189,6 +189,7 @@ def main():
     email = os.environ['AVIATRIX_EMAIL']
     # password = getpass.getpass("Enter new password: ")
     password = os.environ['AVIATRIX_PASSWORD']
+    version = os.environ['CONTROLLER_VERSION']
     ctrl_url = 'https://'+str(public_ip)+str("/v1/api")
 
     try:
@@ -207,7 +208,7 @@ def main():
         sys.exit(1)
 
     onboard_controller(ctrl_url=ctrl_url,
-                       account_id=account_id, cid=cid, email=email, password=password)
+                       account_id=account_id, cid=cid, email=email, password=password, version=version)
 
     time.sleep(150)
 

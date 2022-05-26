@@ -29,6 +29,7 @@ export default function StandardForm(props: ComponentProps) {
             recovery_email: values.email,
             password: values.password,
             confirm_password: values.confirm_password,
+            controller_version: values.controller_version,
             controller_license_type: values.controller_license_type,
             controller_license: values.controller_license,
           },
@@ -44,6 +45,7 @@ export default function StandardForm(props: ComponentProps) {
       email: controller.email,
       password: controller.password,
       confirm_password: controller.confirm_password,
+      controller_version: controller.controller_version,
       controller_license_type: controller.controller_license_type,
       controller_license: controller.controller_license,
     }
@@ -54,6 +56,7 @@ export default function StandardForm(props: ComponentProps) {
         email: "",
         password: "",
         confirm_password: "",
+        controller_version: "6.6",
         controller_license_type: "meteredplatinum",
         controller_license: "",
       }}
@@ -127,6 +130,49 @@ export default function StandardForm(props: ComponentProps) {
             helperText={errors.confirm_password}
             disabled={pageDisabled}
           />
+          <FormControl variant="outlined" size="medium" style={{ width: 360 }}>
+            <InputLabel
+              style={{
+                fontSize: 14,
+              }}
+              variant="outlined"
+              htmlFor="controller_version"
+            >
+              Controller Version
+            </InputLabel>
+            <Select
+              labelId="controller_version"
+              name="controller_version"
+              value={values.controller_version}
+              onChange={handleChange}
+              label="Controller Version"
+              variant="outlined"
+              style={{
+                color: "black",
+                fontSize: 14,
+              }}
+              disabled={pageDisabled}
+            >
+              <MenuItem value="6.6">6.6</MenuItem>
+              <MenuItem value="6.7">6.7</MenuItem>
+            </Select>
+          </FormControl>
+          {(() => {
+            if (values.controller_version === "6.7") {
+              return (
+                <>
+                  <Paragraph
+                    customClasses="--light"
+                    text={
+                      <span>
+                        If using the SST as a prerequisite to ACE IaC, please select Controller Version 6.6
+                      </span>
+                    }
+                  ></Paragraph>
+                </>
+              );
+            }
+          })()}
           <FormControl variant="outlined" size="medium" style={{ width: 360 }}>
             <InputLabel
               style={{

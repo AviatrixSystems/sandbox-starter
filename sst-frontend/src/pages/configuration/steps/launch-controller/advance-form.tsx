@@ -53,6 +53,7 @@ export default function AdvanceForm(props: ComponentProps) {
       region: step2_variables?.region || "",
       vpc_cidr: step2_variables?.vpc_cidr || "",
       vpc_subnet: step2_variables?.vpc_subnet || "",
+      controller_version: step2_variables?.controller_version || "",
       controller_license_type: step2_variables?.controller_license_type || "",
       controller_license: step2_variables?.controller_license || "",
     }
@@ -62,6 +63,7 @@ export default function AdvanceForm(props: ComponentProps) {
       region: step2_variables?.region || "",
       vpc_cidr: step2_variables?.vpc_cidr || "",
       vpc_subnet: step2_variables?.vpc_subnet || "",
+      controller_version: step2_variables?.controller_version || "",
       controller_license_type: step2_variables?.controller_license_type || "",
       controller_license: step2_variables?.controller_license || "",
     };
@@ -76,6 +78,7 @@ export default function AdvanceForm(props: ComponentProps) {
         email: "",
         password: "",
         confirm_password: "",
+        controller_version: "6.6",
         controller_license_type: "meteredplatinum",
         controller_license: "",
         az: "us-east-1a",
@@ -209,6 +212,53 @@ export default function AdvanceForm(props: ComponentProps) {
               disabled={pageDisabled}
             />{" "}
             <Separator />
+            <FormControl
+              variant="outlined"
+              size="medium"
+              style={{ width: 360 }}
+            >
+              <InputLabel
+                variant="outlined"
+                style={{
+                  fontSize: 14,
+                }}
+                htmlFor="controller_version"
+              >
+                Controller Version
+              </InputLabel>
+              <Select
+                labelId="controller_version"
+                name="controller_version"
+                value={values.controller_version}
+                onChange={handleChange}
+                label="Controller Version"
+                variant="outlined"
+                style={{
+                  color: "black",
+                  fontSize: 14,
+                }}
+                disabled={pageDisabled}
+              >
+                <MenuItem value="6.6">6.6</MenuItem>
+                <MenuItem value="6.7">6.7</MenuItem>
+              </Select>
+            </FormControl>
+            {(() => {
+              if (values.controller_version === "6.7") {
+                return (
+                  <>
+                    <Paragraph
+                      customClasses="--light"
+                      text={
+                        <span>
+                          If using the SST as a prerequisite to ACE IaC, please select Controller Version 6.6
+                        </span>
+                      }
+                    ></Paragraph>
+                  </>
+                );
+              }
+            })()}
             <FormControl
               variant="outlined"
               size="medium"

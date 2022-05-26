@@ -19,20 +19,37 @@ controller_file_change(){
   local az=$2
   local vpc_cidr=$3
   local vpc_subnet=$4
-  local controller_license_type=$5
+  local controller_version=$5
+  local controller_license_type=$6
+  # controller_license_type has to be last as it may be empty in the case of metered
 
   sed -i "s/variable \"region\".*/variable \"region\" { default = \"$region\" }/g" /root/controller/variables.tf
   sed -i "s/variable \"az\".*/variable \"az\" { default = \"$az\" }/g" /root/controller/variables.tf
   sed -i "s#variable \"vpc_cidr\".*#variable \"vpc_cidr\" { default = \"$vpc_cidr\" }#g"  /root/controller/variables.tf
   sed -i "s#variable \"vpc_subnet\".*#variable \"vpc_subnet\" { default = \"$vpc_subnet\" }#g"  /root/controller/variables.tf
   sed -i "s#variable \"controller_license_type\".*#variable \"controller_license_type\" { default = \"$controller_license_type\" }#g"  /root/controller/variables.tf
-
+  if [ $controller_version = "6.6" ]; then
+  sed -i'' -e 's+version = "~> 2.22.0"+version = "~> 2.21.2"+g' /root/mcna/versions.tf
+  sed -i'' -e 's+version = "~> 2.22.0"+version = "~> 2.21.2"+g' /root/mcna-govcloud/versions.tf
+  else
+  sed -i'' -e 's+version = "~> 2.21.2"+version = "~> 2.22.0"+g' /root/mcna/versions.tf
+  sed -i'' -e 's+version = "~> 2.21.2"+version = "~> 2.22.0"+g' /root/mcna-govcloud/versions.tf
+  fi
 }
 controller_file_change_std(){
 
-  local controller_license_type=$1
+  local controller_version=$1
+  local controller_license_type=$2
+  # controller_license_type has to be last as it may be empty in the case of metered
 
   sed -i "s/variable \"controller_license_type\".*/variable \"controller_license_type\" { default = \"$controller_license_type\" }/g"  /root/controller/variables.tf
+  if [ $controller_version = "6.6" ]; then
+  sed -i'' -e 's+version = "~> 2.22.0"+version = "~> 2.21.2"+g' /root/mcna/versions.tf
+  sed -i'' -e 's+version = "~> 2.22.0"+version = "~> 2.21.2"+g' /root/mcna-govcloud/versions.tf
+  else
+  sed -i'' -e 's+version = "~> 2.21.2"+version = "~> 2.22.0"+g' /root/mcna/versions.tf
+  sed -i'' -e 's+version = "~> 2.21.2"+version = "~> 2.22.0"+g' /root/mcna-govcloud/versions.tf
+  fi
 }
 
 
@@ -463,7 +480,8 @@ controller_init()
     email=$1
     password=$2
     recovery_email=$3
-    controller_license=$4
+    controller_version=$4
+    controller_license=$5
 
     if [ -z $KS_GOVCLOUD ]; then
     echo 'Into govt'
@@ -497,6 +515,9 @@ controller_init()
     export CONTROLLER_LICENSE=$controller_license
     echo "export CONTROLLER_LICENSE='$controller_license'" >> $f 
     
+    export CONTROLLER_VERSION=$controller_version
+    echo "export CONTROLLER_VERSION='$controller_version'" >> $f 
+
     python3 controller_init.py
     if [ $? != 0 ]; then
 	echo "--> Controller init failed"
@@ -648,8 +669,9 @@ launch_controller()
     email=$1
     recovery_email=$2
     password=$3
-    controller_license=$4
-
+    controller_version=$4
+    controller_license=$5
+    # controller_license has to be last as it may be empty in the case of metered
 
     if [[ -v CONTROLLER_PUBLIC_IP ]]; then
         echo "--> Controller already launched, skipping."
@@ -668,10 +690,10 @@ launch_controller()
     if [[ -v SANDBOX_STARTER_CONTROLLER_INIT_DONE ]]; then
         echo "--> Controller already initialized, skipping."
     else
-        controller_init $email $password $recovery_email $controller_license
+        controller_init $email $password $recovery_email $controller_version $controller_license
         if [ $? != 0 ]; then
         echo "--> Controller init failed, retrying."
-        controller_init $email $password $recovery_email $controller_license
+        controller_init $email $password $recovery_email $controller_version $controller_license
         if [ $? != 0 ]; then
             echo "--> Controller init failed, exiting."
             return 1
@@ -680,7 +702,6 @@ launch_controller()
     fi
 
     return 0
-
 
 }
 

@@ -191,6 +191,7 @@ def launch_controller(controller_data):
     recovery_email = controller_data.get('recovery_email')
     password = controller_data.get('password')
     confirm_password = controller_data.get('confirm_password')
+    controller_version = controller_data.get('controller_version')
     controller_license_type = controller_data.get('controller_license_type')
     if not controller_license_type:
         controller_license_type = "meteredplatinum"
@@ -201,7 +202,8 @@ def launch_controller(controller_data):
     controller = {
         'email': email,
         'recovery_email': recovery_email,
-        'controller_license_type': controller_license_type
+        'controller_license_type': controller_license_type,
+        'controller_version': controller_version
     }
 
     data['processedData'].update({'controller': controller})
@@ -212,7 +214,7 @@ def launch_controller(controller_data):
     command = ['bash', '-c', '. /root/sandbox_starter_web.sh;'
                              ' launch_controller '
                + email + ' ' + recovery_email + ' '
-               + password + ' ' + controller_license]
+               + password + ' ' + controller_version + ' ' + controller_license]
     state = 2
     stateName = 'launchController'
     proccess(command, state, stateName)
