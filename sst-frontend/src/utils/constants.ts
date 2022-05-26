@@ -36,6 +36,7 @@ export const FORM_CONFIGS = {
       email: "",
       password: "",
       confirm_password: "",
+      controller_version: "",
       controller_license_type: "",
       controller_license: "",
     },
@@ -47,6 +48,7 @@ export const FORM_CONFIGS = {
       az: "",
       vpc_cidr: "",
       vpc_subnet: "",
+      controller_version: "",
       controller_license_type: "",
       controller_license: "",
     },
@@ -62,6 +64,7 @@ export const FORM_CONFIGS = {
           passwordRegex,
           "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case (@!%*#?) Character"
         ),
+      controller_version: yup.string().oneOf(["6.6", "6.7"]),
       controller_license_type: yup.string().oneOf(["meteredplatinum", "byol"]),
       confirm_password: yup.string().required("Required"),
       controller_license: yup.string().when("controller_license_type", {
@@ -86,6 +89,7 @@ export const FORM_CONFIGS = {
       confirm_password: yup.string().required("Required"),
       region: yup.string().required("Required"),
       az: yup.string().required("Required"),
+      controller_version: yup.string().oneOf(["6.6", "6.7"]),
       controller_license_type: yup.string().oneOf(["meteredplatinum", "byol"]),
       vpc_cidr: yup
         .string()
