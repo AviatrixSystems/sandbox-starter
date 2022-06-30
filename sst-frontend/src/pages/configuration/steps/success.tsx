@@ -6,7 +6,7 @@ import { AppState } from "store";
 import { copyToClipboard } from "utils";
 
 export default function Success() {
-  const { controllerIP = "", copilotIP = "", ips } = useSelector<
+  const { controllerIP = "", ips } = useSelector<
     AppState,
     AppState["configuration"]
   >((state) => state.configuration);

@@ -78,7 +78,7 @@ export default function AdvanceForm(props: ComponentProps) {
         email: "",
         password: "",
         confirm_password: "",
-        controller_version: "6.6",
+        controller_version: "6.7",
         controller_license_type: "meteredplatinum",
         controller_license: "",
         az: "us-east-1a",
@@ -105,7 +105,7 @@ export default function AdvanceForm(props: ComponentProps) {
           <div className="text-block">
             <Heading
               customClasses="--dark"
-              text="Launch Controller and Copilot"
+              text="Launch Controller"
             ></Heading>
             <Paragraph
               customClasses="--light"
@@ -251,7 +251,7 @@ export default function AdvanceForm(props: ComponentProps) {
                       customClasses="--light"
                       text={
                         <span>
-                          If using the SST as a prerequisite to ACE IaC, please select Controller Version 6.6
+                          If using the SST as a prerequisite to ACE IaC, please select Controller Version 6.7
                         </span>
                       }
                     ></Paragraph>

@@ -26,7 +26,3 @@ output "security_group_id" {
 output "name_prefix" {
   value = var.name_prefix
 }
-
-output "copilot_public_ip" {
-  value = aws_eip.aws_copilot_eip.public_ip
-}

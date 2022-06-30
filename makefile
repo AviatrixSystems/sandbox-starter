@@ -1,4 +1,4 @@
-VERSION ?= 1.2.0
+VERSION ?= 1.2.2
 
 build:
 	sed -i'' -e 's+version = ".*"+version = "${VERSION}"+g' sst-frontend/src/components/app-bar/index.tsx
@@ -20,11 +20,6 @@ run:
 run-latest:
 	docker volume create TF
 	docker run -v TF:/root -p 5001:5000 -d aviatrix/sandbox-starter:latest
-
-run-byol:
-	docker volume create TF
-	docker run -v TF:/root -p 5001:5000 -d aviatrix/sandbox-starter:${VERSION}
-	docker exec $$(docker ps -aqf "ancestor=aviatrix/sandbox-starter") sed -i 's/"meteredplatinum"/"BYOL"/g' /root/controller/aviatrix-controller-build/variables.tf
 
 release:
 	docker tag aviatrix/sandbox-starter:${VERSION} aviatrix/sandbox-starter:latest

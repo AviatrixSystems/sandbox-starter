@@ -15,7 +15,6 @@ export interface ConfigurationState
   responseStatus?: "success" | "failure";
   responseMessage?: string;
   controllerIP?: string;
-  copilotIP?: string;
   actionPending?: number;
   isFirstTime: boolean;
   step2_variables?: Step2Variables["data"];
@@ -55,7 +54,6 @@ export type Actions =
       | "step"
       | "isInProgress"
       | "controllerIP"
-      | "copilotIP"
       | "error"
       | "processedData"
       | "progress"

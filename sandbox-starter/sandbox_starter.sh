@@ -110,7 +110,6 @@ controller_launch()
     export CONTROLLER_PRIVATE_IP=$(terraform output -raw controller_private_ip)
     export CONTROLLER_PUBLIC_IP=$(terraform output -raw controller_public_ip)
     export AVIATRIX_CONTROLLER_IP=$CONTROLLER_PUBLIC_IP
-    export COPILOT_PUBLIC_IP=$(terraform output -raw copilot_public_ip)
 
     # Keep them in .bashrc in case the container gets restarted.
     f=/root/.sandbox_starter_restore
@@ -124,12 +123,10 @@ controller_launch()
     echo 'export CONTROLLER_PRIVATE_IP=$(terraform output -raw controller_private_ip)' >> $f
     echo 'export CONTROLLER_PUBLIC_IP=$(terraform output -raw controller_public_ip)' >> $f
     echo 'export AVIATRIX_CONTROLLER_IP=$CONTROLLER_PUBLIC_IP' >> $f
-    echo 'export COPILOT_PUBLIC_IP=$(terraform output -raw copilot_public_ip)' >> $f
 
     echo AWS_ACCOUNT: $AWS_ACCOUNT
     echo CONTROLLER_PRIVATE_IP: $CONTROLLER_PRIVATE_IP
     echo CONTROLLER_PUBLIC_IP: $CONTROLLER_PUBLIC_IP
-    echo COPILOT_PUBLIC_IP: $COPILOT_PUBLIC_IP
 
     record_controller_launch
 
@@ -179,7 +176,7 @@ controller_init()
     if [ ! -z $KS_GOVCLOUD ]; then
 	cat /root/.eagle
     fi
-    echo -e "\n--> Controller init has completed. Controller and CoPilot are now running. Please note that if you are going to manually upgrade the Controller, only Build release upgrades are supported. For example, manual upgrades from 6.6.x to 6.6.y are supported, but manual upgrades of Minor releases, such as from 6.6.x to 6.7.y are NOT supported."
+    echo -e "\n--> Controller init has completed. Controller is now running. Please note that if you are going to manually upgrade the Controller, only Build release upgrades are supported. For example, manual upgrades from 6.6.x to 6.6.y are supported, but manual upgrades of Minor releases, such as from 6.6.x to 6.7.y are NOT supported."
 }
 
 mcna_aws_transit()

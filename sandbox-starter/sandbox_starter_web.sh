@@ -272,12 +272,11 @@ writekeys_controller_launch() {
   local CONTROLLER_PRIVATE_IP=$2
   local CONTROLLER_PUBLIC_IP=$3
   local AVIATRIX_CONTROLLER_IP=$4
-  local COPILOT_PUBLIC_IP=$5
 
 #   echo "$AVIATRIX_CONTROLLER_IP"
 
   # Save variables to file
-  typeset -p AWS_ACCOUNT CONTROLLER_PRIVATE_IP CONTROLLER_PUBLIC_IP COPILOT_PUBLIC_IP AVIATRIX_CONTROLLER_IP >keys.sh
+  typeset -p AWS_ACCOUNT CONTROLLER_PRIVATE_IP CONTROLLER_PUBLIC_IP AVIATRIX_CONTROLLER_IP >keys.sh
 
 }
 
@@ -293,7 +292,7 @@ writekeys_controller_init() {
   local SANDBOX_STARTER_CONTROLLER_INIT_DONE=$4
 
   # Save variables to file
-  typeset -p  AWS_ACCOUNT CONTROLLER_PRIVATE_IP CONTROLLER_PUBLIC_IP COPILOT_PUBLIC_IP AVIATRIX_CONTROLLER_IP  AVIATRIX_EMAIL AVIATRIX_PASSWORD AVIATRIX_USERNAME SANDBOX_STARTER_CONTROLLER_INIT_DONE >keys.sh
+  typeset -p  AWS_ACCOUNT CONTROLLER_PRIVATE_IP CONTROLLER_PUBLIC_IP AVIATRIX_CONTROLLER_IP  AVIATRIX_EMAIL AVIATRIX_PASSWORD AVIATRIX_USERNAME SANDBOX_STARTER_CONTROLLER_INIT_DONE >keys.sh
 }
 
 #test for key.sh data
@@ -306,7 +305,6 @@ check_data_test() {
     printf 'CONTROLLER_PRIVATE_IP=%s\n' "$CONTROLLER_PRIVATE_IP"
     printf 'CONTROLLER_PUBLIC_IP=%s\n' "$CONTROLLER_PUBLIC_IP"
     printf 'AVIATRIX_CONTROLLER_IP=%s\n' "$AVIATRIX_CONTROLLER_IP"
-    printf 'COPILOT_PUBLIC_IP=%s\n' "$COPILOT_PUBLIC_IP"
 
     printf 'AVIATRIX_EMAIL=%s\n'  "$AVIATRIX_EMAIL"
     printf 'AVIATRIX_PASSWORD=%s\n'  "$AVIATRIX_PASSWORD"
@@ -428,7 +426,7 @@ controller_launch()
     # Check if the Avx ec2 role exists
     check_ec2_role
 
-    # Launch Controller/Copilot
+    # Launch Controller
     terraform init
     terraform apply -auto-approve
 
@@ -444,7 +442,6 @@ controller_launch()
     export CONTROLLER_PRIVATE_IP=$(terraform output -raw controller_private_ip)
     export CONTROLLER_PUBLIC_IP=$(terraform output -raw controller_public_ip)
     export AVIATRIX_CONTROLLER_IP=$CONTROLLER_PUBLIC_IP
-    export COPILOT_PUBLIC_IP=$(terraform output -raw copilot_public_ip)
 
     # Keep them in .bashrc in case the container gets restarted.
     f=/root/.sandbox_starter_restore
@@ -458,14 +455,12 @@ controller_launch()
     echo 'export CONTROLLER_PRIVATE_IP=$(terraform output -raw controller_private_ip)' >> $f
     echo 'export CONTROLLER_PUBLIC_IP=$(terraform output -raw controller_public_ip)' >> $f
     echo 'export AVIATRIX_CONTROLLER_IP=$CONTROLLER_PUBLIC_IP' >> $f
-    echo 'export COPILOT_PUBLIC_IP=$(terraform output -raw copilot_public_ip)' >> $f
-
+    
     echo AWS_ACCOUNT: $AWS_ACCOUNT
     echo CONTROLLER_PRIVATE_IP: $CONTROLLER_PRIVATE_IP
     echo CONTROLLER_PUBLIC_IP: $CONTROLLER_PUBLIC_IP
-    echo COPILOT_PUBLIC_IP: $COPILOT_PUBLIC_IP
 
-    writekeys_controller_launch $AWS_ACCOUNT $CONTROLLER_PRIVATE_IP $CONTROLLER_PUBLIC_IP  $AVIATRIX_CONTROLLER_IP $COPILOT_PUBLIC_IP
+    writekeys_controller_launch $AWS_ACCOUNT $CONTROLLER_PRIVATE_IP $CONTROLLER_PUBLIC_IP  $AVIATRIX_CONTROLLER_IP
 
     record_controller_launch $email_support
 
@@ -530,7 +525,7 @@ controller_init()
     if [ ! -z $KS_GOVCLOUD ]; then
 	cat /root/.eagle
     fi
-    echo -e "\n--> Controller init has completed. Controller and CoPilot are now running. Please note that if you are going to manually upgrade the Controller, only Build release upgrades are supported. For example, manual upgrades from 6.6.x to 6.6.y are supported, but manual upgrades of Minor releases, such as from 6.6.x to 6.7.y are NOT supported."
+    echo -e "\n--> Controller init has completed. Controller is now running. Please note that if you are going to manually upgrade the Controller, only Build release upgrades are supported. For example, manual upgrades from 6.6.x to 6.6.y are supported, but manual upgrades of Minor releases, such as from 6.6.x to 6.7.y are NOT supported."
 
     writekeys_controller_init  $AVIATRIX_EMAIL $AVIATRIX_PASSWORD $AVIATRIX_USERNAME $SANDBOX_STARTER_CONTROLLER_INIT_DONE
 }
@@ -787,16 +782,6 @@ get_public_ip()
 
 }
 
-get_copilot_ip()
-{
-    cd /root/
-        . keys.sh # Load variables from file
-
-    export $COPILOT_PUBLIC_IP
-    echo "$COPILOT_PUBLIC_IP"
-
-}
-
 check_ec2_role()
 {
     FILE=./check_ec2_role.chk
@@ -824,12 +809,6 @@ delete_terraform()
     init_ctrl_auth=$(curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' -d "action=login&username=admin&password=$AVIATRIX_PASSWORD" https://$CONTROLLER_PUBLIC_IP/v1/api --insecure)
     CID=$(echo $init_ctrl_auth | jq -r .CID)
     disable_aws_sg=$(curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' -d "action=disable_controller_security_group_management&CID=$CID" https://$CONTROLLER_PUBLIC_IP/v1/api --insecure)
-    # Reset Copilot license if one has been configured
-    cplt_auth=$(curl -c ./cookie.txt -X POST -H 'Content-Type: application/x-www-form-urlencoded' -d "controllerIp=$CONTROLLER_PUBLIC_IP&username=admin&password=$AVIATRIX_PASSWORD" https://$COPILOT_PUBLIC_IP/login --insecure)
-    get_cplt_license=$(curl -b ./cookie.txt -X GET https://$COPILOT_PUBLIC_IP/getlicenseinfo --insecure)
-    licenseId=$(echo $get_cplt_license | jq -r .licenseId)
-    customerId=$(echo $get_cplt_license | jq -r .customerId)
-    reset_cplt_license=$(curl -b ./cookie.txt -X POST -H 'Content-Type: application/x-www-form-urlencoded' -d "username=admin&password=$AVIATRIX_PASSWORD&customerId=$customerId&licenseId=$licenseId" https://$COPILOT_PUBLIC_IP/resetlicense --insecure)
 
     terraform init
     cd /root/mcna

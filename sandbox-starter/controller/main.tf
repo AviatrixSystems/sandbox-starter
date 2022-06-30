@@ -86,7 +86,3 @@ output "controller_private_ip" {
 output "controller_public_ip" {
   value = module.avtx_controller_instance.public_ip
 }
-
-output "copilot_public_ip" {
-  value = module.avtx_controller_instance.copilot_public_ip
-}

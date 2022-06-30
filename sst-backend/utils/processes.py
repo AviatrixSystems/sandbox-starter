@@ -404,7 +404,6 @@ def skip_azure_transit(command):
         launch_azure_state(command)
         peering(command)
 
-    # get_copilot_ip()
     get_controller_ip()
 
 
@@ -420,11 +419,9 @@ def aws_azure_peering(command):
         if return_code == 0:
             peering(command)
         # getting ip after whole proccess
-        # get_copilot_ip()
         get_controller_ip()
 
     elif command == 'no':
-        # get_copilot_ip()
         get_controller_ip()
         peering(command)
 
@@ -463,22 +460,3 @@ def get_controller_ip(command=None):
         json.dump(data, outfile)
 
     status_json('controllerIP', 'success', 8)
-
-
-def get_copilot_ip(command=None):
-    """get IP of copilot"""
-    proc_ip = subprocess.Popen(
-        ['bash', '-c', '. /root/sandbox_starter_web.sh;'
-                       ' get_copilot_ip '], stdout=subprocess.PIPE)
-
-    result = proc_ip.communicate()[0]
-
-    with open('state.txt') as state_file:
-        data = json.load(state_file)
-
-    data["copilotIP"] = result.decode()
-
-    with open('state.txt', 'w') as outfile:
-        json.dump(data, outfile)
-
-    status_json('copilotIP', 'success', 8)
