@@ -111,61 +111,6 @@ def onboard_controller(ctrl_url, account_id, cid, email, password, version):
         sys.exit(1)
 
 
-def configure_controller_copilot(ctrl_url, password, ctrl_ip, cplt_ip):
-
-    # Configure and link Copilot
-
-    s = requests.Session()
-
-    cplt_url = 'https://%s/login' % (cplt_ip)
-
-    set_cplt = {"controllerIp": ctrl_ip,
-                "username": "admin", "password": password}
-    r = s.post(cplt_url, data=set_cplt, verify=False)
-
-    cplt_url = 'https://%s/submitserviceaccount' % (cplt_ip)
-    set_cplt_svc_acct = {"username": "admin", "password": password}
-    r = s.post(cplt_url, data=set_cplt_svc_acct, verify=False)
-
-    cplt_url = 'https://%s/create_physical_volumes' % (cplt_ip)
-    set_cplt_data_volume = {"physicalVolumes": ["/dev/nvme1n1"]}
-    r = s.post(cplt_url, data=set_cplt_data_volume, verify=False)
-
-    cplt_url = 'https://%s/set_lvm_status' % (cplt_ip)
-    finish_cplt_data_volume = {"status": "true"}
-    r = s.post(cplt_url, data=finish_cplt_data_volume, verify=False)
-
-    r = s.get('https://%s/performance_migrate_logstash_v2' %
-              (cplt_ip), verify=False)
-    r = s.get('https://%s/performance_migrate_task_server_v2' %
-              (cplt_ip), verify=False)
-    r = s.get('https://%s/performance_migrate_existing_alerts_v2' %
-              (cplt_ip), verify=False)
-    r = s.get('https://%s/performance_restart_logstash' %
-              (cplt_ip), verify=False)
-    r = s.get('https://%s/performance_restart_task_server' %
-              (cplt_ip), verify=False)
-    r = s.get('https://%s/performance_delete_v1_data' %
-              (cplt_ip), verify=False)
-    r = s.get('https://%s/performance_finish_upgrade_v2' %
-              (cplt_ip), verify=False)
-
-    # Set Netflow Agent on Controller
-    post_upgrade_cid = login(ctrl_url, password=password)
-
-    enable_netflow = {"action": "enable_netflow_agent",
-                      "CID": post_upgrade_cid, "server_ip": cplt_ip, "port": "31283", "version": "9", "exclude_gateway_list": ""}
-    r = requests.post(ctrl_url, data=enable_netflow, verify=False)
-
-    enable_syslog = {"action": "enable_remote_syslog_logging",
-                     "CID": post_upgrade_cid, "server": cplt_ip, "port": "5000", "protocol": "UDP", "exclude_gateway_list": "", "index": "9"}
-    r = requests.post(ctrl_url, data=enable_syslog, verify=False)
-
-    set_cplt_association = {"action": "enable_copilot_association",
-                            "CID": post_upgrade_cid, "copilot_ip": cplt_ip}
-    r = requests.post(ctrl_url, data=set_cplt_association, verify=False)
-
-
 def print_credentials(public_ip, email, password, cid):
     with open("controller_settings.txt", "w+") as f:
         f.write("Controller Public IP: " + str(public_ip) + '\n')
@@ -183,7 +128,6 @@ def export_password_to_envvar(password):
 def main():
     public_ip = os.environ['CONTROLLER_PUBLIC_IP']
     private_ip = os.environ['CONTROLLER_PRIVATE_IP']
-    copilot_public_ip = os.environ['COPILOT_PUBLIC_IP']
     account_id = os.environ['AWS_ACCOUNT']
     # email = input("Enter recovery email: ")
     email = os.environ['AVIATRIX_EMAIL']
@@ -227,9 +171,6 @@ def main():
                   "CID": cid, "previous_ip": "34.204.42.164"}
     migrate_ip_call = requests.post(ctrl_url, data=migrate_ip, verify=False)
     print("Migrate IP", migrate_ip_call, flush=True)
-
-    configure_controller_copilot(
-        ctrl_url, password, ctrl_ip=public_ip, cplt_ip=copilot_public_ip)
 
 
 if __name__ == "__main__":

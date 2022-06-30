@@ -65,7 +65,6 @@ export type GetStepResponse = {
       };
     };
     controllerIP?: string;
-    copilotIP?: string;
     ips?: {
       privateSpokeVm1: string;
       privateSpokeVm2: string;

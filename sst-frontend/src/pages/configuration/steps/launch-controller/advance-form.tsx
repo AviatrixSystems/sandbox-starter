@@ -105,7 +105,7 @@ export default function AdvanceForm(props: ComponentProps) {
           <div className="text-block">
             <Heading
               customClasses="--dark"
-              text="Launch Controller and Copilot"
+              text="Launch Controller"
             ></Heading>
             <Paragraph
               customClasses="--light"
