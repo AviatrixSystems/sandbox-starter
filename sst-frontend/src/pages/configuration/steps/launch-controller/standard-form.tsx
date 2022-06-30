@@ -56,7 +56,7 @@ export default function StandardForm(props: ComponentProps) {
         email: "",
         password: "",
         confirm_password: "",
-        controller_version: "6.6",
+        controller_version: "6.7",
         controller_license_type: "meteredplatinum",
         controller_license: "",
       }}
@@ -165,7 +165,7 @@ export default function StandardForm(props: ComponentProps) {
                     customClasses="--light"
                     text={
                       <span>
-                        If using the SST as a prerequisite to ACE IaC, please select Controller Version 6.6
+                        If using the SST as a prerequisite to ACE IaC, please select Controller Version 6.7
                       </span>
                     }
                   ></Paragraph>
