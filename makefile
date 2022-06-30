@@ -21,11 +21,6 @@ run-latest:
 	docker volume create TF
 	docker run -v TF:/root -p 5001:5000 -d aviatrix/sandbox-starter:latest
 
-run-byol:
-	docker volume create TF
-	docker run -v TF:/root -p 5001:5000 -d aviatrix/sandbox-starter:${VERSION}
-	docker exec $$(docker ps -aqf "ancestor=aviatrix/sandbox-starter") sed -i 's/"meteredplatinum"/"BYOL"/g' /root/controller/aviatrix-controller-build/variables.tf
-
 release:
 	docker tag aviatrix/sandbox-starter:${VERSION} aviatrix/sandbox-starter:latest
 	docker push aviatrix/sandbox-starter:latest
