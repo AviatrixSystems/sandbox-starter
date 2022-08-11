@@ -239,8 +239,8 @@ export default function AdvanceForm(props: ComponentProps) {
                 }}
                 disabled={pageDisabled}
               >
-                <MenuItem value="6.6">6.6</MenuItem>
                 <MenuItem value="6.7">6.7</MenuItem>
+                <MenuItem value="6.8">6.8</MenuItem>
               </Select>
             </FormControl>
             {(() => {
