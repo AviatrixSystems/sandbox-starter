@@ -95,7 +95,7 @@ controller_launch()
     fi
 
     read -n 1 -r -s -p $'--> To abort, close the window or press Ctrl-C. To continue, press any key.\n'
-    terraform init
+    terraform init -upgrade
     terraform apply -auto-approve
 
     if [ $? -eq 0 ]; then
@@ -176,7 +176,7 @@ controller_init()
     if [ ! -z $KS_GOVCLOUD ]; then
 	cat /root/.eagle
     fi
-    echo -e "\n--> Controller init has completed. Controller is now running. Please note that if you are going to manually upgrade the Controller, only Build release upgrades are supported. For example, manual upgrades from 6.6.x to 6.6.y are supported, but manual upgrades of Minor releases, such as from 6.6.x to 6.7.y are NOT supported."
+    echo -e "\n--> Controller init has completed. Controller is now running. Please note that if you are going to manually upgrade the Controller, only Build release upgrades are supported. For example, manual upgrades from 6.8.x to 6.8.y are supported, but manual upgrades of Minor releases, such as from 6.7.x to 6.8.y are NOT supported."
 }
 
 mcna_aws_transit()
@@ -194,7 +194,7 @@ mcna_aws_transit()
 	vim variables.tf
     fi
 
-    terraform init
+    terraform init -upgrade
     terraform apply -target=aviatrix_transit_gateway.aws_transit_gw -target=aviatrix_spoke_gateway.aws_spoke_gws -target aviatrix_spoke_transit_attachment.aws_spoke_gws_attachment -auto-approve
     return $?
 }

@@ -4,7 +4,7 @@ terraform {
       # Make sure to keep the version up to date with the controller version.
       # https://registry.terraform.io/providers/AviatrixSystems/aviatrix/latest/docs/guides/release-compatibility.
       source  = "aviatrixsystems/aviatrix"
-      version = "~> 2.21.2"
+      version = "~> 2.23.0"
     }
     aws = {
       source  = "hashicorp/aws"
