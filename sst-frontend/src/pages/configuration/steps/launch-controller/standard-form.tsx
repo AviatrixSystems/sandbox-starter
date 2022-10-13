@@ -56,7 +56,7 @@ export default function StandardForm(props: ComponentProps) {
         email: "",
         password: "",
         confirm_password: "",
-        controller_version: "6.7",
+        controller_version: "6.9",
         controller_license_type: "meteredplatinum",
         controller_license: "",
       }}
@@ -153,19 +153,19 @@ export default function StandardForm(props: ComponentProps) {
               }}
               disabled={pageDisabled}
             >
-              <MenuItem value="6.7">6.7</MenuItem>
               <MenuItem value="6.8">6.8</MenuItem>
+              <MenuItem value="6.9">6.9</MenuItem>
             </Select>
           </FormControl>
           {(() => {
-            if (values.controller_version === "6.7") {
+            if (values.controller_version === "6.8") {
               return (
                 <>
                   <Paragraph
                     customClasses="--light"
                     text={
                       <span>
-                        If using the SST as a prerequisite to ACE IaC, please select Controller Version 6.7
+                        If using the SST as a prerequisite to ACE IaC, please select Controller Version 6.9
                       </span>
                     }
                   ></Paragraph>
@@ -223,9 +223,9 @@ export default function StandardForm(props: ComponentProps) {
                         Before clicking 'Continue' below, subscribe to both{" "}
                         <a
                           target="blank"
-                          href="https://aws.amazon.com/marketplace/pp/prodview-nsys2ingy6m3w"
+                          href="https://aws.amazon.com/marketplace/pp/prodview-qzvzwigqw72ek"
                         >
-                          Aviatrix Secure Networking Platform - BYOL
+                          Aviatrix Secure Networking Platform Metered 2208-Universal 24x7 Support
                         </a>{" "}
                         and{" "}
                         <a
