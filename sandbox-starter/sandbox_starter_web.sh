@@ -28,12 +28,12 @@ controller_file_change(){
   sed -i "s#variable \"vpc_cidr\".*#variable \"vpc_cidr\" { default = \"$vpc_cidr\" }#g"  /root/controller/variables.tf
   sed -i "s#variable \"vpc_subnet\".*#variable \"vpc_subnet\" { default = \"$vpc_subnet\" }#g"  /root/controller/variables.tf
   sed -i "s#variable \"controller_license_type\".*#variable \"controller_license_type\" { default = \"$controller_license_type\" }#g"  /root/controller/variables.tf
-  if [ $controller_version = "6.7" ]; then
-  sed -i'' -e 's+version = "~> 2.23.0"+version = "~> 2.22.3"+g' /root/mcna/versions.tf
-  sed -i'' -e 's+version = "~> 2.23.0"+version = "~> 2.22.3"+g' /root/mcna-govcloud/versions.tf
+  if [ $controller_version = "6.8" ]; then
+  sed -i'' -e 's+version = "~> 2.24.0"+version = "~> 2.23.0"+g' /root/mcna/versions.tf
+  sed -i'' -e 's+version = "~> 2.24.0"+version = "~> 2.22.0"+g' /root/mcna-govcloud/versions.tf
   else
-  sed -i'' -e 's+version = "~> 2.22.3"+version = "~> 2.23.0"+g' /root/mcna/versions.tf
-  sed -i'' -e 's+version = "~> 2.22.3"+version = "~> 2.23.0"+g' /root/mcna-govcloud/versions.tf
+  sed -i'' -e 's+version = "~> 2.23.0"+version = "~> 2.24.0"+g' /root/mcna/versions.tf
+  sed -i'' -e 's+version = "~> 2.23.0"+version = "~> 2.24.0"+g' /root/mcna-govcloud/versions.tf
   fi
 }
 controller_file_change_std(){
@@ -43,12 +43,12 @@ controller_file_change_std(){
   # controller_license_type has to be last as it may be empty in the case of metered
 
   sed -i "s/variable \"controller_license_type\".*/variable \"controller_license_type\" { default = \"$controller_license_type\" }/g"  /root/controller/variables.tf
-  if [ $controller_version = "6.7" ]; then
-  sed -i'' -e 's+version = "~> 2.23.0"+version = "~> 2.22.3"+g' /root/mcna/versions.tf
-  sed -i'' -e 's+version = "~> 2.23.0"+version = "~> 2.22.3"+g' /root/mcna-govcloud/versions.tf
+  if [ $controller_version = "6.8" ]; then
+  sed -i'' -e 's+version = "~> 2.24.0"+version = "~> 2.23.0"+g' /root/mcna/versions.tf
+  sed -i'' -e 's+version = "~> 2.24.0"+version = "~> 2.23.0"+g' /root/mcna-govcloud/versions.tf
   else
-  sed -i'' -e 's+version = "~> 2.22.3"+version = "~> 2.23.0"+g' /root/mcna/versions.tf
-  sed -i'' -e 's+version = "~> 2.22.3"+version = "~> 2.23.0"+g' /root/mcna-govcloud/versions.tf
+  sed -i'' -e 's+version = "~> 2.23.0"+version = "~> 2.24.0"+g' /root/mcna/versions.tf
+  sed -i'' -e 's+version = "~> 2.23.0"+version = "~> 2.24.0"+g' /root/mcna-govcloud/versions.tf
   fi
 }
 
@@ -525,7 +525,7 @@ controller_init()
     if [ ! -z $KS_GOVCLOUD ]; then
 	cat /root/.eagle
     fi
-    echo -e "\n--> Controller init has completed. Controller is now running. Please note that if you are going to manually upgrade the Controller, only Build release upgrades are supported. For example, manual upgrades from 6.8.x to 6.8.y are supported, but manual upgrades of Minor releases, such as from 6.7.x to 6.8.y are NOT supported."
+    echo -e "\n--> Controller init has completed. Controller is now running. Please note that if you are going to manually upgrade the Controller, only Build release upgrades are supported. For example, manual upgrades from 6.8.x to 6.8.y are supported, but manual upgrades of Minor releases, such as from 6.8.x to 6.9.y are NOT supported."
 
     writekeys_controller_init  $AVIATRIX_EMAIL $AVIATRIX_PASSWORD $AVIATRIX_USERNAME $SANDBOX_STARTER_CONTROLLER_INIT_DONE
 }
