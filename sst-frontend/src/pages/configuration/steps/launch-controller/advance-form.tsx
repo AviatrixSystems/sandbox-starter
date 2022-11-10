@@ -79,7 +79,7 @@ export default function AdvanceForm(props: ComponentProps) {
         password: "",
         confirm_password: "",
         controller_version: "6.9",
-        controller_license_type: "meteredplatinum",
+        controller_license_type: "byol",
         controller_license: "",
         az: "us-east-1a",
         region: "us-east-1",
@@ -259,124 +259,61 @@ export default function AdvanceForm(props: ComponentProps) {
                 );
               }
             })()}
-            <FormControl
-              variant="outlined"
-              size="medium"
-              style={{ width: 360 }}
-            >
-              <InputLabel
+            <>
+              <Input
+                value={values.controller_license}
+                name="controller_license"
+                label="Controller License"
                 variant="outlined"
-                style={{
-                  fontSize: 14,
-                }}
-                htmlFor="controller_license_type"
-              >
-                Controller License Type
-              </InputLabel>
-              <Select
-                labelId="controller_license_type"
-                name="controller_license_type"
-                value={values.controller_license_type}
+                fullWidth={false}
+                customClasses="--small --blue"
                 onChange={handleChange}
-                label="Controller License Type"
-                variant="outlined"
-                style={{
-                  color: "black",
-                  fontSize: 14,
-                }}
+                error={Boolean(errors.controller_license)}
+                helperText={errors.controller_license}
                 disabled={pageDisabled}
+              />
+              <Paragraph
+                customClasses="--light"
+                text={
+                  <span>
+                    Before clicking 'Continue' below, subscribe to both{" "}
+                    <a
+                      target="blank"
+                      href="https://aws.amazon.com/marketplace/pp/prodview-qzvzwigqw72ek"
+                    >
+                      Aviatrix Secure Networking Platform Metered 2208-Universal 24x7 Support
+                    </a>{" "}
+                    and{" "}
+                    <a
+                      target="blank"
+                      href="https://aws.amazon.com/marketplace/pp/prodview-hr74smekrfqiu"
+                    >
+                      Aviatrix CoPilot
+                    </a>{" "}
+                    in the AWS Marketplace. Click on "Continue to subscribe", then
+                    "Subscribe", and "Set Up Your Account" to generate your Controller License.
+                    For CoPilot, click "Continue to subscribe", but do NOT click on
+                    "Continue to Configuration".
+                  </span>
+                }
+              ></Paragraph>
+            </>
+            <span>
+              <Button
+                disabled={pageDisabled}
+                type="submit"
+                variant="contained"
+                customClasses=" --blue"
               >
-                <MenuItem value="meteredplatinum">Metered Platinum</MenuItem>
-                <MenuItem value="byol">BYOL</MenuItem>
-              </Select>
-            </FormControl>
-            {(() => {
-              if (values.controller_license_type === "byol") {
-                return (
-                  <>
-                    <Input
-                      value={values.controller_license}
-                      name="controller_license"
-                      label="Controller License"
-                      variant="outlined"
-                      fullWidth={false}
-                      customClasses="--small --blue"
-                      onChange={handleChange}
-                      error={Boolean(errors.controller_license)}
-                      helperText={errors.controller_license}
-                      disabled={pageDisabled}
-                    />
-                    <Paragraph
-                      customClasses="--light"
-                      text={
-                        <span>
-                          Before clicking 'Continue' below, subscribe to both{" "}
-                          <a
-                            target="blank"
-                            href="https://aws.amazon.com/marketplace/pp/prodview-qzvzwigqw72ek"
-                          >
-                            Aviatrix Secure Networking Platform Metered 2208-Universal 24x7 Support
-                          </a>{" "}
-                          and{" "}
-                          <a
-                            target="blank"
-                            href="https://aws.amazon.com/marketplace/pp/prodview-hr74smekrfqiu"
-                          >
-                            Aviatrix CoPilot
-                          </a>{" "}
-                          in the AWS Marketplace. Click on "Continue to subscribe",
-                          and accept the terms. Do NOT click on "Continue to
-                          Configuration".
-                        </span>
-                      }
-                    ></Paragraph>
-                  </>
-                );
-              } else {
-                return (
-                  <Paragraph
-                    customClasses="--light"
-                    text={
-                      <span>
-                        Before clicking 'Continue' below, subscribe to both{" "}
-                        <a
-                          target="blank"
-                          href="https://aws.amazon.com/marketplace/pp/B08NTSDHKG"
-                        >
-                          Aviatrix Secure Networking Platform Metered
-                        </a>{" "}
-                        and{" "}
-                        <a
-                          target="blank"
-                          href="https://aws.amazon.com/marketplace/pp/prodview-hr74smekrfqiu"
-                        >
-                          Aviatrix CoPilot
-                        </a>{" "}
-                        in the AWS Marketplace. Click on "Continue to subscribe",
-                        and accept the terms. Do NOT click on "Continue to
-                        Configuration".
-                      </span>
-                    }
-                  ></Paragraph>
-                );
-              }
-            })()}
-            <Separator />
+                Continue
+              </Button>
+            </span>
           </>
-          <span>
-            <Button
-              disabled={pageDisabled}
-              type="submit"
-              variant="contained"
-              customClasses=" --blue"
-            >
-              Continue
-            </Button>
-          </span>
         </form>
       )}
     </Formik>
-  ) : (
-    <div />
-  );
+  ) :
+    (
+      <div />
+    );
 }

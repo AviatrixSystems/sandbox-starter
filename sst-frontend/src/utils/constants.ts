@@ -65,7 +65,7 @@ export const FORM_CONFIGS = {
           "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case (@!%*#?) Character"
         ),
       controller_version: yup.string().oneOf(["6.8", "6.9"]),
-      controller_license_type: yup.string().oneOf(["meteredplatinum", "byol"]),
+      controller_license_type: yup.string().oneOf(["byol"]),
       confirm_password: yup.string().required("Required"),
       controller_license: yup.string().when("controller_license_type", {
         is: (val) => val === "byol",
@@ -90,7 +90,7 @@ export const FORM_CONFIGS = {
       region: yup.string().required("Required"),
       az: yup.string().required("Required"),
       controller_version: yup.string().oneOf(["6.8", "6.9"]),
-      controller_license_type: yup.string().oneOf(["meteredplatinum", "byol"]),
+      controller_license_type: yup.string().oneOf(["byol"]),
       vpc_cidr: yup
         .string()
         .required("Required")
