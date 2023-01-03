@@ -176,7 +176,7 @@ controller_init()
     if [ ! -z $KS_GOVCLOUD ]; then
 	cat /root/.eagle
     fi
-    echo -e "\n--> Controller init has completed. Controller is now running. Please note that if you are going to manually upgrade the Controller, only Build release upgrades are supported. For example, manual upgrades from 6.8.x to 6.8.y are supported, but manual upgrades of Minor releases, such as from 6.8.x to 6.9.y are NOT supported."
+    echo -e "\n--> Controller init has completed. Controller is now running. Please note that if you are going to manually upgrade the Controller, only Build release upgrades are supported. For example, manual upgrades from 7.0.x to 7.0.y are supported, but manual upgrades of Minor releases, such as from 6.9.x to 7.0.y are NOT supported."
 }
 
 mcna_aws_transit()
