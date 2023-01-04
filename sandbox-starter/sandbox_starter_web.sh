@@ -20,10 +20,9 @@ controller_file_change(){
   local vpc_cidr=$3
   local vpc_subnet=$4
   local controller_version=$5
-  local controller_license=$6
-  local controller_email=$7
-  local controller_password=$8
-  local controller_license_type=$9
+  local controller_email=$6
+  local controller_password=$7
+  local controller_license_type=$8
   # controller_license_type has to be last as it may be empty in the case of metered
 
   sed -i "s/variable \"region\".*/variable \"region\" { default = \"$region\" }/g" /root/controller/variables.tf
@@ -32,38 +31,44 @@ controller_file_change(){
   sed -i "s#variable \"vpc_subnet\".*#variable \"vpc_subnet\" { default = \"$vpc_subnet\" }#g"  /root/controller/variables.tf
   sed -i "s#variable \"controller_license_type\".*#variable \"controller_license_type\" { default = \"$controller_license_type\" }#g"  /root/controller/variables.tf
   sed -i "s#variable \"account_email\".*#variable \"account_email\" { default = \"$controller_email\" }#g"  /root/controller/variables.tf    
-  sed -i "s#variable \"admin_password\".*#variable \"admin_password\" { default = \"$controller_password\" }#g"  /root/controller/variables.tf    
   sed -i "s#variable \"controller_version\".*#variable \"controller_version\" { default = \"$controller_version\" }#g"  /root/controller/variables.tf    
-  sed -i "s#variable \"customer_license_id\".*#variable \"customer_license_id\" { default = \"$controller_license\" }#g"  /root/controller/variables.tf    
-
+  sed -i '/admin_password/d' /root/controller/variables.tf    
+  python3 /root/controller/pwd_update.py $controller_password
   if [ $controller_version = "6.9" ]; then
   sed -i'' -e 's+version = "~> 3.0.0"+version = "~> 2.24.0"+g' /root/mcna/versions.tf
   sed -i'' -e 's+version = "~> 3.0.0"+version = "~> 2.24.0"+g' /root/mcna-govcloud/versions.tf
   else
   sed -i'' -e 's+version = "~> 2.24.0"+version = "~> 3.0.0"+g' /root/mcna/versions.tf
   sed -i'' -e 's+version = "~> 2.24.0"+version = "~> 3.0.0"+g' /root/mcna-govcloud/versions.tf
+  sed -i '/manage_transit_gateway_attachment/d' /root/mcna/aviatrix_aws.tf
+  sed -i '/manage_transit_gateway_attachment/d' /root/mcna/aviatrix_azure.tf
+  sed -i '/manage_transit_gateway_attachment/d' /root/mcna-govcloud/aviatrix_aws.tf
+  sed -i '/manage_transit_gateway_attachment/d' /root/mcna-govcloud/aviatrix_azure.tf
   fi
 }
 controller_file_change_std(){
 
   local controller_version=$1
-  local controller_license=$2
-  local controller_email=$3
-  local controller_password=$4
-  local controller_license_type=$5
+  local controller_email=$2
+  local controller_password=$3
+  local controller_license_type=$4
   # controller_license_type has to be last as it may be empty in the case of metered
 
   sed -i "s/variable \"controller_license_type\".*/variable \"controller_license_type\" { default = \"$controller_license_type\" }/g"  /root/controller/variables.tf
   sed -i "s#variable \"account_email\".*#variable \"account_email\" { default = \"$controller_email\" }#g"  /root/controller/variables.tf    
-  sed -i "s#variable \"admin_password\".*#variable \"admin_password\" { default = \"$controller_password\" }#g"  /root/controller/variables.tf    
   sed -i "s#variable \"controller_version\".*#variable \"controller_version\" { default = \"$controller_version\" }#g"  /root/controller/variables.tf    
-  sed -i "s#variable \"customer_license_id\".*#variable \"customer_license_id\" { default = \"$controller_license\" }#g"  /root/controller/variables.tf    
+  sed -i '/admin_password/d' /root/controller/variables.tf    
+  python3 /root/controller/pwd_update.py $controller_password
   if [ $controller_version = "6.9" ]; then
   sed -i'' -e 's+version = "~> 3.0.0"+version = "~> 2.24.0"+g' /root/mcna/versions.tf
   sed -i'' -e 's+version = "~> 3.0.0"+version = "~> 2.24.0"+g' /root/mcna-govcloud/versions.tf
   else
   sed -i'' -e 's+version = "~> 2.24.0"+version = "~> 3.0.0"+g' /root/mcna/versions.tf
   sed -i'' -e 's+version = "~> 2.24.0"+version = "~> 3.0.0"+g' /root/mcna-govcloud/versions.tf
+  sed -i '/manage_transit_gateway_attachment/d' /root/mcna/aviatrix_aws.tf
+  sed -i '/manage_transit_gateway_attachment/d' /root/mcna/aviatrix_azure.tf
+  sed -i '/manage_transit_gateway_attachment/d' /root/mcna-govcloud/aviatrix_aws.tf
+  sed -i '/manage_transit_gateway_attachment/d' /root/mcna-govcloud/aviatrix_azure.tf
   fi
 }
 

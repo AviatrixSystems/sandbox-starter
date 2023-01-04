@@ -40,10 +40,10 @@ def controller_file_change(data):
 
         command = ['bash', '-c', '. /root/sandbox_starter_web.sh;'
                    ' controller_file_change "' + region + '" "'
-                   + az + '" "' + vpc_cidr + '" "' + vpc_subnet + '" "' + controller_version + '" "' + controller_license + '" "' + controller_email + '" "' + controller_password + '" "' + controller_license_type + '"']
+                   + az + '" "' + vpc_cidr + '" "' + vpc_subnet + '" "' + controller_version + '" "' + controller_email + '" "' + controller_password + '" "' + controller_license_type + '"']
     else:
         command = ['bash', '-c', '. /root/sandbox_starter_web.sh;'
-                   ' controller_file_change_std "' + controller_version + '" "' + controller_license + '" "' + controller_email + '" "' + controller_password + '" "' + controller_license_type + '"']
+                   ' controller_file_change_std "' + controller_version + '" "' + controller_email + '" "' + controller_password + '" "' + controller_license_type + '"']
 
     proccess_file(command)
 

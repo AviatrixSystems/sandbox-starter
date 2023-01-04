@@ -12,5 +12,4 @@ variable "account_email" { default = "replace_account_email" }
 variable "admin_password" { default = "r3place_Admin_password" }
 variable "aws_account_name" { default = "aws-account" }
 variable "controller_version" { default = "replace_controller_version" }
-variable "customer_license_id" { default = "replace_customer_license_id" }
 variable "instance_type" { default = "t3.large" }

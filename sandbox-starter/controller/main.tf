@@ -10,7 +10,6 @@ module "aviatrix_controller_aws" {
   admin_password              = var.admin_password
   aws_account_id              = data.aws_caller_identity.aws_account.account_id
   controller_version          = var.controller_version
-  customer_license_id         = var.customer_license_id
   termination_protection      = false
   incoming_ssl_cidrs          = ["0.0.0.0/0"]
   instance_type               = var.instance_type

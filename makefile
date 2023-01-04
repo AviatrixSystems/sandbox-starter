@@ -1,4 +1,4 @@
-VERSION ?= 1.3.1
+VERSION ?= 1.4.0
 
 build:
 	sed -i'' -e 's+version = ".*"+version = "${VERSION}"+g' sst-frontend/src/components/app-bar/index.tsx
@@ -8,7 +8,7 @@ build:
 	docker build --file=Dockerfile --no-cache --tag=aviatrix/sandbox-starter:${VERSION} .
 
 clean:
-	docker container rm $$(docker stop $$(docker ps -a -q)); docker rmi -f $$(docker images -qa aviatrix/sandbox-starter); docker volume rm TF
+	docker container rm $$(docker stop $$(docker ps -a -q)); docker rmi -f $$(docker images -qa aviatrix/sandbox-starter); docker volume rm TF; docker system prune -f
 
 push:
 	docker push aviatrix/sandbox-starter:${VERSION}
