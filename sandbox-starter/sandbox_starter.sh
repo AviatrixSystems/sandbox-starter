@@ -1,5 +1,14 @@
 #!/bin/bash
-
+############################################################
+#                                                          #
+#                                                          #
+#        This file no longer actively maintained           #
+#        This file no longer actively maintained           #
+#        This file no longer actively maintained           #
+#        This file no longer actively maintained           #
+#                                                          #
+#                                                          #
+############################################################
 timer()
 {
     temp_cnt=$1
@@ -130,7 +139,7 @@ controller_launch()
 
     record_controller_launch
 
-    echo -e "\n--> Waiting 15 minutes for the controller to come up... Do not access the controller yet."
+    echo -e "\n--> Waiting 5 minutes for final controller configuration... Do not access the controller yet."
     timer 300
     return 0
 }
@@ -176,7 +185,7 @@ controller_init()
     if [ ! -z $KS_GOVCLOUD ]; then
 	cat /root/.eagle
     fi
-    echo -e "\n--> Controller init has completed. Controller is now running. Please note that if you are going to manually upgrade the Controller, only Build release upgrades are supported. For example, manual upgrades from 6.8.x to 6.8.y are supported, but manual upgrades of Minor releases, such as from 6.8.x to 6.9.y are NOT supported."
+    echo -e "\n--> Controller init has completed. Controller is now running. Please note that if you are going to manually upgrade the Controller, only Build release upgrades are supported. For example, manual upgrades from 7.0.x to 7.0.y are supported, but manual upgrades of Minor releases, such as from 6.9.x to 7.0.y are NOT supported."
 }
 
 mcna_aws_transit()

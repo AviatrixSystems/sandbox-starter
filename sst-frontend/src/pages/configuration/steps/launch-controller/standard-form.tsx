@@ -153,12 +153,12 @@ export default function StandardForm(props: ComponentProps) {
               }}
               disabled={pageDisabled}
             >
-              <MenuItem value="6.8">6.8</MenuItem>
               <MenuItem value="6.9">6.9</MenuItem>
+              <MenuItem value="7.0">7.0</MenuItem>
             </Select>
           </FormControl>
           {(() => {
-            if (values.controller_version === "6.8") {
+            if (values.controller_version === "7.0") {
               return (
                 <>
                   <Paragraph
@@ -190,22 +190,30 @@ export default function StandardForm(props: ComponentProps) {
               customClasses="--light"
               text={
                 <span>
-                  Before clicking 'Continue' below, subscribe to both{" "}
+                  Before clicking 'Continue' below, subscribe to{" "}
                   <a
                     target="blank"
                     href="https://aws.amazon.com/marketplace/pp/prodview-qzvzwigqw72ek"
                   >
                     Aviatrix Secure Networking Platform Metered 2208-Universal 24x7 Support
                   </a>{" "}
-                  and{" "}
+                  ,{" "}
+                  <a
+                    target="blank"
+                    href="https://aws.amazon.com/marketplace/pp/prodview-nsys2ingy6m3w"
+                  >
+                    Aviatrix Secure Networking Platform - BYOL
+                  </a>{" "}
+                  , and{" "}
                   <a
                     target="blank"
                     href="https://aws.amazon.com/marketplace/pp/prodview-hr74smekrfqiu"
                   >
                     Aviatrix CoPilot
                   </a>{" "}
-                  in the AWS Marketplace. Click on "Continue to subscribe", then
+                  in the AWS Marketplace. For "Metered 2208", click on "Continue to subscribe", then
                   "Subscribe", and "Set Up Your Account" to generate your Controller License.
+                  For "BYOL", click on "Continue to subscribe", then "Subscribe".
                   For CoPilot, click "Continue to subscribe", but do NOT click on
                   "Continue to Configuration".
                 </span>
