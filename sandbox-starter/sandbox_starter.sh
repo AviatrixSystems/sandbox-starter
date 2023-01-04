@@ -139,7 +139,7 @@ controller_launch()
 
     record_controller_launch
 
-    echo -e "\n--> Waiting 15 minutes for the controller to come up... Do not access the controller yet."
+    echo -e "\n--> Waiting 5 minutes for final controller configuration... Do not access the controller yet."
     timer 300
     return 0
 }
