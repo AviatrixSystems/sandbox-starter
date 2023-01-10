@@ -14,7 +14,7 @@ module "aviatrix_controller_aws" {
   incoming_ssl_cidrs          = ["0.0.0.0/0"]
   instance_type               = var.instance_type
   type                        = "BYOL"
-  controller_launch_wait_time = "120"
+  controller_launch_wait_time = "210"
   vpc_cidr                    = var.vpc_cidr
   subnet_cidr                 = var.vpc_subnet
 }
