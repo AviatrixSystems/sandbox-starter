@@ -56,7 +56,7 @@ export default function StandardForm(props: ComponentProps) {
         email: "",
         password: "",
         confirm_password: "",
-        controller_version: "6.9",
+        controller_version: "7.0",
         controller_license_type: "byol",
         controller_license: "",
       }}
@@ -158,14 +158,14 @@ export default function StandardForm(props: ComponentProps) {
             </Select>
           </FormControl>
           {(() => {
-            if (values.controller_version === "7.0") {
+            if (values.controller_version === "6.9") {
               return (
                 <>
                   <Paragraph
                     customClasses="--light"
                     text={
                       <span>
-                        If using the SST as a prerequisite to ACE IaC, please select Controller Version 6.9
+                        If using the SST as a prerequisite to ACE Automation (IaC), please select Controller Version 7.0
                       </span>
                     }
                   ></Paragraph>
