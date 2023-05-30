@@ -56,7 +56,7 @@ export default function StandardForm(props: ComponentProps) {
         email: "",
         password: "",
         confirm_password: "",
-        controller_version: "7.0",
+        controller_version: "7.1",
         controller_license_type: "byol",
         controller_license: "",
       }}
@@ -153,19 +153,19 @@ export default function StandardForm(props: ComponentProps) {
               }}
               disabled={pageDisabled}
             >
-              <MenuItem value="6.9">6.9</MenuItem>
               <MenuItem value="7.0">7.0</MenuItem>
+              <MenuItem value="7.1">7.1</MenuItem>
             </Select>
           </FormControl>
           {(() => {
-            if (values.controller_version === "6.9") {
+            if (values.controller_version === "7.0") {
               return (
                 <>
                   <Paragraph
                     customClasses="--light"
                     text={
                       <span>
-                        If using the SST as a prerequisite to ACE Automation (IaC), please select Controller Version 7.0
+                        If using the SST as a prerequisite to ACE Automation (IaC), please select Controller Version 7.1
                       </span>
                     }
                   ></Paragraph>
@@ -211,8 +211,7 @@ export default function StandardForm(props: ComponentProps) {
                   >
                     Aviatrix CoPilot
                   </a>{" "}
-                  in the AWS Marketplace. For "Metered 2208", click on "Continue to subscribe", then
-                  "Subscribe", and "Set Up Your Account" to generate your Controller License.
+                  in the AWS Marketplace. For "Metered 2208", click on 'View purchase options', then under 'Purchase', click 'Subscribe'. In the resulting green banner, click 'Set up your account' which will launch a new window to generate your license key. Follow those instructions and your key will be emailed to you.
                   For "BYOL", click on "Continue to subscribe", then "Subscribe".
                   For CoPilot, click "Continue to subscribe", but do NOT click on
                   "Continue to Configuration".

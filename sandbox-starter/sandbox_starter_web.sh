@@ -34,12 +34,12 @@ controller_file_change(){
   sed -i "s#variable \"controller_version\".*#variable \"controller_version\" { default = \"$controller_version\" }#g"  /root/controller/variables.tf    
   sed -i '/admin_password/d' /root/controller/variables.tf    
   python3 /root/controller/pwd_update.py $controller_password
-  if [ $controller_version = "6.9" ]; then
-  sed -i'' -e 's+version = "~> 3.0.0"+version = "~> 2.24.0"+g' /root/mcna/versions.tf
-  sed -i'' -e 's+version = "~> 3.0.0"+version = "~> 2.24.0"+g' /root/mcna-govcloud/versions.tf
+  if [ $controller_version = "7.0" ]; then
+  sed -i'' -e 's+version = "~> 3.1.0"+version = "~> 3.0.0"+g' /root/mcna/versions.tf
+  sed -i'' -e 's+version = "~> 3.1.0"+version = "~> 3.0.0"+g' /root/mcna-govcloud/versions.tf
   else
-  sed -i'' -e 's+version = "~> 2.24.0"+version = "~> 3.0.0"+g' /root/mcna/versions.tf
-  sed -i'' -e 's+version = "~> 2.24.0"+version = "~> 3.0.0"+g' /root/mcna-govcloud/versions.tf
+  sed -i'' -e 's+version = "~> 3.0.0"+version = "~> 3.1.0"+g' /root/mcna/versions.tf
+  sed -i'' -e 's+version = "~> 3.0.0"+version = "~> 3.1.0"+g' /root/mcna-govcloud/versions.tf
   sed -i '/manage_transit_gateway_attachment/d' /root/mcna/aviatrix_aws.tf
   sed -i '/manage_transit_gateway_attachment/d' /root/mcna/aviatrix_azure.tf
   sed -i '/manage_transit_gateway_attachment/d' /root/mcna-govcloud/aviatrix_aws.tf
@@ -59,12 +59,12 @@ controller_file_change_std(){
   sed -i "s#variable \"controller_version\".*#variable \"controller_version\" { default = \"$controller_version\" }#g"  /root/controller/variables.tf    
   sed -i '/admin_password/d' /root/controller/variables.tf    
   python3 /root/controller/pwd_update.py $controller_password
-  if [ $controller_version = "6.9" ]; then
-  sed -i'' -e 's+version = "~> 3.0.0"+version = "~> 2.24.0"+g' /root/mcna/versions.tf
-  sed -i'' -e 's+version = "~> 3.0.0"+version = "~> 2.24.0"+g' /root/mcna-govcloud/versions.tf
+  if [ $controller_version = "7.0" ]; then
+  sed -i'' -e 's+version = "~> 3.1.0"+version = "~> 3.0.0"+g' /root/mcna/versions.tf
+  sed -i'' -e 's+version = "~> 3.1.0"+version = "~> 3.0.0"+g' /root/mcna-govcloud/versions.tf
   else
-  sed -i'' -e 's+version = "~> 2.24.0"+version = "~> 3.0.0"+g' /root/mcna/versions.tf
-  sed -i'' -e 's+version = "~> 2.24.0"+version = "~> 3.0.0"+g' /root/mcna-govcloud/versions.tf
+  sed -i'' -e 's+version = "~> 3.0.0"+version = "~> 3.1.0"+g' /root/mcna/versions.tf
+  sed -i'' -e 's+version = "~> 3.0.0"+version = "~> 3.1.0"+g' /root/mcna-govcloud/versions.tf
   sed -i '/manage_transit_gateway_attachment/d' /root/mcna/aviatrix_aws.tf
   sed -i '/manage_transit_gateway_attachment/d' /root/mcna/aviatrix_azure.tf
   sed -i '/manage_transit_gateway_attachment/d' /root/mcna-govcloud/aviatrix_aws.tf
@@ -545,7 +545,7 @@ controller_init()
     if [ ! -z $KS_GOVCLOUD ]; then
 	cat /root/.eagle
     fi
-    echo -e "\n--> Controller init has completed. Controller is now running. Please note that if you are going to manually upgrade the Controller, only Build release upgrades are supported. For example, manual upgrades from 7.0.x to 7.0.y are supported, but manual upgrades of Minor releases, such as from 6.9.x to 7.0.y are NOT supported."
+    echo -e "\n--> Controller init has completed. Controller is now running. Please note that if you are going to manually upgrade the Controller, only Build release upgrades are supported. For example, manual upgrades from 7.0.x to 7.0.y are supported, but manual upgrades of Minor releases, such as from 7.0.x to 7.1.y are NOT supported."
 
     writekeys_controller_init  $AVIATRIX_EMAIL $AVIATRIX_PASSWORD $AVIATRIX_USERNAME $SANDBOX_STARTER_CONTROLLER_INIT_DONE
 }
