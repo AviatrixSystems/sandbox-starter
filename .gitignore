@@ -12,3 +12,4 @@ yarn.lock
 .yarn*
 terraform.tfstate
 terraform.*
+node-modules/*

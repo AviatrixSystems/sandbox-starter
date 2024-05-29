@@ -9,7 +9,7 @@ import { helpIcon, reloadIcon } from "svgs";
 import { AppState } from "store";
 
 export default function AppBar() {
-  const version = "1.4.2";
+  const version = "1.4.3";
   const dispatch = useDispatch();
   const history = useHistory();
   const { is_advance } = useSelector<AppState, AppState["configuration"]>(
