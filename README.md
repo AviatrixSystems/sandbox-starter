@@ -4,7 +4,7 @@ Spin up cloud networks in minutes
 
 ## About
 
-To learn about Sandbox Starter, visit its [Aviatrix Community space](https://community.aviatrix.com/t/g9hx9jh/aviatrix-sandbox-starter-tool-spin-up-cloud-networks-in-minutes)
+To learn about Sandbox Starter, visit its [Aviatrix Community space](https://community.aviatrix.com/tech-zone-14/aviatrix-cloud-sandbox-starter-spin-up-cloud-networks-in-minutes-203?tid=203&fid=14)
 
 ## Prerequsites for local development
 
